@@ -4,6 +4,7 @@
   <a href="https://github.com/MichaelGahnDESIGN/MGD-DevOS/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/MichaelGahnDESIGN/MGD-DevOS/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="Plattformen" src="https://img.shields.io/badge/macOS%20%C2%B7%20Windows%20%C2%B7%20Linux-Flutter%203.47-2f6fed">
   <img alt="Status" src="https://img.shields.io/badge/Status-fr%C3%BCh%20(v0.1)-orange">
+  <a href="LICENSE"><img alt="Lizenz" src="https://img.shields.io/badge/Lizenz-PolyForm%20Noncommercial-blue"></a>
   <img alt="Lokal" src="https://img.shields.io/badge/Daten-lokal%2C%20keine%20Telemetrie-2e9e6e">
 </p>
 
@@ -79,6 +80,11 @@ Tabs, Scanner, Agentic Panel, Sicherheit, Architektur, Entwicklung und CI, Relea
 Keine Telemetrie, keine Zugangsdaten, keine Netzwerkzugriffe im Normalbetrieb. Gespeichert
 werden nur Theme, Akzentfarbe und der Projekt-Root-Pfad. Mehr: [Sicherheit](wiki/Sicherheit-und-Datenschutz.md).
 
-## Mitwirken
+## Lizenz und Mitwirken
+
+Nutzen, ändern und Änderungen vorschlagen ist erlaubt, **verkaufen oder kommerziell nutzen nicht**
+([PolyForm Noncommercial 1.0.0](LICENSE)). Das ist keine Open-Source-Lizenz im Sinne der OSI.
+Beiträge willkommen, siehe [CONTRIBUTING.md](CONTRIBUTING.md).
+
 
 Regeln für Beiträge, Tests und CI stehen in [Entwicklung und CI](wiki/Entwicklung-und-CI.md).
