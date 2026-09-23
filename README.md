@@ -1,121 +1,84 @@
-# MGD-DevOS
+<p align="center"><img src="assets/banner.svg" alt="MGD-DevOS" width="100%"></p>
 
-Lokale Flutter-Desktop-Projektzentrale für Projekte, Living Documentation,
-Skills, MCP-Verbindungen und Agenten. Läuft komplett auf dem eigenen Rechner,
-macht keine Netzwerkzugriffe und speichert keine Zugangsdaten.
+<p align="center">
+  <a href="https://github.com/MichaelGahnDESIGN/MGD-DevOS/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/MichaelGahnDESIGN/MGD-DevOS/actions/workflows/ci.yml/badge.svg"></a>
+  <img alt="Plattformen" src="https://img.shields.io/badge/macOS%20%C2%B7%20Windows%20%C2%B7%20Linux-Flutter%203.47-2f6fed">
+  <img alt="Status" src="https://img.shields.io/badge/Status-fr%C3%BCh%20(v0.1)-orange">
+  <img alt="Lokal" src="https://img.shields.io/badge/Daten-lokal%2C%20keine%20Telemetrie-2e9e6e">
+</p>
 
-Diese erste Version deckt Abschnitt 3 der Projektübergabe vom 23.09.2026 ab:
-Onboarding, Projektregister, Dokumentenöffnung, Light/Dark/System-Modus mit
-Akzentfarbe und einen **lesenden** Agentic-Control-Panel-Graphen aus echten
-lokalen Projektinformationen.
+**MGD-DevOS** ist die Desktop-Zentrale für deine Projekte: ein Fenster mit Tabs, in dem du
+zwischen den Dashboards aller Projekte wechselst. Die Daten liegen in deinen lokalen
+Projektordnern, die Claude, Codex & Co. anlegen und pflegen. Die App zeigt sie an, sie
+braucht deshalb keinen eigenen Server und keinen Updater für Inhalte.
 
-## Status (ehrlich, Stand 23.09.2026)
+> **Ehrlicher Stand (v0.1):** Die App ist gebaut und getestet (`flutter analyze`, 15 Tests),
+> aber noch **auf keinem Betriebssystem als fertiger Installer geprüft**. Es gibt noch kein
+> Installationspaket. Details unter [Status](#status).
 
-**Läuft:**
-- `flutter analyze` ohne Befunde, `flutter test` grün (Unit- und Widget-Tests).
-- Onboarding mit Ordnerauswahl für den Projekt-Root.
-- Projektregister: scannt den gewählten Root eine Ebene tief nach echten
-  Projektordnern (erkannt an `.git`, `README.md`, `AGENTS.md`,
-  `pubspec.yaml`, `package.json` oder `PROJEKT/.mgd-ai-projektmanager.json`)
-  und öffnet gefundene Dokumente (README, Living Docs, AGENTS.md, ...).
-- Einstellungen: Light/Dark/System-Theme und Akzentfarbe, persistiert lokal.
-- Agentic Control Panel: liest `AGENTS.md`, `catalog/capabilities.json`,
-  `catalog/integrations.json` und `catalog/skills.json` (inkl. Pflicht-
-  Skills wie `MGD_AI-Thread`) aus den gescannten Projekten. Jeder Eintrag
-  zeigt Quelle und Beobachtungszeitpunkt und trägt **nie** den Status
-  "belegt aktiv", solange kein echter Codex-/Claude-Code-Adapter verbunden
-  ist (siehe `lib/services/agentic_scanner.dart`).
+## Einrichten und Starten
 
-**CI (`.github/workflows/ci.yml`):** baut und testet bei jedem Push/PR auf
-main automatisch auf allen drei Zielplattformen (GitHub-Actions-Runner
-bringen für macOS ein vollständiges Xcode mit – im Gegensatz zu diesem
-lokalen Entwicklungsrechner):
-- `analyze_test` (Ubuntu): `flutter analyze` + `flutter test`.
-- `macos` (macos-14, volles Xcode): `scripts/package_macos.sh` →
-  Artefakt `MGD-DevOS-macos` (`MGD-DevOS.dmg`, unsigniert/nicht notarisiert).
-- `windows` (windows-latest): `flutter build windows --release` →
-  Artefakt `MGD-DevOS-windows` (ZIP des Release-Ordners).
-- `linux` (ubuntu-latest, GTK-Abhängigkeiten installiert): `flutter build
-  linux --release` → Artefakt `MGD-DevOS-linux` (TAR.GZ des Bundles).
+Gib deinem Assistenten (Claude Code, ChatGPT Codex, ...) den Link zum Projektmanager und
+diesen Text:
 
-Artefakte liegen nach jedem Lauf unter dem jeweiligen Actions-Run auf
-GitHub. Das ist eine echte Build-Verifikation auf allen drei Plattformen,
-aber noch **keine signierte/notarisierte** Auslieferung.
-
-**Noch nicht geprüft/verifiziert:**
-- **Lokaler macOS-Build:** `flutter build macos` schlägt auf diesem
-  Entwicklungsrechner fehl, weil nur die Xcode Command Line Tools
-  installiert sind, nicht das volle Xcode (`xcodebuild` fehlt).
-  Xcode-Installation über den App Store braucht eine Apple-ID-Anmeldung
-  durch den Nutzer selbst. Nach Installation:
-  ```
-  sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-  sudo xcodebuild -runFirstLaunch
-  flutter doctor -v
-  scripts/package_macos.sh
-  ```
-  Bis dahin liefert die GitHub-Actions-CI (siehe oben) die verifizierten
-  macOS-Artefakte.
-- Code-Signierung/Notarisierung, Live-Agenten-Adapter, App-Sperre/Secret-
-  Verwaltung, lokale Bridge, Stripe-Spenden/Rechnungen: siehe die
-  vollständige Restliste in der Projektübergabe (`docs/mgd-devos/` im
-  Quellrepo `MGD_AI-Projektmanager`).
-- **Auto-Updater über GitHub Releases:** noch nicht implementiert. Konzept
-  und Bauplan stehen als wiederverwendbares Skill-Wissen im Quellrepo
-  `MGD_AI-Projektmanager` (siehe dort).
-
-## Architekturentscheidung (23.09.2026)
-
-MGD-DevOS ist ein **Tab-Browser für lokale Projekt-Dashboards**. Die Daten
-kommen aus den lokalen Projektordnern, die Claude, Codex & Co. anlegen und
-pflegen; das Dashboard ist die `index.html`, die auch `/dashboard` erzeugt.
-Darum braucht die App keinen eigenen Inhalts-Updater: die Agenten
-aktualisieren die lokalen Dateien.
-
-- **Tab 0 „Übersicht":** Projektauswahl (mit „Dashboard öffnen"),
-  Agentic Control Panel, Einstellungen.
-- **Weitere Tabs:** je ein Projekt-Dashboard, wechselbar und schließbar.
-- **Sicherheit:** Der Webview lädt nur Dateien im Projektordner, externe
-  http(s)-Links öffnen im Systembrowser, alles andere wird blockiert. Es
-  gibt keine Brücke zwischen Seite und App.
-- **Linux/Web:** kein eingebettetes WebView (`flutter_inappwebview`
-  unterstützt es nicht); dort öffnet der Button das Dashboard im Browser.
-- **Nicht getestet:** Das Laden von `file://` im WebView auf macOS/Windows
-  ist hier mangels Xcode/Windows noch nicht real geprüft (nur Logik-Tests).
-
-Der ältere Webview-Wrapper für eine externe Web-URL
-(`lib/webview_app.dart` u. a.) liegt weiter im Repo, ist aber nicht aktiv.
-
-## Öffentliche Laufzeit-Konfiguration
-
-Für den (aktuell inaktiven) Webview-Modus sowie einen künftigen Updater
-existiert ein separates, öffentliches Repository mit ausschließlich
-nicht-sensiblen Metadaten (Anzeigetitel, URLs, Schalter — keine
-Zugangsdaten, kein Quellcode):
-[MichaelGahnDESIGN/MGD-DevOS-config](https://github.com/MichaelGahnDESIGN/MGD-DevOS-config).
-Öffentlich, weil ein Desktop-Client keinen GitHub-Token sicher aufbewahren
-kann — ein privates Repo würde für anonyme Anfragen 404 liefern.
-
-## Standardpfad für die lokale Entwicklung
-
-Diese erste Installation liegt standardmäßig unter `~/Developer/MGD-DevOS`.
-Ein Nutzer soll den Installationsort später frei wählen können; das ist
-noch nicht umgesetzt.
-
-## Entwicklung
-
-```bash
-flutter pub get
-flutter analyze
-flutter test
-flutter build macos   # erst nach vollständiger Xcode-Installation
+```text
+Einrichten und Starten: Installiere den Skill aus
+https://github.com/MichaelGahnDESIGN/MGD_AI-Projektmanager,
+starte /projektstart und richte gemeinsam mit mir Projektordner, Todo und
+Living Documentation ein. Öffne am Ende das Dashboard, lege nach meiner
+Bestätigung eine Verknüpfung auf den Desktop und erkläre mir, wie ich damit arbeite.
 ```
 
-## Sicherheit
+Danach öffnest du MGD-DevOS. Aus dem Quellcode:
 
-- Es werden ausschließlich Darstellung (Theme, Akzentfarbe) und der
-  Projekt-Root-Pfad lokal gespeichert (`shared_preferences`).
-- Keine Zugangsdaten, keine Secrets, keine Telemetrie, keine
-  Netzwerkzugriffe in dieser Version.
-- Der Projektscanner liest nur Dateien innerhalb des vom Nutzer gewählten
-  Projekt-Root und verändert nichts.
+```bash
+git clone https://github.com/MichaelGahnDESIGN/MGD-DevOS.git
+cd MGD-DevOS
+flutter pub get
+flutter run -d macos     # oder: -d windows / -d linux
+```
+
+Fertige Installer (DMG, ZIP, TAR.GZ) entstehen über die Release-Pipeline, siehe [Release](wiki/Release-Prozess.md).
+
+## Was die App kann
+
+| | |
+|---|---|
+| **Tab-Browser** | Tab „Übersicht" plus je ein Tab pro geöffnetem Projekt-Dashboard (`index.html`). Tabs wechseln und schließen. |
+| **Projektregister** | Scannt deinen Projektordner nach echten Projekten (Git, README, AGENTS.md, ...) und öffnet Dokumente. |
+| **Agentic Control Panel** | Zeigt Agenten, Skills und Integrationen aus `AGENTS.md` und `catalog/*.json`, mit Quelle und Zeitstempel. Nie ein erfundener „aktiv"-Status. |
+| **Darstellung** | Hell, Dunkel oder System, eigene Akzentfarbe. |
+| **Sicher by Design** | Alles lokal, keine Telemetrie, keine Zugangsdaten, Webview nur für Dateien im Projektordner. |
+
+## So funktioniert es
+
+```
+Assistent (Claude/Codex)  ──pflegt──▶  Projektordner  ◀──liest──  MGD-DevOS
+   /projektstart, /todo …              index.html, docs/, catalog/      Tabs · Scanner · Panel
+```
+
+## Status
+
+| Bereich | Stand |
+|---|---|
+| Code, Analyse, Tests | ✅ grün (15 Tests) |
+| macOS/Windows/Linux-Build | ⏳ nicht verifiziert: CI-Läufe sind durch ein GitHub-Abrechnungsproblem blockiert, lokal fehlt Xcode |
+| Dashboard im Webview (`file://`) | ⏳ nur Logik getestet, nicht real auf macOS/Windows |
+| Linux | eingebettetes WebView nicht verfügbar, Dashboard öffnet im Browser |
+| Signierung/Notarisierung | ❌ nicht vorhanden (Apple Developer Program nötig) |
+| App-Sperre, Schlüsselbund, Live-Agenten-Adapter | ❌ geplant |
+| Spenden (Stripe) | ❌ nicht eingerichtet, siehe [Stripe-Spenden](wiki/Stripe-Spenden.md) |
+
+## Dokumentation
+
+Das ausführliche Wiki liegt im Ordner [`wiki/`](wiki/Home.md): Installation, Erste Schritte,
+Tabs, Scanner, Agentic Panel, Sicherheit, Architektur, Entwicklung und CI, Release, Roadmap, FAQ.
+
+## Sicherheit und Datenschutz
+
+Keine Telemetrie, keine Zugangsdaten, keine Netzwerkzugriffe im Normalbetrieb. Gespeichert
+werden nur Theme, Akzentfarbe und der Projekt-Root-Pfad. Mehr: [Sicherheit](wiki/Sicherheit-und-Datenschutz.md).
+
+## Mitwirken
+
+Regeln für Beiträge, Tests und CI stehen in [Entwicklung und CI](wiki/Entwicklung-und-CI.md).
