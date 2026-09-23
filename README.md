@@ -35,8 +35,13 @@ lokalen Projektinformationen.
   sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
   sudo xcodebuild -runFirstLaunch
   flutter doctor -v
-  flutter build macos
+  scripts/package_macos.sh
   ```
+  `scripts/package_macos.sh` baut `MGD-DevOS.app` im Release-Modus und
+  packt sie zusammen mit `dist/DMG-README.md` als `dist/macos/MGD-DevOS.dmg`
+  (unsigniert/nicht notarisiert – siehe Hinweise dort). Das Skript bricht
+  sauber mit klarer Fehlermeldung ab, solange kein volles Xcode installiert
+  ist; genau das ist der aktuelle Zustand auf diesem Rechner.
 - **Windows- und Linux-Build:** noch nicht auf den jeweiligen Plattformen
   geprüft (siehe Restliste, Abschnitt „Release und Betrieb“).
 - Live-Agenten-Adapter, App-Sperre/Secret-Verwaltung, lokale Bridge, Stripe-

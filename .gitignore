@@ -46,3 +46,6 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Gebaute Installer/Pakete (siehe scripts/package_macos.sh); nicht versionieren.
+/dist/macos/
