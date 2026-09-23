@@ -60,6 +60,33 @@ aber noch **keine signierte/notarisierte** Auslieferung.
   Verwaltung, lokale Bridge, Stripe-Spenden/Rechnungen: siehe die
   vollständige Restliste in der Projektübergabe (`docs/mgd-devos/` im
   Quellrepo `MGD_AI-Projektmanager`).
+- **Auto-Updater über GitHub Releases:** noch nicht implementiert. Konzept
+  und Bauplan stehen als wiederverwendbares Skill-Wissen im Quellrepo
+  `MGD_AI-Projektmanager` (siehe dort).
+
+## Architekturentscheidung (23.09.2026)
+
+MGD-DevOS ist eine **native** Flutter-Desktop-App (Onboarding, lokaler
+Projekt-Scanner, Agentic Control Panel) — kein Webview-Wrapper um eine
+externe Web-App. Ein vollständig fertiger, alternativer Webview-Modus
+(`lib/webview_app.dart`, `lib/screens/webview_home_screen.dart`,
+`lib/screens/linux_launch_screen.dart`, `lib/services/remote_config_service.dart`)
+liegt im Repository, ist aber **nicht** der Einstiegspunkt in `main.dart`.
+Er kann reaktiviert werden, sobald es eine erreichbare Web-Version von
+MGD_AI-Projektmanager gibt. Hinweis dazu: `flutter_inappwebview`
+unterstützt kein eingebettetes WebView für Linux-Desktop (nur Android,
+iOS, macOS, Windows, Web) — der Webview-Modus öffnet auf Linux stattdessen
+den Standardbrowser.
+
+## Öffentliche Laufzeit-Konfiguration
+
+Für den (aktuell inaktiven) Webview-Modus sowie einen künftigen Updater
+existiert ein separates, öffentliches Repository mit ausschließlich
+nicht-sensiblen Metadaten (Anzeigetitel, URLs, Schalter — keine
+Zugangsdaten, kein Quellcode):
+[MichaelGahnDESIGN/MGD-DevOS-config](https://github.com/MichaelGahnDESIGN/MGD-DevOS-config).
+Öffentlich, weil ein Desktop-Client keinen GitHub-Token sicher aufbewahren
+kann — ein privates Repo würde für anonyme Anfragen 404 liefern.
 
 ## Standardpfad für die lokale Entwicklung
 
