@@ -8,6 +8,13 @@
 - Ein Desktop-Client kann keine Geheimnisse sicher halten. Deshalb liegt nichts Abrufbares
   hinter einem GitHub-Token.
 
+## macOS: keine App-Sandbox
+
+Die macOS-App läuft ohne App-Sandbox, weil sie beliebige vom Nutzer gewählte Projektordner und
+deren Dashboards lesen muss (wie andere Entwickler-Werkzeuge, nicht im App Store). Sie hat damit
+dieselben Dateirechte wie dein Benutzerkonto, liest laut Code aber nur im gewählten Projektordner
+und schreibt dort nichts.
+
 ## Webview
 
 Siehe [Dashboard und Tabs](Dashboard-und-Tabs.md): nur Dateien im Projektordner, externe Links im

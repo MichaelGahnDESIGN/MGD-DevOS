@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2 (2026-09-23)
+
+- Fix macOS: Ordner-Auswahl („Wählen") funktionierte nicht und der Standardpfad zeigte in den
+  Sandbox-Container. Die App-Sandbox ist jetzt aus, damit MGD-DevOS gewählte Projektordner und
+  deren `index.html` lesen kann (keine App-Store-Verteilung).
+
 ## 0.1.1 (2026-09-23)
 
 - Erste Version mit Installern: macOS (DMG), Windows (ZIP), Linux (TAR.GZ), gebaut über GitHub Actions.
