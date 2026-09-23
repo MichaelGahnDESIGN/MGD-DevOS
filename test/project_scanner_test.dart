@@ -71,4 +71,35 @@ void main() {
       reason: 'Ohne Live-Adapter darf nie "belegt aktiv" behauptet werden.',
     );
   });
+
+  test('AgenticScanner liest catalog/skills.json inkl. Pflicht-Skills',
+      () async {
+    final projectDir = Directory(p.join(root.path, 'mein-projekt'));
+    await projectDir.create();
+    await Directory(p.join(projectDir.path, '.git')).create();
+    await Directory(p.join(projectDir.path, 'catalog')).create();
+    await File(p.join(projectDir.path, 'catalog', 'skills.json'))
+        .writeAsString('''
+{
+  "skills": [
+    {
+      "name": "MGD_AI-Thread",
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_AI-Thread",
+      "description": "Schreibt eine belegte Uebergabe.",
+      "mandatory": true,
+      "slashCommands": ["/thread"]
+    }
+  ]
+}
+''');
+
+    final projects = await ProjectScanner().scan(root.path);
+    expect(projects.single.hasSkillsCatalog, isTrue);
+
+    final entities = await AgenticScanner().scan(projects);
+    final thread = entities.singleWhere((e) => e.name == 'MGD_AI-Thread');
+    expect(thread.kind, AgenticKind.skill);
+    expect(thread.description, contains('Pflicht-Skill'));
+    expect(thread.status, isNot(AgenticStatus.claimedActive));
+  });
 }

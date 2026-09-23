@@ -29,6 +29,9 @@ class AgenticScanner {
       if (project.hasIntegrationsCatalog) {
         entities.addAll(await _readIntegrationsCatalog(project, now));
       }
+      if (project.hasSkillsCatalog) {
+        entities.addAll(await _readSkillsCatalog(project, now));
+      }
     }
 
     return entities;
@@ -127,6 +130,57 @@ class AgenticScanner {
         AgenticEntity(
           id: '${project.name}:capabilities:error',
           name: 'capabilities.json (${project.name})',
+          kind: AgenticKind.skill,
+          status: AgenticStatus.unknown,
+          source: file.path,
+          observedAt: now,
+          description: 'Datei konnte nicht gelesen oder geparst werden.',
+          projectName: project.name,
+        ),
+      ];
+    }
+  }
+
+  Future<List<AgenticEntity>> _readSkillsCatalog(
+    MgdProject project,
+    DateTime now,
+  ) async {
+    final file = File(p.join(project.path, 'catalog', 'skills.json'));
+    try {
+      final raw = await file.readAsString();
+      final data = jsonDecode(raw) as Map<String, dynamic>;
+      final skills = (data['skills'] as List?) ?? const [];
+      return skills.map((entry) {
+        final map = entry as Map<String, dynamic>;
+        final name = map['name']?.toString() ?? 'Skill';
+        final mandatory = map['mandatory'] == true;
+        final url = map['url']?.toString();
+        final slashCommands = (map['slashCommands'] as List?)
+                ?.map((e) => e.toString())
+                .where((e) => e.isNotEmpty)
+                .join(', ') ??
+            '';
+        return AgenticEntity(
+          id: '${project.name}:skills:$name',
+          name: name,
+          kind: AgenticKind.skill,
+          status: AgenticStatus.notConnected,
+          source: file.path,
+          observedAt: now,
+          description: [
+            mandatory ? 'Pflicht-Skill (mandatory)' : 'Optionaler Skill',
+            if (map['description'] != null) map['description'].toString(),
+            if (slashCommands.isNotEmpty) 'Befehle: $slashCommands',
+            ?url,
+          ].join(' – '),
+          projectName: project.name,
+        );
+      }).toList();
+    } catch (_) {
+      return [
+        AgenticEntity(
+          id: '${project.name}:skills:error',
+          name: 'skills.json (${project.name})',
           kind: AgenticKind.skill,
           status: AgenticStatus.unknown,
           source: file.path,

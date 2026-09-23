@@ -134,9 +134,11 @@ class _ProjectCard extends StatelessWidget {
                   const _Chip(label: 'Dashboard-Konfiguration'),
                 if (project.hasAgentsFile) const _Chip(label: 'AGENTS.md'),
                 if (project.hasCapabilitiesCatalog)
-                  const _Chip(label: 'Skill-Katalog'),
+                  const _Chip(label: 'Capabilities-Katalog'),
                 if (project.hasIntegrationsCatalog)
                   const _Chip(label: 'Integrations-Katalog'),
+                if (project.hasSkillsCatalog)
+                  const _Chip(label: 'Skill-Katalog'),
               ],
             ),
             if (project.documents.isNotEmpty) ...[

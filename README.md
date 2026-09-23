@@ -19,8 +19,9 @@ lokalen Projektinformationen.
   `pubspec.yaml`, `package.json` oder `PROJEKT/.mgd-ai-projektmanager.json`)
   und öffnet gefundene Dokumente (README, Living Docs, AGENTS.md, ...).
 - Einstellungen: Light/Dark/System-Theme und Akzentfarbe, persistiert lokal.
-- Agentic Control Panel: liest `AGENTS.md`, `catalog/capabilities.json` und
-  `catalog/integrations.json` aus den gescannten Projekten. Jeder Eintrag
+- Agentic Control Panel: liest `AGENTS.md`, `catalog/capabilities.json`,
+  `catalog/integrations.json` und `catalog/skills.json` (inkl. Pflicht-
+  Skills wie `MGD_AI-Thread`) aus den gescannten Projekten. Jeder Eintrag
   zeigt Quelle und Beobachtungszeitpunkt und trägt **nie** den Status
   "belegt aktiv", solange kein echter Codex-/Claude-Code-Adapter verbunden
   ist (siehe `lib/services/agentic_scanner.dart`).

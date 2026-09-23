@@ -15,6 +15,7 @@ class MgdProject {
     required this.hasAgentsFile,
     required this.hasCapabilitiesCatalog,
     required this.hasIntegrationsCatalog,
+    required this.hasSkillsCatalog,
     required this.lastModified,
     required this.documents,
   });
@@ -27,6 +28,7 @@ class MgdProject {
   final bool hasAgentsFile;
   final bool hasCapabilitiesCatalog;
   final bool hasIntegrationsCatalog;
+  final bool hasSkillsCatalog;
   final DateTime? lastModified;
 
   /// Textdokumente (README, Living Docs, AGENTS.md, ...), die in der Projekt-

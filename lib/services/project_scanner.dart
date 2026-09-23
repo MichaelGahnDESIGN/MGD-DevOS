@@ -56,6 +56,9 @@ class ProjectScanner {
     final hasIntegrationsCatalog = await File(
       p.join(dir.path, 'catalog', 'integrations.json'),
     ).exists();
+    final hasSkillsCatalog = await File(
+      p.join(dir.path, 'catalog', 'skills.json'),
+    ).exists();
 
     // Nur echte Ordner mit mindestens einem erkennbaren Projektmerkmal
     // aufnehmen, damit beliebige unbeteiligte Verzeichnisse nicht als
@@ -92,6 +95,7 @@ class ProjectScanner {
       hasAgentsFile: hasAgentsFile,
       hasCapabilitiesCatalog: hasCapabilitiesCatalog,
       hasIntegrationsCatalog: hasIntegrationsCatalog,
+      hasSkillsCatalog: hasSkillsCatalog,
       lastModified: lastModified,
       documents: documents,
     );
