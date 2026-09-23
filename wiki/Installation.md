@@ -20,8 +20,8 @@ Standard-Entwicklungspfad auf dem Entwicklungsrechner: `~/Developer/MGD-DevOS`.
 
 ## Fertige Pakete
 
-Es gibt derzeit **keine geprüften Installer**. Die Pipeline ([Release-Prozess](Release-Prozess.md))
-erzeugt DMG (macOS), ZIP (Windows) und TAR.GZ (Linux). Sie sind unsigniert: macOS zeigt beim
+Installer liegen im [neuesten Release](https://github.com/MichaelGahnDESIGN/MGD-DevOS/releases/latest):
+DMG (macOS), ZIP (Windows), TAR.GZ (Linux x64). Sie sind unsigniert: macOS zeigt beim
 ersten Start eine Gatekeeper-Warnung (Rechtsklick, Öffnen), Windows ggf. SmartScreen.
 
 ## Deinstallation

@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://github.com/MichaelGahnDESIGN/MGD-DevOS/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/MichaelGahnDESIGN/MGD-DevOS/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="Plattformen" src="https://img.shields.io/badge/macOS%20%C2%B7%20Windows%20%C2%B7%20Linux-Flutter%203.47-2f6fed">
-  <img alt="Status" src="https://img.shields.io/badge/Status-fr%C3%BCh%20(v0.1)-orange">
+  <a href="https://github.com/MichaelGahnDESIGN/MGD-DevOS/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/MichaelGahnDESIGN/MGD-DevOS?label=Release"></a>
   <a href="LICENSE"><img alt="Lizenz" src="https://img.shields.io/badge/Lizenz-PolyForm%20Noncommercial-blue"></a>
   <img alt="Lokal" src="https://img.shields.io/badge/Daten-lokal%2C%20keine%20Telemetrie-2e9e6e">
 </p>
@@ -15,9 +15,20 @@ zwischen den Dashboards aller Projekte wechselst. Die Daten liegen in deinen lok
 Projektordnern, die Claude, Codex & Co. anlegen und pflegen. Die App zeigt sie an, sie
 braucht deshalb keinen eigenen Server und keinen Updater für Inhalte.
 
-> **Ehrlicher Stand (v0.1):** Die App ist gebaut und getestet (`flutter analyze`, 15 Tests),
-> aber noch **auf keinem Betriebssystem als fertiger Installer geprüft**. Es gibt noch kein
-> Installationspaket. Details unter [Status](#status).
+> **Stand v0.1.1:** Installer für macOS, Windows und Linux werden über GitHub Actions gebaut
+> (alle Builds grün). Sie sind **unsigniert**, siehe [Download](#download). Details unter [Status](#status).
+
+## Download
+
+Aktuelle Version: **[Releases](https://github.com/MichaelGahnDESIGN/MGD-DevOS/releases/latest)**
+
+| System | Datei | Start |
+|---|---|---|
+| macOS | `MGD-DevOS.dmg` | DMG öffnen, App nach „Programme" ziehen. Beim ersten Start: Rechtsklick → „Öffnen" (unsigniert). |
+| Windows | `MGD-DevOS-windows.zip` | Entpacken, `mgd_devos.exe` starten. SmartScreen: „Weitere Informationen" → „Trotzdem ausführen". |
+| Linux (x64) | `MGD-DevOS-linux.tar.gz` | `tar -xzf MGD-DevOS-linux.tar.gz && ./bundle/mgd_devos` (benötigt GTK 3). |
+
+Prüfsummen: `SHA256SUMS.txt` im Release, prüfen mit `shasum -a 256 -c SHA256SUMS.txt`.
 
 ## Einrichten und Starten
 
@@ -41,7 +52,7 @@ flutter pub get
 flutter run -d macos     # oder: -d windows / -d linux
 ```
 
-Fertige Installer (DMG, ZIP, TAR.GZ) entstehen über die Release-Pipeline, siehe [Release](wiki/Release-Prozess.md).
+Fertige Installer: siehe [Download](#download).
 
 ## Was die App kann
 
@@ -65,7 +76,8 @@ Assistent (Claude/Codex)  ──pflegt──▶  Projektordner  ◀──liest�
 | Bereich | Stand |
 |---|---|
 | Code, Analyse, Tests | ✅ grün (15 Tests) |
-| macOS/Windows/Linux-Build | ⏳ nicht verifiziert: CI-Läufe sind durch ein GitHub-Abrechnungsproblem blockiert, lokal fehlt Xcode |
+| macOS/Windows/Linux-Build | ✅ grün auf GitHub Actions, Installer im Release |
+| Start auf echten Geräten | ⏳ noch nicht manuell geprüft |
 | Dashboard im Webview (`file://`) | ⏳ nur Logik getestet, nicht real auf macOS/Windows |
 | Linux | eingebettetes WebView nicht verfügbar, Dashboard öffnet im Browser |
 | Signierung/Notarisierung | ❌ nicht vorhanden (Apple Developer Program nötig) |

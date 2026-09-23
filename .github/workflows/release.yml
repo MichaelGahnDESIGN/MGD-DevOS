@@ -57,8 +57,11 @@ jobs:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
+      - uses: actions/checkout@v4
+        with: { path: src }
       - uses: actions/download-artifact@v4
         with: { path: out, merge-multiple: true }
+      - run: cp src/.github/release-notes.md release-notes.md
       - name: Prüfsummen und Release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -66,6 +69,6 @@ jobs:
           cd out
           sha256sum * > SHA256SUMS.txt
           gh release view "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1 \
-            || gh release create "${GITHUB_REF_NAME}" --prerelease --title "${GITHUB_REF_NAME}" \
-                 --notes "Unsignierte Vorabversion, siehe CHANGELOG.md" --repo "${GITHUB_REPOSITORY}"
+            || gh release create "${GITHUB_REF_NAME}" --latest --title "MGD-DevOS ${GITHUB_REF_NAME}" \
+                 --notes-file ../release-notes.md --repo "${GITHUB_REPOSITORY}"
           gh release upload "${GITHUB_REF_NAME}" * --clobber --repo "${GITHUB_REPOSITORY}"

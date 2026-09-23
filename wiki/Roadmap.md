@@ -2,7 +2,7 @@
 
 | Priorität | Punkt | Stand |
 |---|---|---|
-| 1 | GitHub-Abrechnung klären, CI grün, erstes Release mit Installern | blockiert |
+| 1 | CI grün, erstes Release mit Installern | erledigt (v0.1.1) |
 | 2 | Dashboard-`file://` real auf macOS/Windows prüfen | offen |
 | 3 | Signierung und Notarisierung | braucht Apple Developer Program |
 | 4 | App-Sperre und Schlüsselbund | offen |

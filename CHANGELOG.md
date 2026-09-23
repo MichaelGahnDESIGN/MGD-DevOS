@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.1 (2026-09-23)
+
+- Erste Version mit Installern: macOS (DMG), Windows (ZIP), Linux (TAR.GZ), gebaut über GitHub Actions.
+- Logo, App-Icons (macOS, Windows, Linux-Fenster, Web) und Pflicht-Fußzeile „supported by: Michael Gahn DESIGN".
+- Lizenz PolyForm Noncommercial 1.0.0, NOTICE, CONTRIBUTING.
+- Laufzeit-Konfiguration liegt jetzt unter `config/` in diesem Repo.
+- Fix: Windows-Build mit Visual Studio 18 (flutter_inappwebview).
+- Bekannt: unsigniert/nicht notarisiert; Dashboard-`file://` im Webview noch nicht auf echtem Gerät geprüft.
+
 ## 0.1.0 (2026-09-23, Vorabversion)
 
 - Native Flutter-Desktop-App: Onboarding, Projektregister, Dokumentenansicht.
