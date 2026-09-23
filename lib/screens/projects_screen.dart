@@ -78,6 +78,9 @@ class ProjectsScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return _ProjectCard(
                       project: projects[index],
+                      onOpenDashboard: projects[index].dashboardFile == null
+                          ? null
+                          : () => appState.openDashboard(projects[index]),
                       dateFormat: dateFormat,
                     );
                   },
@@ -89,9 +92,14 @@ class ProjectsScreen extends StatelessWidget {
 }
 
 class _ProjectCard extends StatelessWidget {
-  const _ProjectCard({required this.project, required this.dateFormat});
+  const _ProjectCard({
+    required this.project,
+    required this.dateFormat,
+    this.onOpenDashboard,
+  });
 
   final MgdProject project;
+  final VoidCallback? onOpenDashboard;
   final DateFormat dateFormat;
 
   @override
@@ -111,6 +119,15 @@ class _ProjectCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
+                if (onOpenDashboard != null)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: FilledButton.tonalIcon(
+                      onPressed: onOpenDashboard,
+                      icon: const Icon(Icons.dashboard_outlined, size: 16),
+                      label: const Text('Dashboard öffnen'),
+                    ),
+                  ),
                 if (project.lastModified != null)
                   Text(
                     dateFormat.format(project.lastModified!),

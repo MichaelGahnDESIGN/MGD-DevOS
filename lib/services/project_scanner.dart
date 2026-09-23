@@ -60,6 +60,9 @@ class ProjectScanner {
       p.join(dir.path, 'catalog', 'skills.json'),
     ).exists();
 
+    final indexFile = File(p.join(dir.path, 'index.html'));
+    final dashboardFile = await indexFile.exists() ? indexFile : null;
+
     // Nur echte Ordner mit mindestens einem erkennbaren Projektmerkmal
     // aufnehmen, damit beliebige unbeteiligte Verzeichnisse nicht als
     // "Projekt" erscheinen.
@@ -96,6 +99,7 @@ class ProjectScanner {
       hasCapabilitiesCatalog: hasCapabilitiesCatalog,
       hasIntegrationsCatalog: hasIntegrationsCatalog,
       hasSkillsCatalog: hasSkillsCatalog,
+      dashboardFile: dashboardFile,
       lastModified: lastModified,
       documents: documents,
     );

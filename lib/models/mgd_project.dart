@@ -16,6 +16,7 @@ class MgdProject {
     required this.hasCapabilitiesCatalog,
     required this.hasIntegrationsCatalog,
     required this.hasSkillsCatalog,
+    required this.dashboardFile,
     required this.lastModified,
     required this.documents,
   });
@@ -29,6 +30,10 @@ class MgdProject {
   final bool hasCapabilitiesCatalog;
   final bool hasIntegrationsCatalog;
   final bool hasSkillsCatalog;
+
+  /// `index.html` im Projektroot (das `/dashboard` des Projektmanagers),
+  /// falls vorhanden. Wird in einem eigenen Tab angezeigt.
+  final File? dashboardFile;
   final DateTime? lastModified;
 
   /// Textdokumente (README, Living Docs, AGENTS.md, ...), die in der Projekt-

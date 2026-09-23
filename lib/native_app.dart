@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'app_state.dart';
-import 'screens/home_shell.dart';
+import 'screens/tabs_shell.dart';
 import 'screens/onboarding_screen.dart';
 
-/// Frühere native Variante von MGD-DevOS: lokale Projektzentrale mit
-/// Onboarding, Projekt-Scanner und lesendem Agentic Control Panel aus
-/// echten lokalen Projektdateien.
-///
-/// Seit dem Wechsel zum Webview-Wrapper (siehe `webview_app.dart` und
-/// `main.dart`) ist dies nicht mehr der Standard-Einstiegspunkt, aber
-/// vollständig erhalten und weiterhin durch Tests abgedeckt. Beide
-/// Betriebsarten können bei Bedarf später kombiniert oder umschaltbar
-/// gemacht werden.
+/// MGD-DevOS als Tab-Browser für lokale Projekt-Dashboards: Tab 0 ist die
+/// Übersicht (Projektauswahl, Agentic Control Panel, Einstellungen), weitere
+/// Tabs zeigen die `index.html` (`/dashboard`) einzelner Projekte.
 class NativeMgdDevOsApp extends StatefulWidget {
   const NativeMgdDevOsApp({super.key, required this.appState});
 
@@ -63,7 +57,7 @@ class _NativeMgdDevOsAppState extends State<NativeMgdDevOsApp> {
       home: appState.isLoading
           ? const _SplashScreen()
           : appState.onboardingDone
-              ? HomeShell(appState: appState)
+              ? TabsShell(appState: appState)
               : OnboardingScreen(appState: appState),
     );
   }

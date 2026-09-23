@@ -66,17 +66,25 @@ aber noch **keine signierte/notarisierte** Auslieferung.
 
 ## Architekturentscheidung (23.09.2026)
 
-MGD-DevOS ist eine **native** Flutter-Desktop-App (Onboarding, lokaler
-Projekt-Scanner, Agentic Control Panel) — kein Webview-Wrapper um eine
-externe Web-App. Ein vollständig fertiger, alternativer Webview-Modus
-(`lib/webview_app.dart`, `lib/screens/webview_home_screen.dart`,
-`lib/screens/linux_launch_screen.dart`, `lib/services/remote_config_service.dart`)
-liegt im Repository, ist aber **nicht** der Einstiegspunkt in `main.dart`.
-Er kann reaktiviert werden, sobald es eine erreichbare Web-Version von
-MGD_AI-Projektmanager gibt. Hinweis dazu: `flutter_inappwebview`
-unterstützt kein eingebettetes WebView für Linux-Desktop (nur Android,
-iOS, macOS, Windows, Web) — der Webview-Modus öffnet auf Linux stattdessen
-den Standardbrowser.
+MGD-DevOS ist ein **Tab-Browser für lokale Projekt-Dashboards**. Die Daten
+kommen aus den lokalen Projektordnern, die Claude, Codex & Co. anlegen und
+pflegen; das Dashboard ist die `index.html`, die auch `/dashboard` erzeugt.
+Darum braucht die App keinen eigenen Inhalts-Updater: die Agenten
+aktualisieren die lokalen Dateien.
+
+- **Tab 0 „Übersicht":** Projektauswahl (mit „Dashboard öffnen"),
+  Agentic Control Panel, Einstellungen.
+- **Weitere Tabs:** je ein Projekt-Dashboard, wechselbar und schließbar.
+- **Sicherheit:** Der Webview lädt nur Dateien im Projektordner, externe
+  http(s)-Links öffnen im Systembrowser, alles andere wird blockiert. Es
+  gibt keine Brücke zwischen Seite und App.
+- **Linux/Web:** kein eingebettetes WebView (`flutter_inappwebview`
+  unterstützt es nicht); dort öffnet der Button das Dashboard im Browser.
+- **Nicht getestet:** Das Laden von `file://` im WebView auf macOS/Windows
+  ist hier mangels Xcode/Windows noch nicht real geprüft (nur Logik-Tests).
+
+Der ältere Webview-Wrapper für eine externe Web-URL
+(`lib/webview_app.dart` u. a.) liegt weiter im Repo, ist aber nicht aktiv.
 
 ## Öffentliche Laufzeit-Konfiguration
 
