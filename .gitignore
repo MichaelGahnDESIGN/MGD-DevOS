@@ -49,3 +49,12 @@ app.*.map.json
 
 # Gebaute Installer/Pakete (siehe scripts/package_macos.sh); nicht versionieren.
 /dist/macos/
+
+# Play-Tests, Backups und sensible Daten bleiben lokal
+PLAYTEST/
+PlayTest/
+BACKUPS/
+*.sql
+*.sql.gz
+.env*
+!.env.example
