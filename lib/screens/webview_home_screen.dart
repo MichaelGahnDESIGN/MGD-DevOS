@@ -92,7 +92,7 @@ class WebviewHomeScreen extends StatelessWidget {
               right: 16,
               child: FloatingActionButton.extended(
                 onPressed: _openDonationLink,
-                icon: const Text('☕', style: TextStyle(fontSize: 16)),
+                icon: const Icon(Icons.favorite_outline, size: 18),
                 label: const Text('Projekt unterstützen'),
               ),
             ),

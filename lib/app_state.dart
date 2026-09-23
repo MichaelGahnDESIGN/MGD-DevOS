@@ -32,6 +32,7 @@ class AppState extends ChangeNotifier {
   String? projectsRoot;
 
   List<MgdProject> projects = const [];
+  List<String> skippedFolders = const [];
   List<AgenticEntity> agenticEntities = const [];
   DateTime? lastScan;
 
@@ -39,6 +40,9 @@ class AppState extends ChangeNotifier {
   /// [activeTabIndex] zählt daher ab 0 = Übersicht, 1.. = [dashboardTabs].
   List<DashboardTab> dashboardTabs = const [];
   int activeTabIndex = 0;
+
+  /// Bereich in der Übersicht: 0 Projekte, 1 Agentic Control Panel, 2 Einstellungen.
+  int overviewSection = 0;
   String? lastScanError;
 
   Future<void> bootstrap() async {
@@ -77,6 +81,7 @@ class AppState extends ChangeNotifier {
       final found = await _projectScanner.scan(root);
       final agentic = await _agenticScanner.scan(found);
       projects = found;
+      skippedFolders = _projectScanner.lastSkipped;
       agenticEntities = agentic;
       lastScan = DateTime.now();
       lastScanError = null;
@@ -131,6 +136,12 @@ class AppState extends ChangeNotifier {
     if (activeTabIndex >= index) {
       activeTabIndex = (activeTabIndex - 1).clamp(0, dashboardTabs.length);
     }
+    notifyListeners();
+  }
+
+  void showOverviewSection(int section) {
+    overviewSection = section;
+    activeTabIndex = 0;
     notifyListeners();
   }
 }

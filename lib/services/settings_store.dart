@@ -15,7 +15,7 @@ class SettingsStore {
   static const _keyProjectsRoot = 'projects_root_v1';
   static const _keyLocale = 'locale_v1';
 
-  static const Color defaultAccentColor = Color(0xFF2F6FED);
+  static const Color defaultAccentColor = Color(0xFFCD1616);
 
   Future<bool> isOnboardingDone() async {
     final prefs = await SharedPreferences.getInstance();

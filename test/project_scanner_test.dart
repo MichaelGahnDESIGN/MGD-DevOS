@@ -102,4 +102,18 @@ void main() {
     expect(thread.description, contains('Pflicht-Skill'));
     expect(thread.status, isNot(AgenticStatus.claimedActive));
   });
+
+  test('verlinkte Projektordner werden erkannt, Ordner ohne Merkmal gemeldet', () async {
+    final real = await Directory.systemTemp.createTemp('mgd_real_');
+    addTearDown(() => real.delete(recursive: true));
+    await Directory(p.join(real.path, '.git')).create();
+    await Link(p.join(root.path, 'verlinkt')).create(real.path);
+    await Directory(p.join(root.path, 'sammelordner')).create();
+
+    final scanner = ProjectScanner();
+    final projects = await scanner.scan(root.path);
+
+    expect(projects.map((x) => x.name), ['verlinkt']);
+    expect(scanner.lastSkipped, ['sammelordner']);
+  });
 }

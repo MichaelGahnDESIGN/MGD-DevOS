@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.0 (2026-09-23)
+
+- Neues Design: ruhiges, flaches Developer-Tool-Design mit Slate-Neutraltönen und MGD-Rot als Akzent,
+  Schrift Inter (lokal eingebettet, SIL OFL), einheitliche Outline-Icons, dezente Übergänge
+  (150–200 ms, respektiert „Bewegung reduzieren").
+- Onboarding mit Markenbereich und Live-Vorschau, wie viele Projekte im gewählten Ordner erkannt werden.
+- Browser-Tab-Leiste mit Einstellungen oben rechts, Seitenleiste für Projekte, Agentic Control Panel, Einstellungen.
+- Projekte als Kachelraster mit Suche, Kennzahlen, Dokumentmenü und Hinweis auf ausgeblendete Ordner.
+- Agentic Control Panel mit Kennzahlen, Filter-Chips, Suche und aufklappbaren Details (Quelle, Zeitpunkt).
+- Einstellungen in Abschnittskarten; MGD-Rot ist neue Standard-Akzentfarbe.
+- Kontrast im Dunkelmodus: Akzent-Text wird aufgehellt (mind. 4,5:1).
+- Fix: verlinkte Projektordner (Symlinks) werden erkannt.
+
 ## 0.1.2 (2026-09-23)
 
 - Fix macOS: Ordner-Auswahl („Wählen") funktionierte nicht und der Standardpfad zeigte in den

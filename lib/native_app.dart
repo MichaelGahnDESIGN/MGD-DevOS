@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_state.dart';
+import 'theme/app_theme.dart';
 import 'screens/tabs_shell.dart';
 import 'screens/onboarding_screen.dart';
 
@@ -43,17 +44,8 @@ class _NativeMgdDevOsAppState extends State<NativeMgdDevOsApp> {
       title: 'MGD-DevOS',
       debugShowCheckedModeBanner: false,
       themeMode: appState.themeMode,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: accent),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: accent,
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
+      theme: buildTheme(Brightness.light, accent),
+      darkTheme: buildTheme(Brightness.dark, accent),
       home: appState.isLoading
           ? const _SplashScreen()
           : appState.onboardingDone

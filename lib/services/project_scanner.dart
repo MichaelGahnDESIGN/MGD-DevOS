@@ -9,6 +9,9 @@ import '../models/mgd_project.dart';
 ///
 /// Es werden keine Netzwerkzugriffe gemacht und keine Inhalte verändert.
 class ProjectScanner {
+  /// Ordner ohne Projektmerkmal aus dem letzten [scan], für einen Hinweis in der UI.
+  List<String> lastSkipped = const [];
+
   static const _documentCandidates = [
     'README.md',
     'CHANGELOG.md',
@@ -27,16 +30,30 @@ class ProjectScanner {
     }
 
     final results = <MgdProject>[];
+    final skipped = <String>[];
     final entries = root.list(followLinks: false);
     await for (final entry in entries) {
-      if (entry is! Directory) continue;
       final name = p.basename(entry.path);
       if (name.startsWith('.')) continue;
-      final project = await _inspect(entry, name);
+      final Directory dir;
+      if (entry is Directory) {
+        dir = entry;
+      } else if (entry is Link &&
+          await FileSystemEntity.isDirectory(entry.path)) {
+        // Verlinkte Projektordner zählen mit; der Name bleibt der des Links.
+        dir = Directory(entry.path);
+      } else {
+        continue;
+      }
+      final project = await _inspect(dir, name);
       if (project != null) {
         results.add(project);
+      } else {
+        skipped.add(name);
       }
     }
+    skipped.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    lastSkipped = List.unmodifiable(skipped);
 
     results.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
     return results;

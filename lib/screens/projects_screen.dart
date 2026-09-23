@@ -1,90 +1,116 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart' as p;
 
 import '../app_state.dart';
 import '../models/mgd_project.dart';
+import '../theme/app_theme.dart';
+import '../widgets/ui.dart';
 import 'document_viewer_screen.dart';
 
-class ProjectsScreen extends StatelessWidget {
+class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({super.key, required this.appState});
 
   final AppState appState;
 
   @override
+  State<ProjectsScreen> createState() => _ProjectsScreenState();
+}
+
+class _ProjectsScreenState extends State<ProjectsScreen> {
+  String _query = '';
+
+  @override
   Widget build(BuildContext context) {
-    final projects = appState.projects;
-    final dateFormat = DateFormat('dd.MM.yyyy HH:mm');
+    final app = widget.appState;
+    final dateFormat = DateFormat('dd.MM.yyyy, HH:mm');
+    final q = _query.toLowerCase();
+    final projects = app.projects.where((x) => q.isEmpty || x.name.toLowerCase().contains(q)).toList();
+    final dashboards = app.projects.where((x) => x.dashboardFile != null).length;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Projekte',
-                  style: Theme.of(context).textTheme.headlineSmall,
+        PageHeader(
+          title: 'Projekte',
+          subtitle: app.lastScan == null
+              ? 'Noch nicht gescannt'
+              : '${app.projects.length} Projekte · $dashboards mit Dashboard · zuletzt gescannt ${dateFormat.format(app.lastScan!)}',
+          actions: [
+            SizedBox(
+              width: 240,
+              child: TextField(
+                onChanged: (v) => setState(() => _query = v),
+                style: const TextStyle(fontSize: 14),
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.search, size: 18),
+                  hintText: 'Projekte suchen',
                 ),
               ),
-              if (appState.lastScan != null)
-                Text(
-                  'Zuletzt gescannt: ${dateFormat.format(appState.lastScan!)}',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              const SizedBox(width: 12),
-              IconButton(
-                tooltip: 'Neu scannen',
-                icon: const Icon(Icons.refresh),
-                onPressed: appState.rescan,
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(width: Space.sm),
+            IconButton.outlined(
+              tooltip: 'Neu scannen',
+              icon: const Icon(Icons.refresh, size: 18),
+              onPressed: app.rescan,
+            ),
+          ],
         ),
-        if (appState.projectsRoot != null)
+        if (app.lastScanError != null)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text(
-              'Projekt-Root: ${appState.projectsRoot}',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          ),
-        if (appState.lastScanError != null)
-          Padding(
-            padding: const EdgeInsets.all(24),
-            child: Text(
-              'Scan-Fehler: ${appState.lastScanError}',
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: Space.xxl),
+            child: Badge2(label: 'Scan-Fehler: ${app.lastScanError}', tone: Tone.warning, icon: Icons.error_outline),
           ),
         Expanded(
-          child: projects.isEmpty
-              ? const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(24),
-                    child: Text(
-                      'Keine Projekte gefunden. Ein Projekt erkennt '
-                      'MGD-DevOS an .git, README.md, AGENTS.md, '
-                      'pubspec.yaml, package.json oder einer '
-                      'PROJEKT/.mgd-ai-projektmanager.json.',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+          child: app.projects.isEmpty
+              ? const EmptyState(
+                  icon: Icons.folder_off_outlined,
+                  title: 'Keine Projekte gefunden',
+                  message: 'Ein Projekt ist ein Unterordner mit .git, README.md, AGENTS.md, pubspec.yaml, package.json oder PROJEKT/.mgd-ai-projektmanager.json. Den Projektordner änderst du in den Einstellungen.',
                 )
-              : ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: projects.length,
-                  itemBuilder: (context, index) {
-                    return _ProjectCard(
-                      project: projects[index],
-                      onOpenDashboard: projects[index].dashboardFile == null
-                          ? null
-                          : () => appState.openDashboard(projects[index]),
-                      dateFormat: dateFormat,
-                    );
-                  },
-                ),
+              : projects.isEmpty
+                  ? EmptyState(
+                      icon: Icons.search_off,
+                      title: 'Kein Treffer',
+                      message: 'Kein Projekt enthält „$_query".',
+                    )
+                  : LayoutBuilder(
+                      builder: (context, box) {
+                        final cols = (box.maxWidth / 380).floor().clamp(1, 4);
+                        return CustomScrollView(
+                          slivers: [
+                            SliverPadding(
+                              padding: const EdgeInsets.fromLTRB(Space.xxl, Space.sm, Space.xxl, Space.lg),
+                              sliver: SliverGrid(
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: cols,
+                                  mainAxisSpacing: Space.lg,
+                                  crossAxisSpacing: Space.lg,
+                                  mainAxisExtent: 220,
+                                ),
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, i) => _ProjectCard(
+                                    project: projects[i],
+                                    dateFormat: dateFormat,
+                                    onOpenDashboard: projects[i].dashboardFile == null
+                                        ? null
+                                        : () => app.openDashboard(projects[i]),
+                                  ),
+                                  childCount: projects.length,
+                                ),
+                              ),
+                            ),
+                            if (app.skippedFolders.isNotEmpty)
+                              SliverToBoxAdapter(
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(Space.xxl, 0, Space.xxl, Space.xxl),
+                                  child: _SkippedHint(names: app.skippedFolders),
+                                ),
+                              ),
+                          ],
+                        );
+                      },
+                    ),
         ),
       ],
     );
@@ -92,117 +118,164 @@ class ProjectsScreen extends StatelessWidget {
 }
 
 class _ProjectCard extends StatelessWidget {
-  const _ProjectCard({
-    required this.project,
-    required this.dateFormat,
-    this.onOpenDashboard,
-  });
+  const _ProjectCard({required this.project, required this.dateFormat, this.onOpenDashboard});
 
   final MgdProject project;
-  final VoidCallback? onOpenDashboard;
   final DateFormat dateFormat;
+  final VoidCallback? onOpenDashboard;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    project.name,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+    final t = Theme.of(context).textTheme;
+    final c = context.colors;
+    final scheme = Theme.of(context).colorScheme;
+    final features = <(String, Tone)>[
+      if (project.hasGit) ('Git', Tone.neutral),
+      if (project.hasLivingDocs) ('Living Docs', Tone.neutral),
+      if (project.hasAgentsFile) ('AGENTS.md', Tone.neutral),
+      if (project.hasSkillsCatalog || project.hasCapabilitiesCatalog) ('Skills', Tone.neutral),
+      if (project.hasIntegrationsCatalog) ('Integrationen', Tone.neutral),
+      if (project.hasDashboardConfig) ('Projektmanager', Tone.accent),
+    ];
+    final initial = project.name.isEmpty ? '?' : project.name.characters.first.toUpperCase();
+
+    return HoverCard(
+      padding: const EdgeInsets.all(Space.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: scheme.primary.withValues(alpha: 0.10),
+                  borderRadius: BorderRadius.circular(Radii.sm),
                 ),
-                if (onOpenDashboard != null)
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12),
-                    child: FilledButton.tonalIcon(
-                      onPressed: onOpenDashboard,
-                      icon: const Icon(Icons.dashboard_outlined, size: 16),
-                      label: const Text('Dashboard öffnen'),
-                    ),
-                  ),
-                if (project.lastModified != null)
-                  Text(
-                    dateFormat.format(project.lastModified!),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-              ],
-            ),
-            const SizedBox(height: 4),
-            Text(
-              project.path,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              children: [
-                if (project.hasGit) const _Chip(label: 'Git'),
-                if (project.hasLivingDocs) const _Chip(label: 'Living Docs'),
-                if (project.hasDashboardConfig)
-                  const _Chip(label: 'Dashboard-Konfiguration'),
-                if (project.hasAgentsFile) const _Chip(label: 'AGENTS.md'),
-                if (project.hasCapabilitiesCatalog)
-                  const _Chip(label: 'Capabilities-Katalog'),
-                if (project.hasIntegrationsCatalog)
-                  const _Chip(label: 'Integrations-Katalog'),
-                if (project.hasSkillsCatalog)
-                  const _Chip(label: 'Skill-Katalog'),
-              ],
-            ),
-            if (project.documents.isNotEmpty) ...[
-              const SizedBox(height: 12),
-              Text(
-                'Dokumente',
-                style: Theme.of(context).textTheme.labelLarge,
+                child: Text(initial, style: TextStyle(color: context.accentText, fontWeight: FontWeight.w700, fontSize: 17)),
               ),
-              Wrap(
-                spacing: 8,
-                runSpacing: 4,
-                children: project.documents.map((file) {
-                  final label = file.path
-                      .substring(project.path.length)
-                      .replaceFirst(RegExp(r'^[\\/]'), '');
-                  return ActionChip(
-                    avatar: const Icon(Icons.description_outlined, size: 16),
-                    label: Text(label),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => DocumentViewerScreen(file: file),
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
+              const SizedBox(width: Space.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(project.name, style: t.titleMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
+                    Tooltip(
+                      message: project.path,
+                      child: Text(
+                        project.path,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 12, color: c.muted),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
-          ],
+          ),
+          const SizedBox(height: Space.md),
+          SizedBox(
+            height: 22,
+            child: Row(
+              children: [
+                for (final f in features.take(3)) ...[Badge2(label: f.$1, tone: f.$2), const SizedBox(width: 6)],
+                if (features.length > 3)
+                  Tooltip(
+                    message: features.skip(3).map((f) => f.$1).join(', '),
+                    child: Badge2(label: '+${features.length - 3}'),
+                  ),
+              ],
+            ),
+          ),
+          const Spacer(),
+          if (project.lastModified != null)
+            Text('Geändert ${dateFormat.format(project.lastModified!)}', style: t.bodySmall),
+          const SizedBox(height: Space.md),
+          Row(
+            children: [
+              if (onOpenDashboard != null)
+                FilledButton.tonalIcon(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: scheme.primary.withValues(alpha: 0.12),
+                    foregroundColor: context.accentText,
+                  ),
+                  onPressed: onOpenDashboard,
+                  icon: const Icon(Icons.open_in_new, size: 16),
+                  label: const Text('Dashboard öffnen'),
+                )
+              else
+                Tooltip(
+                  message: 'Kein Dashboard: Im Projekt fehlt eine index.html. Mit /Dashboard im Assistenten anlegen.',
+                  child: Text('Kein Dashboard', style: TextStyle(fontSize: 13, color: c.muted)),
+                ),
+              const Spacer(),
+              if (project.documents.isNotEmpty) _DocsMenu(project: project),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DocsMenu extends StatelessWidget {
+  const _DocsMenu({required this.project});
+
+  final MgdProject project;
+
+  @override
+  Widget build(BuildContext context) {
+    return MenuAnchor(
+      menuChildren: [
+        for (final file in project.documents)
+          MenuItemButton(
+            leadingIcon: const Icon(Icons.description_outlined, size: 18),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => DocumentViewerScreen(file: file)),
+            ),
+            child: Text(p.relative(file.path, from: project.path)),
+          ),
+      ],
+      builder: (context, controller, _) => Tooltip(
+        message: 'Dokumente öffnen',
+        child: OutlinedButton.icon(
+          style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: Space.md)),
+          onPressed: () => controller.isOpen ? controller.close() : controller.open(),
+          icon: const Icon(Icons.description_outlined, size: 16),
+          label: Text('${project.documents.length}'),
         ),
       ),
     );
   }
 }
 
-class _Chip extends StatelessWidget {
-  const _Chip({required this.label});
+class _SkippedHint extends StatelessWidget {
+  const _SkippedHint({required this.names});
 
-  final String label;
+  final List<String> names;
 
   @override
   Widget build(BuildContext context) {
-    return Chip(
-      label: Text(label, style: const TextStyle(fontSize: 12)),
-      visualDensity: VisualDensity.compact,
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    final c = context.colors;
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        tilePadding: EdgeInsets.zero,
+        leading: Icon(Icons.visibility_off_outlined, size: 18, color: c.muted),
+        title: Text(
+          '${names.length} ${names.length == 1 ? 'Ordner' : 'Ordner'} ohne Projektmerkmal ausgeblendet',
+          style: TextStyle(fontSize: 13, color: c.muted),
+        ),
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Wrap(spacing: 6, runSpacing: 6, children: [for (final n in names) Badge2(label: n)]),
+          ),
+        ],
+      ),
     );
   }
 }

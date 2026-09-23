@@ -13,6 +13,7 @@ Dashboards deiner Projekte in Tabs und liest Projektinformationen direkt aus dei
 | [Einstellungen](Einstellungen.md) | Theme, Akzentfarbe, Projektordner |
 | [Sicherheit und Datenschutz](Sicherheit-und-Datenschutz.md) | Bedrohungsmodell, was gespeichert wird |
 | [Architektur](Architektur.md) | Aufbau des Codes |
+| [Design-System](Design-System.md) | Farben, Schrift, Abstände, Regeln |
 | [Entwicklung und CI](Entwicklung-und-CI.md) | Tests, GitHub Actions, Stolperfallen |
 | [Release-Prozess](Release-Prozess.md) | Tag, Build, Artefakte, Signierung |
 | [Updates](Updates.md) | Warum es keinen Inhalts-Updater gibt |

@@ -5,6 +5,7 @@ import 'package:path/path.dart' as p;
 import 'package:url_launcher/url_launcher.dart';
 
 import '../models/dashboard_tab.dart';
+import '../widgets/ui.dart';
 
 /// Zeigt die lokale `index.html` eines Projekts (das `/dashboard`).
 ///
@@ -31,24 +32,14 @@ class DashboardTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLinux = !kIsWeb && defaultTargetPlatform == TargetPlatform.linux;
     if (kIsWeb || isLinux) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(tab.projectName,
-                style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 8),
-            const Text(
-              'Auf dieser Plattform gibt es kein eingebettetes WebView. '
-              'Das Dashboard öffnet im Standardbrowser.',
-            ),
-            const SizedBox(height: 16),
-            FilledButton.icon(
-              onPressed: _openExternally,
-              icon: const Icon(Icons.open_in_browser),
-              label: const Text('Dashboard im Browser öffnen'),
-            ),
-          ],
+      return EmptyState(
+        icon: Icons.open_in_browser,
+        title: tab.projectName,
+        message: 'Auf dieser Plattform gibt es kein eingebettetes WebView. Das Dashboard öffnet im Standardbrowser.',
+        action: FilledButton.icon(
+          onPressed: _openExternally,
+          icon: const Icon(Icons.open_in_browser, size: 18),
+          label: const Text('Dashboard im Browser öffnen'),
         ),
       );
     }

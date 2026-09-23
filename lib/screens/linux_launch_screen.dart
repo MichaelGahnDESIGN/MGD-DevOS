@@ -73,7 +73,7 @@ class LinuxLaunchScreen extends StatelessWidget {
                   const SizedBox(height: 24),
                   OutlinedButton.icon(
                     onPressed: () => _open(config.stripeDonationUrl),
-                    icon: const Text('☕', style: TextStyle(fontSize: 14)),
+                    icon: const Icon(Icons.favorite_outline, size: 18),
                     label: const Text('Projekt unterstützen'),
                   ),
                 ],

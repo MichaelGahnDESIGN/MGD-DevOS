@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../theme/app_theme.dart';
+import 'ui.dart';
+
 /// Pflicht-Hinweis "supported by: Michael Gahn DESIGN" (siehe NOTICE).
 /// Fester Bestandteil der App, nicht entfernen oder ändern.
 class SupportedByFooter extends StatelessWidget {
@@ -10,53 +13,42 @@ class SupportedByFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
     final scheme = Theme.of(context).colorScheme;
-    return Material(
-      color: scheme.surfaceContainerHighest,
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6),
-          child: Center(
-            child: Tooltip(
-              message: 'Michael-Gahn.de öffnen',
-              child: InkWell(
+    return Container(
+      height: 40,
+      decoration: BoxDecoration(
+        color: c.sidebar,
+        border: Border(top: BorderSide(color: c.border)),
+      ),
+      alignment: Alignment.center,
+      child: Tooltip(
+        message: 'Michael-Gahn.de öffnen',
+        child: Semantics(
+          link: true,
+          label: 'supported by Michael Gahn DESIGN, Website öffnen',
+          child: InkWell(
+            borderRadius: BorderRadius.circular(999),
+            onTap: () => launchUrl(website, mode: LaunchMode.externalApplication),
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(6, 4, Space.md, 4),
+              decoration: BoxDecoration(
+                color: Brand.red.withValues(alpha: 0.08),
+                border: Border.all(color: Brand.red.withValues(alpha: 0.35)),
                 borderRadius: BorderRadius.circular(999),
-                onTap: () =>
-                    launchUrl(website, mode: LaunchMode.externalApplication),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: scheme.primary.withValues(alpha: 0.1),
-                    border: Border.all(
-                      color: scheme.primary.withValues(alpha: 0.45),
+              ),
+              child: ExcludeSemantics(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const BrandMark(size: 20),
+                    const SizedBox(width: Space.sm),
+                    Text('supported by: ', style: TextStyle(fontSize: 12.5, color: c.muted)),
+                    Text(
+                      'Michael Gahn DESIGN',
+                      style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: scheme.onSurface),
                     ),
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: Image.asset(
-                          'assets/brand/logo-64.png',
-                          width: 18,
-                          height: 18,
-                          semanticLabel: 'Michael Gahn DESIGN Logo',
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'supported by: ',
-                        style: TextStyle(color: scheme.onSurfaceVariant),
-                      ),
-                      const Text(
-                        'Michael Gahn DESIGN',
-                        style: TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ),
