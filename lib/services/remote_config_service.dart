@@ -6,23 +6,17 @@ import '../models/app_remote_config.dart';
 
 /// Lädt [AppRemoteConfig] als JSON von einer öffentlich erreichbaren URL.
 ///
-/// WICHTIG: Diese URL muss **öffentlich ohne Authentifizierung** abrufbar
-/// sein (z. B. ein separates öffentliches Repository, ein öffentliches
-/// Gist oder GitHub Pages). `MGD_AI-Projektmanager` ist ein privates
-/// Repository; eine raw.githubusercontent.com-URL daraus liefert für
-/// anonyme Anfragen 404, weil kein Token im Client hinterlegt werden darf
-/// (siehe Sicherheitsregeln: keine Secrets im Flutter-Client).
+/// Die URL muss ohne Authentifizierung abrufbar sein: im Client darf kein
+/// Token liegen. Die Datei liegt im öffentlichen Repository unter `config/`.
 class RemoteConfigService {
   RemoteConfigService({
     this.configUrl =
-        'https://raw.githubusercontent.com/MichaelGahnDESIGN/MGD-DevOS-config/main/mgd-devos-config.json',
+        'https://raw.githubusercontent.com/MichaelGahnDESIGN/MGD-DevOS/main/config/mgd-devos-config.json',
     http.Client? client,
     this.timeout = const Duration(seconds: 6),
   }) : _client = client ?? http.Client();
 
-  /// Öffentliche URL der JSON-Konfiguration. In den Einstellungen änderbar
-  /// (siehe `SettingsStore`), Standardwert zeigt auf ein noch anzulegendes
-  /// separates öffentliches Repository (siehe README.md).
+  /// Öffentliche URL der JSON-Konfiguration.
   final String configUrl;
   final Duration timeout;
   final http.Client _client;

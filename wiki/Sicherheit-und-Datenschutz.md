@@ -16,7 +16,7 @@ Systembrowser, keine Brücke zur App.
 ## Netzwerk
 
 Im Normalbetrieb keine Zugriffe. Der ältere Webview-Wrapper (`lib/webview_app.dart`, inaktiv) würde
-eine öffentliche JSON-Konfiguration laden ([MGD-DevOS-config](https://github.com/MichaelGahnDESIGN/MGD-DevOS-config), keine Secrets).
+eine öffentliche JSON-Konfiguration laden (`config/mgd-devos-config.json` in diesem Repo, keine Secrets).
 
 ## Zahlungen
 
