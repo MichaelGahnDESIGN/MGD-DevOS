@@ -1,3 +1,5 @@
+<p align="center"><a href="https://Michael-Gahn.de"><img src="assets/brand/logo-64.png" alt="Michael Gahn DESIGN" width="48"></a></p>
+
 <p align="center"><img src="assets/banner.svg" alt="MGD-DevOS" width="100%"></p>
 
 <p align="center">
@@ -88,3 +90,7 @@ Beiträge willkommen, siehe [CONTRIBUTING.md](CONTRIBUTING.md).
 
 
 Regeln für Beiträge, Tests und CI stehen in [Entwicklung und CI](wiki/Entwicklung-und-CI.md).
+
+---
+
+<p align="center"><a href="https://Michael-Gahn.de"><img src="assets/brand/logo-64.png" width="24" alt=""> <b>supported by: Michael Gahn DESIGN</b></a></p>

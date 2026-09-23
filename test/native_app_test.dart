@@ -29,6 +29,7 @@ void main() {
     await tester.pumpWidget(NativeMgdDevOsApp(appState: appState));
     await tester.pumpAndSettle();
 
+    expect(find.text('Michael Gahn DESIGN'), findsOneWidget);
     expect(find.text('Projekte'), findsWidgets);
     expect(find.text('Agentic Control Panel'), findsWidgets);
   });

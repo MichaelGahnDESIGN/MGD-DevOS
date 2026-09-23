@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import 'dashboard_tab_view.dart';
+import '../widgets/supported_by_footer.dart';
 import 'home_shell.dart';
 
 /// Browser-artige Hülle: Tab 0 ist die Übersicht (Projektauswahl), weitere
@@ -55,6 +56,7 @@ class TabsShell extends StatelessWidget {
               ],
             ),
           ),
+          const SupportedByFooter(),
         ],
       ),
     );
