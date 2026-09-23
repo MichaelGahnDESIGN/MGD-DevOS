@@ -1,0 +1,97 @@
+name: CI
+
+# Baut und prueft MGD-DevOS auf allen drei Zielplattformen. GitHub-Actions-
+# Runner bringen fuer macOS ein vollstaendiges Xcode mit (im Gegensatz zu
+# lokalen Entwicklungsrechnern ohne Xcode-Installation) und liefern damit
+# die erste echte macOS-Build-Verifikation. Windows- und Linux-Jobs pruefen
+# den Build auf den jeweiligen realen Plattformen (siehe README.md,
+# Abschnitt "Release und Betrieb").
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  FLUTTER_CHANNEL: stable
+
+jobs:
+  analyze_test:
+    name: Analyze & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ env.FLUTTER_CHANNEL }}
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+
+  macos:
+    name: macOS Build + DMG
+    needs: analyze_test
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ env.FLUTTER_CHANNEL }}
+      - name: Xcode-Version pruefen
+        run: xcodebuild -version
+      - name: App bauen und als DMG packen
+        run: scripts/package_macos.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MGD-DevOS-macos
+          path: dist/macos/MGD-DevOS.dmg
+          if-no-files-found: error
+
+  windows:
+    name: Windows Build
+    needs: analyze_test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ env.FLUTTER_CHANNEL }}
+      - run: flutter config --enable-windows-desktop
+      - run: flutter pub get
+      - run: flutter build windows --release
+      - name: Release-Ordner als ZIP packen
+        run: |
+          Compress-Archive -Path build\windows\x64\runner\Release\* -DestinationPath MGD-DevOS-windows.zip
+        shell: pwsh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MGD-DevOS-windows
+          path: MGD-DevOS-windows.zip
+          if-no-files-found: error
+
+  linux:
+    name: Linux Build
+    needs: analyze_test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ env.FLUTTER_CHANNEL }}
+      - name: Linux-Desktop-Abhaengigkeiten installieren
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang cmake ninja-build pkg-config \
+            libgtk-3-dev liblzma-dev libstdc++-12-dev
+      - run: flutter config --enable-linux-desktop
+      - run: flutter pub get
+      - run: flutter build linux --release
+      - name: Release-Bundle als TAR.GZ packen
+        run: |
+          tar -czf MGD-DevOS-linux.tar.gz -C build/linux/x64/release bundle
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MGD-DevOS-linux
+          path: MGD-DevOS-linux.tar.gz
+          if-no-files-found: error

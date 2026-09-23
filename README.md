@@ -26,28 +26,40 @@ lokalen Projektinformationen.
   "belegt aktiv", solange kein echter Codex-/Claude-Code-Adapter verbunden
   ist (siehe `lib/services/agentic_scanner.dart`).
 
+**CI (`.github/workflows/ci.yml`):** baut und testet bei jedem Push/PR auf
+main automatisch auf allen drei Zielplattformen (GitHub-Actions-Runner
+bringen für macOS ein vollständiges Xcode mit – im Gegensatz zu diesem
+lokalen Entwicklungsrechner):
+- `analyze_test` (Ubuntu): `flutter analyze` + `flutter test`.
+- `macos` (macos-14, volles Xcode): `scripts/package_macos.sh` →
+  Artefakt `MGD-DevOS-macos` (`MGD-DevOS.dmg`, unsigniert/nicht notarisiert).
+- `windows` (windows-latest): `flutter build windows --release` →
+  Artefakt `MGD-DevOS-windows` (ZIP des Release-Ordners).
+- `linux` (ubuntu-latest, GTK-Abhängigkeiten installiert): `flutter build
+  linux --release` → Artefakt `MGD-DevOS-linux` (TAR.GZ des Bundles).
+
+Artefakte liegen nach jedem Lauf unter dem jeweiligen Actions-Run auf
+GitHub. Das ist eine echte Build-Verifikation auf allen drei Plattformen,
+aber noch **keine signierte/notarisierte** Auslieferung.
+
 **Noch nicht geprüft/verifiziert:**
-- **macOS-Build:** `flutter build macos` schlägt auf diesem Rechner fehl,
-  weil nur die Xcode Command Line Tools installiert sind, nicht das volle
-  Xcode (`xcodebuild` fehlt). Xcode-Installation über den App Store braucht
-  eine Apple-ID-Anmeldung durch den Nutzer selbst. Nach Installation:
+- **Lokaler macOS-Build:** `flutter build macos` schlägt auf diesem
+  Entwicklungsrechner fehl, weil nur die Xcode Command Line Tools
+  installiert sind, nicht das volle Xcode (`xcodebuild` fehlt).
+  Xcode-Installation über den App Store braucht eine Apple-ID-Anmeldung
+  durch den Nutzer selbst. Nach Installation:
   ```
   sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
   sudo xcodebuild -runFirstLaunch
   flutter doctor -v
   scripts/package_macos.sh
   ```
-  `scripts/package_macos.sh` baut `MGD-DevOS.app` im Release-Modus und
-  packt sie zusammen mit `dist/DMG-README.md` als `dist/macos/MGD-DevOS.dmg`
-  (unsigniert/nicht notarisiert – siehe Hinweise dort). Das Skript bricht
-  sauber mit klarer Fehlermeldung ab, solange kein volles Xcode installiert
-  ist; genau das ist der aktuelle Zustand auf diesem Rechner.
-- **Windows- und Linux-Build:** noch nicht auf den jeweiligen Plattformen
-  geprüft (siehe Restliste, Abschnitt „Release und Betrieb“).
-- Live-Agenten-Adapter, App-Sperre/Secret-Verwaltung, lokale Bridge, Stripe-
-  Spenden/Rechnungen, CI und signierte Installer: siehe die vollständige
-  Restliste in der Projektübergabe (`docs/mgd-devos/` im Quellrepo
-  `MGD_AI-Projektmanager`).
+  Bis dahin liefert die GitHub-Actions-CI (siehe oben) die verifizierten
+  macOS-Artefakte.
+- Code-Signierung/Notarisierung, Live-Agenten-Adapter, App-Sperre/Secret-
+  Verwaltung, lokale Bridge, Stripe-Spenden/Rechnungen: siehe die
+  vollständige Restliste in der Projektübergabe (`docs/mgd-devos/` im
+  Quellrepo `MGD_AI-Projektmanager`).
 
 ## Standardpfad für die lokale Entwicklung
 
