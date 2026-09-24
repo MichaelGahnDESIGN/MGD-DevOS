@@ -61,6 +61,8 @@ jobs:
           channel: ${{ env.FLUTTER_CHANNEL }}
       - run: flutter config --enable-windows-desktop
       - run: flutter pub get
+      - name: Integrationstest (echte App, WebView2)
+        run: flutter test integration_test -d windows
       - run: flutter build windows --release
       - name: Release-Ordner als ZIP packen
         run: |
@@ -88,6 +90,8 @@ jobs:
             libgtk-3-dev liblzma-dev libstdc++-12-dev
       - run: flutter config --enable-linux-desktop
       - run: flutter pub get
+      - name: Integrationstest (echte App, Browser-Ausweichweg)
+        run: xvfb-run -a flutter test integration_test -d linux
       - run: flutter build linux --release
       - name: Release-Bundle als TAR.GZ packen
         run: |

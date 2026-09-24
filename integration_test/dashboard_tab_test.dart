@@ -60,6 +60,13 @@ void main() {
     expect(state.projects.single.name, 'IT-Projekt');
 
     await t.tap(find.text('Dashboard öffnen'));
+    if (Platform.isLinux) {
+      // Linux: kein eingebettetes WebView, der Tab bietet das Öffnen im Browser an.
+      await settle(t);
+      expect(find.text('Dashboard im Browser öffnen'), findsOneWidget);
+      expect(state.dashboardTabs, hasLength(1));
+      return;
+    }
     await waitFor(() => DashboardTabView.debugLastLoaded.value != null, t, seconds: 30);
 
     final loaded = DashboardTabView.debugLastLoaded.value;
@@ -103,7 +110,7 @@ void main() {
     expect(state.dashboardTabs, isEmpty);
   });
 
-  testWidgets('Echtes Control-Plane-Dashboard funktioniert im Tab', (t) async {
+  testWidgets('Echtes Control-Plane-Dashboard funktioniert im Tab', skip: Platform.isLinux, (t) async {
     final real = Directory(p.join(root.path, 'Echt'))..createSync();
     Directory(p.join(real.path, '.git')).createSync();
     File('index.html').copySync(p.join(real.path, 'index.html'));
