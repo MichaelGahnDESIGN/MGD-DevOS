@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.2 (2026-09-25)
+
+- Integrationstest mit der echten App läuft jetzt in der CI auf macOS, Windows (WebView2) und Linux
+  (Browser-Ausweichweg): Dashboard lädt, Speicher, Navigationssperre, Control-Plane-Dashboard.
+
 ## 0.3.1 (2026-09-25)
 
 - Fix (Sicherheit): Die Navigationssperre im Dashboard-Tab war wirkungslos, weil `flutter_inappwebview`

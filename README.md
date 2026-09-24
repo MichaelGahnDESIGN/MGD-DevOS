@@ -15,7 +15,7 @@ zwischen den Dashboards aller Projekte wechselst. Die Daten liegen in deinen lok
 Projektordnern, die Claude, Codex & Co. anlegen und pflegen. Die App zeigt sie an, sie
 braucht deshalb keinen eigenen Server und keinen Updater für Inhalte.
 
-> **Stand v0.3.0:** Installer für macOS, Windows und Linux werden über GitHub Actions gebaut
+> **Stand v0.3.2:** Installer für macOS, Windows und Linux werden über GitHub Actions gebaut
 > (alle Builds grün). Sie sind **unsigniert**, siehe [Download](#download). Details unter [Status](#status).
 
 ## Download
@@ -87,7 +87,7 @@ Assistent (Claude/Codex)  ──pflegt──▶  Projektordner  ◀──liest�
 | Code, Analyse, Tests | ✅ grün (15 Tests) |
 | macOS/Windows/Linux-Build | ✅ grün auf GitHub Actions, Installer im Release |
 | Start auf echten Geräten | ⏳ noch nicht manuell geprüft |
-| Dashboard im Webview (`file://`) | ⏳ nur Logik getestet, nicht real auf macOS/Windows |
+| Dashboard im Webview (`file://`) | ✅ Integrationstest mit echter App auf macOS und Windows, Linux-Ausweichweg geprüft |
 | Linux | eingebettetes WebView nicht verfügbar, Dashboard öffnet im Browser |
 | Signierung/Notarisierung | ❌ nicht vorhanden (Apple Developer Program nötig) |
 | App-Sperre, Schlüsselbund, Live-Agenten-Adapter | ❌ geplant |

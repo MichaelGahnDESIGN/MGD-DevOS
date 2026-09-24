@@ -35,5 +35,5 @@ eigene Bestätigungsdialoge, `try/catch` um `localStorage` mit sichtbarem Hinwei
 `Fragenkatalog.template.html` (Fragenkatalog-Skill) und `dashboard/index.html` (Projektmanager) tun das seit dem 24.09.2026.
 Linux und Web öffnen das Dashboard im normalen Browser, dort gelten die üblichen Browser-Regeln.
 
-**Geprüft (macOS, Integrationstest):** Laden per `file://`, Browser-Speicher, Navigation im Projekt, Sperre für Dateien
-außerhalb und fremde Schemata. **Ungeprüft:** Windows (WebView2).
+**Geprüft (Integrationstest in der CI auf macOS und Windows):** Laden per `file://`, Browser-Speicher, Navigation im Projekt, Sperre für Dateien
+außerhalb und fremde Schemata. Linux: Ausweichweg „im Browser öffnen" geprüft.
