@@ -255,7 +255,7 @@
       document.documentElement.style.setProperty('--accent',color);
       Object.keys(fields).forEach(function(n){fields[n].value=s[n]});
       $('storageState').textContent=storageOk?'':' (hier gesperrt, gilt bis zum Schließen)';
-      requestAnimationFrame(drawEdges);
+      redraw();
     }
     function save(){
       var s={};Object.keys(fields).forEach(function(n){s[n]=fields[n].value});
@@ -273,7 +273,7 @@
       var label=tabs.filter(function(t){return t.dataset.view===view})[0].querySelector('.tip').firstChild.textContent.trim();
       $('viewState').textContent=label;
       if(location.hash!=='#'+view)history.replaceState(null,'','#'+view);
-      requestAnimationFrame(drawEdges);
+      redraw();
     }
     tabs.forEach(function(t,i){
       t.addEventListener('click',function(){show(t.dataset.view)});
@@ -285,7 +285,7 @@
     // Inspektor
     var app=$('app'),inspBtn=$('inspectorToggle');
     var inspPref=null;
-    function setInspector(on,remember){app.classList.toggle('no-insp',!on);inspBtn.setAttribute('aria-pressed',on);if(remember){inspPref=on;store(uiKey,{inspector:on})}requestAnimationFrame(drawEdges)}
+    function setInspector(on,remember){app.classList.toggle('no-insp',!on);inspBtn.setAttribute('aria-pressed',on);if(remember){inspPref=on;store(uiKey,{inspector:on})}redraw()}
     function autoInspector(){if(inspPref===null)setInspector(window.innerWidth>900,false)}
     inspBtn.addEventListener('click',function(){setInspector(app.classList.contains('no-insp'),true)});
     window.addEventListener('resize',autoInspector);
@@ -299,7 +299,8 @@
       $('nextCopy').innerHTML=document.querySelector('#n-next p').innerHTML;
     }
 
-    // Kanten des Projektflusses
+    // Kanten des Projektflusses (direkt und im nächsten Frame, weil rAF in verdeckten Webviews pausiert)
+    function redraw(){drawEdges();requestAnimationFrame(drawEdges)}
     var edges=[['n-stand','n-next',true],['n-next','n-open',false],['n-next','n-risk',false]];
     function drawEdges(){
       var svg=$('edges'),flow=$('flow');if(!svg||!flow||!flow.offsetParent){return}
@@ -313,8 +314,8 @@
       });
       svg.innerHTML=out;
     }
-    window.addEventListener('resize',function(){requestAnimationFrame(drawEdges)});
-    if(window.ResizeObserver){new ResizeObserver(function(){requestAnimationFrame(drawEdges)}).observe($('flow'))}
+    window.addEventListener('resize',function(){redraw()});
+    if(window.ResizeObserver){new ResizeObserver(function(){redraw()}).observe($('flow'))}
 
     // Tastatur
     document.addEventListener('keydown',function(e){

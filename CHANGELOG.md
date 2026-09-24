@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.1 (2026-09-25)
+
+- Fix (Sicherheit): Die Navigationssperre im Dashboard-Tab war wirkungslos, weil `flutter_inappwebview`
+  `shouldOverrideUrlLoading` nur mit `useShouldOverrideUrlLoading: true` aufruft. Externe Links öffneten dadurch im
+  Webview statt im Systembrowser. Dateien außerhalb des Projektordners blockierte WebKit bereits vorher.
+- Dashboard-Tab mit Adressleiste (Pfad), Ladeanzeige, „Neu laden", „Im Browser öffnen", Hinweis bei blockierter
+  Navigation und Fehlerseite mit „Erneut versuchen".
+- Integrationstest auf macOS (echte App): lokale `index.html` lädt, Browser-Speicher funktioniert, Unterseiten im
+  Projekt erlaubt, Dateien außerhalb und fremde Schemata gesperrt, Control-Plane-Dashboard inkl. Einstellungen
+  über Neuladen. Läuft jetzt auch in der CI.
+
 ## 0.3.0 (2026-09-24)
 
 - Programm-Oberfläche im Stil einer Control Plane: schmale Icon-Leiste links, Titelleiste mit Statusanzeigen

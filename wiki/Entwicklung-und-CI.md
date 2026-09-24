@@ -11,6 +11,18 @@ flutter test
 Unit-Tests für Scanner, Konfiguration, Tab-Logik und Navigationssperre; Widget-Tests für Onboarding
 und Übersicht. Echte Webviews lassen sich headless nicht testen.
 
+## Integrationstest (macOS)
+
+```bash
+flutter test integration_test -d macos
+```
+
+Startet die echte App, öffnet ein lokales Dashboard im eingebetteten Webview und prüft Laden, Speicher und
+Navigationssperre. Lokal nötig: volles Xcode (einmalig `sudo xcodebuild -runFirstLaunch`) und CocoaPods.
+Mit der System-Ruby 2.6 ließ sich CocoaPods 1.15.2 nur mit älteren Abhängigkeiten installieren
+(`--user-install`, u. a. `activesupport ~> 6.1`, `concurrent-ruby 1.3.4`). In Tests nicht `pumpAndSettle` verwenden,
+sondern feste Takte, weil die echte App nie vollständig „ruhig" meldet.
+
 ## GitHub Actions
 
 `ci.yml` läuft bei Push und Pull Request: `analyze_test` (Ubuntu), dann `macos` (macos-14, Xcode
