@@ -35,6 +35,9 @@ void main() {
     if (await root.exists()) await root.delete(recursive: true);
   });
 
+  // getTitle() liefert unter WebView2 anfangs die Adresse; document.title ist auf allen Plattformen gleich.
+  Future<String> docTitle(dynamic c) async => '${await c.evaluateJavascript(source: 'document.title')}';
+
   Future<void> settle(WidgetTester t) async {
     for (var i = 0; i < 10; i++) {
       await t.pump(const Duration(milliseconds: 100));
@@ -74,7 +77,7 @@ void main() {
     expect(p.basename(loaded!.toFilePath()), 'index.html');
 
     final controller = DashboardTabView.debugController.value!;
-    final title = await controller.getTitle();
+    final title = await docTitle(controller);
     // ignore: avoid_print
     print('IT: Titel nach Laden: $title');
     expect(title, startsWith('IT-Dashboard'));
@@ -83,14 +86,14 @@ void main() {
 
     await controller.evaluateJavascript(source: 'location.href="sub.html"');
     await waitFor(() => DashboardTabView.debugLastLoaded.value?.path.endsWith('sub.html') ?? false, t);
-    expect(await controller.getTitle(), 'IT-Unterseite');
+    expect(await docTitle(controller), 'IT-Unterseite');
 
     final outside = Uri.file(p.join(root.path, 'ausserhalb.html')).toString();
     await controller.evaluateJavascript(source: 'location.href="$outside"');
     await t.pump(const Duration(seconds: 2));
     await settle(t);
     // Erste Schutzebene: WebKit darf nur im Projektordner lesen.
-    expect(await controller.getTitle(), 'IT-Unterseite', reason: 'Datei außerhalb des Projekts wurde geladen');
+    expect(await docTitle(controller), 'IT-Unterseite', reason: 'Datei außerhalb des Projekts wurde geladen');
 
     // Zweite Schutzebene: die App-Sperre für alle anderen Schemata.
     await controller.evaluateJavascript(source: 'location.href="mgd-test://nicht-erlaubt"');
@@ -98,12 +101,12 @@ void main() {
     // ignore: avoid_print
     print('IT: Navigationslog ${DashboardTabView.debugNavigationLog}');
     expect(find.text('Navigation blockiert'), findsOneWidget);
-    expect(await controller.getTitle(), 'IT-Unterseite');
+    expect(await docTitle(controller), 'IT-Unterseite');
 
     // Andere Schemata (z. B. javascript:, data:) als Hauptnavigation bleiben gesperrt.
     await controller.evaluateJavascript(source: 'location.href="data:text/html,<title>DATA</title>"');
     await t.pump(const Duration(seconds: 1));
-    expect(await controller.getTitle(), 'IT-Unterseite');
+    expect(await docTitle(controller), 'IT-Unterseite');
 
     await t.tap(find.byTooltip('IT-Projekt schließen'));
     await settle(t);
@@ -126,7 +129,7 @@ void main() {
     state.openDashboard(state.projects.firstWhere((x) => x.name == 'Echt'));
     await waitFor(() => DashboardTabView.debugLastLoaded.value?.path.endsWith('Echt/index.html') ?? false, t, seconds: 30);
     final c = DashboardTabView.debugController.value!;
-    expect(await c.getTitle(), contains('MGD-DevOS'));
+    expect(await docTitle(c), contains('MGD-DevOS'));
 
     Future<dynamic> js(String code) => c.evaluateJavascript(source: code);
     await js('document.dispatchEvent(new KeyboardEvent("keydown",{key:"2"}))');
