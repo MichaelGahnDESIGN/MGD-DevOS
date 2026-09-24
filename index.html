@@ -173,10 +173,10 @@
         <div class="view-head"><span class="label">Projektfluss</span><h1>MGD-DevOS</h1><p>Desktop-App (Flutter) für macOS, Windows und Linux: Tabs für die lokalen Dashboards deiner Projekte, Projekt-Scanner und Agentic Control Panel.</p></div>
         <div class="flow" id="flow">
           <svg class="edges" id="edges" aria-hidden="true"></svg>
-          <article class="card node n-stand" id="n-stand"><span class="port out"></span><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"/></svg></span><h2 class="label">Bestätigter Stand</h2></div><span class="chip good">geprüft</span><p style="margin-top:8px">Version 0.2.0 mit Installern für macOS, Windows und Linux veröffentlicht; CI grün, <code>flutter analyze</code> ohne Befunde, 16 Tests grün.</p></article>
-          <article class="card node n-next" id="n-next"><span class="port in"></span><span class="port out"></span><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><h2 class="label">Nächster Schritt</h2></div><p>Auf dem Mac prüfen, ob „Wählen“ und ein Dashboard-Tab mit lokaler <code>index.html</code> funktionieren.</p></article>
-          <article class="card node n-open" id="n-open"><span class="port in"></span><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><h2 class="label">Offene Punkte</h2></div><ul class="list"><li class="warn-t">Windows- und Linux-Installer nicht auf echten Geräten gestartet.</li><li class="warn-t">Dashboard im eingebetteten Webview nur per Logiktest geprüft; Installer unsigniert.</li></ul></article>
-          <article class="card node n-risk" id="n-risk"><span class="port in"></span><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg></span><h2 class="label">Risiken</h2></div><p class="risk-t">macOS-App ohne App-Sandbox (Dateirechte wie das Benutzerkonto). Stripe nicht eingerichtet; Downloads im Webview werden nicht abgefangen.</p></article>
+          <article class="card node n-stand" id="n-stand"><span class="port out"></span><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"/>Version 0.3.2 mit Installern für macOS, Windows und Linux veröffentlicht. Integrationstest mit der echten App in der CI grün auf macOS, Windows und Linux; 20 Unit-/Widget-Tests grün.</p></article>
+          <article class="card node n-next" id="n-next"><span class="port in"></span><span class="port out"></span><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/>Ordner-Dialog „Wählen“ in der installierten App v0.3.2 einmal von Hand prüfen.</p></article>
+          <article class="card node n-open" id="n-open"><span class="port in"></span><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/><li class="warn-t">Ordner-Dialog „Wählen“ ist ein Systemdialog und nicht automatisch getestet.</li><li class="warn-t">Start auf echten Windows- und Linux-Rechnern außerhalb der CI nicht geprüft; Installer unsigniert.</li></ul></article>
+          <article class="card node n-risk" id="n-risk"><span class="port in"></span><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3Z"/>macOS-App ohne App-Sandbox (Dateirechte wie das Benutzerkonto). Stripe nicht eingerichtet.</p></article>
           <article class="card node n-safe" id="n-safe"><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/></svg></span><h2 class="label">Schutzbereiche</h2></div><p><strong>SECRETS/</strong> bleibt geschützt. <strong>USER CONCEPT/</strong> bewahrt deine Ideen und Grafiken.</p></article>
         </div>
       </section>
@@ -212,7 +212,7 @@
         <dl class="kv" id="insp-info" role="tabpanel" aria-labelledby="i-info">
           <div><dt class="label">Status</dt><dd><span class="chip good">geprüft</span></dd></div>
           <div><dt class="label">Nächster Schritt</dt><dd id="nextCopy"></dd></div>
-          <div><dt class="label">Aktualisiert</dt><dd>24.09.2026</dd></div>
+          <div><dt class="label">Aktualisiert</dt><dd>25.09.2026</dd></div>
           <div><dt class="label">Datenhaltung</dt><dd>Lokale Datei, keine Telemetrie. Einstellungen im Browser<span id="storageState"></span>.</dd></div>
         </dl>
         <div class="kbd" id="insp-keys" role="tabpanel" aria-labelledby="i-keys" hidden>
@@ -223,7 +223,7 @@
 
     <footer class="statusbar">
       <span><span class="dot"></span>Lokal</span><span class="sb-sep"></span>
-      <span class="hide-s">Aktualisiert 24.09.2026</span><span class="sb-sep hide-s"></span>
+      <span class="hide-s">Aktualisiert 25.09.2026</span><span class="sb-sep hide-s"></span>
       <span id="viewState" aria-live="polite">Übersicht</span>
       <span class="spacer"></span>
       <!-- MGD-SUPPORTED-BY: fester Bestandteil des Dashboards, nicht entfernen oder ändern (siehe LICENSE/NOTICE). -->
