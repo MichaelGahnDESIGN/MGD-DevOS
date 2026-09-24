@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "beschreibung": "Kuratierter Startkatalog für den MGD-DevOS. Wird von /Dashboard, /projektstart und /projektstart-katalog gelesen. mandatory=true markiert die zwei verbindlichen MGD-Basis-Skills Autopilot und AI-Thread; die übrigen Einträge sind optionale Vorschläge.",
+  "stand": "2026-09-23",
+  "skills": [
+    {
+      "name": "MGD_DEV_SKILL",
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_DEV_SKILL",
+      "description": "Release/Sync/Backup/Cleanup/Tests/Wissensdokumentation für laufende Projekte.",
+      "category": "core",
+      "stars": null,
+      "source": "mgd",
+      "requiresScan": false,
+      "mandatory": false,
+      "installTargets": [
+        ".claude/commands/",
+        ".codex/commands/",
+        "dev/SKILL.md"
+      ],
+      "slashCommands": [
+        "/dev",
+        "/dev-fast",
+        "/dev-changelog"
+      ]
+    },
+    {
+      "name": "Fragenkatalog-Skill",
+      "url": "https://github.com/MichaelGahnDESIGN/Fragenkatalog-Skill",
+      "description": "Interaktiver Design-Fragenkatalog mit KI-Antworten aus wählbarer Experten-Perspektive, inkl. eigener Recht-Kategorie mit ⚖️-Disclaimer.",
+      "category": "core",
+      "stars": null,
+      "source": "mgd",
+      "requiresScan": false,
+      "mandatory": false,
+      "installTargets": [
+        ".claude/commands/fragenkatalog.md",
+        ".codex/commands/fragenkatalog.md",
+        "SKILL.md"
+      ],
+      "slashCommands": [
+        "/fragenkatalog-setup"
+      ]
+    },
+    {
+      "name": "MGD_Todo_SKILL",
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_Todo_SKILL",
+      "description": "Selbst-gehostete TODO.html mit Bearbeiten-Funktion (/todo-edit) und Dokument-Verknüpfung (/todo-link).",
+      "category": "core",
+      "stars": null,
+      "source": "mgd",
+      "requiresScan": false,
+      "mandatory": false,
+      "installTargets": [
+        ".claude/commands/todo.md",
+        "SKILL.md",
+        "todo/TODO.template.html"
+      ],
+      "slashCommands": [
+        "/todo-setup",
+        "/todo-add",
+        "/todo-edit",
+        "/todo-link"
+      ]
+    },
+    {
+      "name": "MGD_Living-Documentation",
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_Living-Documentation",
+      "description": "Lebendige Projektdokumentation (Entscheidungen, offene Punkte, Risiken, Testnachweise).",
+      "category": "core",
+      "stars": null,
+      "source": "mgd",
+      "requiresScan": false,
+      "mandatory": false,
+      "installTargets": [
+        ".claude/skills/living-documentation/",
+        "~/.claude/skills/living-documentation/"
+      ],
+      "slashCommands": []
+    },
+    {
+      "name": "MGD_Autopilot_SKILL",
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_Autopilot_SKILL",
+      "description": "Ein KI-Agent arbeitet ein Projektziel unbeaufsichtigt ab — und merkt selbst, wenn er danebenliegt. Vertrag vor dem Start, Validierung nach jeder Änderung, zehn Härtungsregeln aus echten Fehlschlägen, harte Sicherheitsleitplanken.",
+      "category": "orchestrierung",
+      "stars": null,
+      "source": "mgd",
+      "requiresScan": false,
+      "mandatory": true,
+      "installTargets": [
+        ".claude/commands/",
+        "autopilot/",
+        "~/.claude/skills/autopilot/"
+      ],
+      "slashCommands": []
+    },
+    {
+      "name": "MGD_AI-Thread",
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_AI-Thread",
+      "description": "Schreibt mit /thread eine belegte Übergabe für Codex oder Claude Code. Fertige, geprüfte Arbeit wird bei eingerichtetem Remote und erlaubtem Push zuvor selektiv gesichert; offene Arbeit bleibt sichtbar.",
+      "category": "orchestrierung",
+      "stars": null,
+      "source": "mgd",
+      "requiresScan": false,
+      "mandatory": true,
+      "installTargets": [
+        ".claude/skills/thread/SKILL.md",
+        ".claude/commands/thread.md",
+        ".codex/skills/thread/SKILL.md",
+        ".codex/commands/thread.md"
+      ],
+      "slashCommands": [
+        "/thread"
+      ]
+    },
+    {
+      "name": "Projekt-Plattform-System",
+      "url": "https://github.com/MichaelGahnDESIGN/Projekt-Plattform-System",
+      "description": "Eigenständiges Referenz-System für Backend/Admin/Compliance-lastige Plattformen mit CLI mgd-platform (init --preset <name> --target <pfad>, validate, doctor, audit, release-check, module create, update). Wird NICHT als Datei-Kopie installiert, sondern per CLI-Befehl in ein Zielverzeichnis initialisiert.",
+      "category": "platform",
+      "stars": null,
+      "source": "mgd",
+      "requiresScan": false,
+      "installTargets": [],
+      "cliCommand": "mgd-platform init --preset <preset> --target <pfad>",
+      "mandatory": false
+    },
+    {
+      "name": "MGD Blogpost Skill",
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_Blogpost-Skill",
+      "description": "Kompletter Blog-Workflow mit Recherche, Faktencheck, SEO, Beitragsbild sowie Facebook- und Instagram-Entwürfen. WordPress-Schreibzugriff erzeugt standardmäßig nur einen Entwurf.",
+      "category": "content-marketing-wordpress",
+      "stars": null,
+      "source": "mgd",
+      "requiresScan": false,
+      "mandatory": false,
+      "installTargets": [
+        ".claude/skills/blogpost/",
+        "~/.claude/skills/blogpost/",
+        "~/.codex/skills/blogpost/"
+      ],
+      "slashCommands": [
+        "/blogpost"
+      ]
+    },
+    {
+      "name": "MGD JTL OPC Skill",
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_JTL-OPC_SKILL",
+      "description": "Spezialisierte Automation für JTL-Shop-5-OnPage-Composer-Seiten; Bearbeitung und Veröffentlichung sind getrennt zu prüfen, da Publishing live wirkt.",
+      "category": "ecommerce-jtl",
+      "stars": null,
+      "source": "mgd",
+      "requiresScan": false,
+      "mandatory": false,
+      "installTargets": [
+        ".claude/skills/MGD-JTL-OPC-Skill/",
+        "~/.claude/skills/MGD-JTL-OPC-Skill/",
+        "~/.codex/skills/MGD-JTL-OPC-Skill/"
+      ],
+      "slashCommands": [
+        "/jtl-opc"
+      ]
+    },
+    {
+      "name": "Graphify-Labs/graphify",
+      "url": "https://github.com/Graphify-Labs/graphify",
+      "description": "Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. Lokale deterministische AST-Analyse, kein Vector-Store.",
+      "category": "code-analyse-dokumentation",
+      "stars": 120740,
+      "source": "third-party-curated",
+      "requiresScan": true,
+      "mandatory": false
+    },
+    {
+      "name": "Klotzkette/claude-fuer-deutsches-recht",
+      "url": "https://github.com/Klotzkette/claude-fuer-deutsches-recht",
+      "description": "Experimentelle Skill-Sammlung für deutsches Recht (Arbeits-, Gesellschafts-, Insolvenz-, Datenschutz-, Prozessrecht u.a.). Ausdrücklich KEINE Rechtsberatung; behandelt Mandatsgeheimnis, DSGVO, KI-VO.",
+      "category": "recht-deutschland",
+      "stars": 1615,
+      "source": "third-party-curated",
+      "requiresScan": true,
+      "mandatory": false
+    },
+    {
+      "name": "dickwu/apple-design-skill",
+      "url": "https://github.com/dickwu/apple-design-skill",
+      "description": "Cross-Platform UI/UX-Design-Reviewer nach Apple HIG. Funktioniert mit Flutter, Tauri, Electron, React Native.",
+      "category": "design-ui-ux",
+      "stars": 770,
+      "source": "third-party-curated",
+      "requiresScan": true,
+      "mandatory": false
+    },
+    {
+      "name": "affaan-m/agentshield",
+      "url": "https://github.com/affaan-m/agentshield",
+      "description": "KI-Agenten-Sicherheitsscanner. Erkennt Schwachstellen in Agent-Konfigurationen, MCP-Servern und Tool-Berechtigungen. CLI, GitHub Action, ECC-Plugin.",
+      "category": "sicherheit",
+      "stars": 1214,
+      "source": "third-party-curated",
+      "requiresScan": true,
+      "role": "vetting-tool",
+      "mandatory": false
+    },
+    {
+      "name": "affaan-m/ECC",
+      "url": "https://github.com/affaan-m/ECC",
+      "description": "Agent-Harness-Performance-Optimierungssystem. Skills, Instincts, Memory, Security, research-first Development.",
+      "category": "agenten-framework",
+      "stars": 265856,
+      "source": "third-party-curated",
+      "requiresScan": true,
+      "mandatory": false
+    },
+    {
+      "name": "WorldFlowAI/everything-claude-code",
+      "url": "https://github.com/WorldFlowAI/everything-claude-code",
+      "description": "Claude-Code-Toolkit — Agents, Commands, Skills, Rules und Hooks für produktive KI-gestützte Entwicklung.",
+      "category": "sammlung-toolkit",
+      "stars": 3494,
+      "source": "third-party-curated",
+      "requiresScan": true,
+      "mandatory": false
+    },
+    {
+      "name": "Jakeschincariol/promptmaster-skill",
+      "url": "https://github.com/Jakeschincariol/promptmaster-skill",
+      "description": "Schreibt Prompts in ein optimiertes Format um, prüft auf 35 Credit-Verschwendungs-Muster.",
+      "category": "produktivitaet",
+      "stars": 8,
+      "source": "third-party-curated",
+      "requiresScan": true,
+      "mandatory": false
+    },
+    {
+      "name": "NVIDIA/SkillSpector",
+      "url": "https://github.com/NVIDIA/SkillSpector",
+      "description": "Sicherheitsscanner für KI-Agenten-Skills. Erkennt Schwachstellen, bösartige Muster, Prompt-Injection, Datenexfiltration und Supply-Chain-Risiken in Claude-Code-/Codex-/MCP-Skills VOR der Installation.",
+      "category": "sicherheit-skill-vetting",
+      "stars": 18143,
+      "source": "third-party-curated",
+      "requiresScan": true,
+      "role": "vetting-tool",
+      "mandatory": false
+    },
+    {
+      "name": "getsentry/XcodeBuildMCP",
+      "url": "https://github.com/getsentry/XcodeBuildMCP",
+      "description": "MCP-Server und CLI, mit dem Agenten Xcode-Projekte für iOS und macOS bauen, testen und starten (auch Flutter-macOS-Builds). Braucht macOS 14.5+, volles Xcode 16+ und Node 18+ oder Homebrew. Nur macOS/iOS, ersetzt keine Windows- oder Linux-Builds.",
+      "category": "apple-build",
+      "stars": 6414,
+      "source": "third-party-curated",
+      "requiresScan": true,
+      "role": "mcp-server",
+      "mandatory": false
+    }
+  ]
+}

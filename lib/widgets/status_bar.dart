@@ -20,28 +20,64 @@ class StatusBar extends StatelessWidget {
     final c = context.colors;
     final scan = appState.lastScan;
     final style = TextStyle(fontSize: 12, color: c.muted);
-    Widget sep() => Container(width: 1, height: 14, margin: const EdgeInsets.symmetric(horizontal: Space.md), color: c.border);
+    Widget sep() => Container(
+      width: 1,
+      height: 14,
+      margin: const EdgeInsets.symmetric(horizontal: Space.md),
+      color: c.border,
+    );
 
     return Container(
       height: 34,
       padding: const EdgeInsets.symmetric(horizontal: Space.md),
-      decoration: BoxDecoration(color: c.sidebar, border: Border(top: BorderSide(color: c.border))),
+      decoration: BoxDecoration(
+        color: c.sidebar,
+        border: Border(top: BorderSide(color: c.border)),
+      ),
       child: Row(
         children: [
-          Container(width: 7, height: 7, decoration: BoxDecoration(color: c.success, shape: BoxShape.circle)),
-          const SizedBox(width: 6),
-          Text('Lokal', style: style),
-          sep(),
-          Text('${appState.projects.length} Projekte', style: style),
-          if (scan != null) ...[
-            sep(),
-            Text('Gescannt ${DateFormat('HH:mm').format(scan)}', style: style),
-          ],
-          if (appState.dashboardTabs.isNotEmpty) ...[
-            sep(),
-            Text('${appState.dashboardTabs.length} Dashboard${appState.dashboardTabs.length == 1 ? '' : 's'} offen', style: style),
-          ],
-          const Spacer(),
+          // Linker Teil darf abgeschnitten werden, der Pflicht-Hinweis rechts bleibt immer sichtbar.
+          Expanded(
+            child: ClipRect(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const NeverScrollableScrollPhysics(),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 7,
+                      height: 7,
+                      decoration: BoxDecoration(
+                        color: c.success,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Text('Lokal', style: style),
+                    sep(),
+                    Text('MGD-DevOS ${appState.meta.label}', style: style),
+                    sep(),
+                    Text('${appState.projects.length} Projekte', style: style),
+                    if (scan != null) ...[
+                      sep(),
+                      Text(
+                        'Gescannt ${DateFormat('HH:mm').format(scan)}',
+                        style: style,
+                      ),
+                    ],
+                    if (appState.dashboardTabs.isNotEmpty) ...[
+                      sep(),
+                      Text(
+                        '${appState.dashboardTabs.length} Dashboard${appState.dashboardTabs.length == 1 ? '' : 's'} offen',
+                        style: style,
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: Space.md),
           const SupportedByPill(),
         ],
       ),
@@ -63,7 +99,10 @@ class SupportedByPill extends StatelessWidget {
         label: 'supported by Michael Gahn DESIGN, Website öffnen',
         child: InkWell(
           borderRadius: BorderRadius.circular(999),
-          onTap: () => launchUrl(StatusBar.website, mode: LaunchMode.externalApplication),
+          onTap: () => launchUrl(
+            StatusBar.website,
+            mode: LaunchMode.externalApplication,
+          ),
           child: Container(
             height: 24,
             padding: const EdgeInsets.fromLTRB(3, 0, Space.md, 0),
@@ -78,8 +117,18 @@ class SupportedByPill extends StatelessWidget {
                 children: [
                   const BrandMark(size: 18),
                   const SizedBox(width: Space.sm),
-                  Text('supported by: ', style: TextStyle(fontSize: 12, color: c.muted)),
-                  Text('Michael Gahn DESIGN', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface)),
+                  Text(
+                    'supported by: ',
+                    style: TextStyle(fontSize: 12, color: c.muted),
+                  ),
+                  Text(
+                    'Michael Gahn DESIGN',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -92,7 +141,12 @@ class SupportedByPill extends StatelessWidget {
 
 /// Kleine Statuspille in der Titelleiste (z. B. "LOKAL").
 class StatusPill extends StatelessWidget {
-  const StatusPill({super.key, required this.label, required this.color, this.tooltip});
+  const StatusPill({
+    super.key,
+    required this.label,
+    required this.color,
+    this.tooltip,
+  });
 
   final String label;
   final Color color;
@@ -118,13 +172,25 @@ class StatusPill extends StatelessWidget {
             decoration: BoxDecoration(
               color: color,
               shape: BoxShape.circle,
-              boxShadow: [BoxShadow(color: color.withValues(alpha: 0.35), blurRadius: 0, spreadRadius: 2.5)],
+              boxShadow: [
+                BoxShadow(
+                  color: color.withValues(alpha: 0.35),
+                  blurRadius: 0,
+                  spreadRadius: 2.5,
+                ),
+              ],
             ),
           ),
           const SizedBox(width: 7),
           Text(
             label.toUpperCase(),
-            style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w700, letterSpacing: 0.9, color: c.muted, fontFamily: 'Inter'),
+            style: TextStyle(
+              fontSize: 10.5,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.9,
+              color: c.muted,
+              fontFamily: 'Inter',
+            ),
           ),
         ],
       ),

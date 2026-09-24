@@ -25,6 +25,8 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
+      - name: Zentrale Version und Metadaten aktuell
+        run: python3 scripts/sync_meta.py --check
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test

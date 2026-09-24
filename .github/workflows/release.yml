@@ -62,6 +62,9 @@ jobs:
       - uses: actions/download-artifact@v4
         with: { path: out, merge-multiple: true }
       - run: cp src/.github/release-notes.md release-notes.md
+      - name: Skill als ZIP
+        run: |
+          cd src && git archive --format=zip --prefix=mgd-devos-skill/ -o ../out/MGD-DevOS-Skill.zip HEAD:skill
       - name: Prüfsummen und Release
         env:
           GH_TOKEN: ${{ github.token }}

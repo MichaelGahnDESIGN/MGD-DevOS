@@ -10,13 +10,19 @@
   <img alt="Lokal" src="https://img.shields.io/badge/Daten-lokal%2C%20keine%20Telemetrie-2e9e6e">
 </p>
 
-**MGD-DevOS** ist die Desktop-Zentrale für deine Projekte: ein Fenster mit Tabs, in dem du
-zwischen den Dashboards aller Projekte wechselst. Die Daten liegen in deinen lokalen
+**MGD-DevOS** ist deine Projektzentrale aus zwei Teilen in einem Repository:
+
+- **Desktop-App** (Flutter, macOS/Windows/Linux): Tabs für die Dashboards aller Projekte, Agentic Control Panel, PIN-Sperre.
+- **Projektmanager-Skill** (`skill/`) für Claude Code, Codex & Co.: Projektstart, Skill-Auswahl, `/dashboard` mit einem
+  Dashboard im Stil eines Programms (Menüleiste, verschiebbare Fenster, Einstellungen, Versionen, Credits).
+
+Mit der App wechselst du zwischen den Dashboards aller Projekte. Die Daten liegen in deinen lokalen
 Projektordnern, die Claude, Codex & Co. anlegen und pflegen. Die App zeigt sie an, sie
 braucht deshalb keinen eigenen Server und keinen Updater für Inhalte.
 
-> **Stand v0.3.2:** Installer für macOS, Windows und Linux werden über GitHub Actions gebaut
-> (alle Builds grün). Sie sind **unsigniert**, siehe [Download](#download). Details unter [Status](#status).
+> **Version 0.5.1 Pre-Alpha.** Installer für macOS, Windows und Linux entstehen über GitHub Actions, sie sind
+> **unsigniert**, siehe [Download](#download). Versionsschema 1.2.3: 1 = Hauptversion ab Release, 2 = neue Funktionen,
+> 3 = Patches. Die Nummer steht zentral in [`assets/meta/version.json`](assets/meta/version.json).
 
 ## Download
 
@@ -32,18 +38,28 @@ Prüfsummen: `SHA256SUMS.txt` im Release, prüfen mit `shasum -a 256 -c SHA256SU
 
 ## Einrichten und Starten
 
-Gib deinem Assistenten (Claude Code, ChatGPT Codex, ...) den Link zum Projektmanager und
-diesen Text:
+Gib deinem Assistenten (Claude Code, ChatGPT Codex, ...) diesen Text:
 
 ```text
-Einrichten und Starten: Installiere den Skill aus
-https://github.com/MichaelGahnDESIGN/MGD_AI-Projektmanager,
+Einrichten und Starten: Installiere den Skill aus dem Ordner skill/ von
+https://github.com/MichaelGahnDESIGN/MGD-DevOS,
 starte /projektstart und richte gemeinsam mit mir Projektordner, Todo und
 Living Documentation ein. Öffne am Ende das Dashboard, lege nach meiner
 Bestätigung eine Verknüpfung auf den Desktop und erkläre mir, wie ich damit arbeite.
 ```
 
-Danach öffnest du MGD-DevOS. Aus dem Quellcode:
+Skill von Hand installieren (Claude Code, global):
+
+```bash
+git clone --depth 1 https://github.com/MichaelGahnDESIGN/MGD-DevOS.git /tmp/mgd-devos
+mkdir -p ~/.claude/skills ~/.claude/commands
+cp -R /tmp/mgd-devos/skill ~/.claude/skills/mgd-devos
+cp ~/.claude/skills/mgd-devos/.claude/commands/dashboard.md ~/.claude/commands/
+```
+
+Start im Assistenten: `/projektstart`, danach `/dashboard`. Codex und projekt-lokal: [skill/wiki/Setup.md](skill/wiki/Setup.md).
+
+App aus dem Quellcode:
 
 ```bash
 git clone https://github.com/MichaelGahnDESIGN/MGD-DevOS.git

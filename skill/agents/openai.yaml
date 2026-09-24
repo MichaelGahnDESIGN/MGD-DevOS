@@ -1,0 +1,5 @@
+interface:
+  display_name: "MGD-DevOS"
+  short_description: "Projektzentrale mit Dashboard, Skill-Audit und sicherem Projektstart"
+  brand_color: "#10A37F"
+  default_prompt: "Use $mgd-devos to set up or open the project dashboard safely."

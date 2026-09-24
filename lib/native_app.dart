@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'app_state.dart';
 import 'theme/app_theme.dart';
 import 'screens/tabs_shell.dart';
+import 'screens/lock_screen.dart';
 import 'screens/onboarding_screen.dart';
 
 /// MGD-DevOS als Tab-Browser für lokale Projekt-Dashboards: Tab 0 ist die
@@ -48,6 +49,8 @@ class _NativeMgdDevOsAppState extends State<NativeMgdDevOsApp> {
       darkTheme: buildTheme(Brightness.dark, accent),
       home: appState.isLoading
           ? const _SplashScreen()
+          : appState.locked
+              ? LockScreen(appState: appState)
           : appState.onboardingDone
               ? TabsShell(appState: appState)
               : OnboardingScreen(appState: appState),

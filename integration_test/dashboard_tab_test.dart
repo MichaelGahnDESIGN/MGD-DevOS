@@ -117,6 +117,7 @@ void main() {
     final real = Directory(p.join(root.path, 'Echt'))..createSync();
     Directory(p.join(real.path, '.git')).createSync();
     File('index.html').copySync(p.join(real.path, 'index.html'));
+    // Kein gespeicherter Zustand aus früheren Läufen (Webview-Speicher bleibt pro App erhalten).
     SharedPreferences.setMockInitialValues({
       'onboarding_done_v1': true,
       'projects_root_v1': root.path,
@@ -132,19 +133,43 @@ void main() {
     expect(await docTitle(c), contains('MGD-DevOS'));
 
     Future<dynamic> js(String code) => c.evaluateJavascript(source: code);
-    await js('document.dispatchEvent(new KeyboardEvent("keydown",{key:"2"}))');
-    expect(await js('document.getElementById("aufgaben").classList.contains("active")'), true);
-    expect(await js('document.querySelectorAll("#openCopy li").length'), 2);
-    await js('document.dispatchEvent(new KeyboardEvent("keydown",{key:"1"}))');
+    // Webview-Speicher bleibt zwischen Läufen erhalten; für einen sauberen Test leeren.
+    await js('localStorage.clear()');
+    await c.reload();
+    await waitFor(() => false, t, seconds: 2);
+    // Fenster-Dashboard: Menü, Fenster öffnen/minimieren/schließen, Pflicht-Footer.
+    expect(await js('document.querySelectorAll(".mb>button").length'), 5);
+    expect(await js('!!window.MGD_DASHBOARD.wins.flow'), true);
+    await js('window.MGD_DASHBOARD.openWin("tasks")');
+    expect(await js('document.querySelectorAll("[data-win=tasks] .list li").length'), 2);
+    await js('window.MGD_DASHBOARD.minimize("tasks")');
+    expect(await js('document.querySelector("[data-win=tasks]").hidden'), true);
+    await js('window.MGD_DASHBOARD.closeWin("tasks")');
+    expect(await js('!window.MGD_DASHBOARD.wins.tasks'), true);
     await t.pump(const Duration(milliseconds: 300));
     expect(await js('document.querySelectorAll("#edges path").length'), 3);
     expect(await js('!!document.querySelector("[data-mgd-supported-by] a[href=\'https://Michael-Gahn.de\']")'), true);
+    expect(await js('MGD_META.version.version'), '0.5.1');
 
-    await js('document.getElementById("settingsButton").click();document.getElementById("theme").value="dark";document.getElementById("accent").value="mgd";document.getElementById("saveSettings").click();');
+    // Einstellungen speichern und nach Neuladen behalten.
+    await js('window.MGD_DASHBOARD.openWin("settings");var b=document.querySelector("[data-win=settings] [data-sec=allg]");b.querySelector("[data-f=theme]").value="dark";b.querySelector("[data-f=accent]").value="mgd";b.querySelector("[data-a=save]").click();');
     await c.reload();
     await waitFor(() => false, t, seconds: 2);
     expect(await js('document.documentElement.dataset.theme'), 'dark', reason: 'Einstellung hat den Neuladen nicht überlebt');
     expect(await js('getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()'), '#cd1616');
+    expect(await js('!!window.MGD_DASHBOARD.wins.settings'), true, reason: 'Fensterlayout wurde nicht wiederhergestellt');
+
+    // PIN setzen, Sperre nach Neuladen, Entsperren (Web-Crypto im eingebetteten Webview).
+    expect(await js('!!(window.crypto && crypto.subtle)'), true, reason: 'Web-Crypto fehlt im Webview');
+    await js('var s=document.querySelector("[data-win=settings]");[...s.querySelectorAll("nav button")].find(function(b){return b.textContent==="Sicherheit"}).click();var q=function(n){return s.querySelector("[data-sec=sicherheit] [data-f="+n+"]")};q("len").value="4";q("new").value="2468";q("rep").value="2468";s.querySelector("[data-sec=sicherheit] [data-a=set]").click();');
+    await waitFor(() => false, t, seconds: 3);
+    await c.reload();
+    await waitFor(() => false, t, seconds: 2);
+    expect(await js('document.getElementById("lock").hidden'), false, reason: 'Sperrbildschirm erscheint nicht');
+    await js('document.getElementById("lockPin").value="2468";document.getElementById("lockForm").requestSubmit();');
+    await waitFor(() => false, t, seconds: 3);
+    expect(await js('document.getElementById("lock").hidden'), true, reason: 'Entsperren mit richtiger PIN schlägt fehl');
+
     // ignore: avoid_print
     print('IT: Control-Plane-Dashboard ok, Einstellungen bleiben nach Neuladen erhalten');
   });

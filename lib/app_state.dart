@@ -4,6 +4,8 @@ import 'models/agentic_entity.dart';
 import 'models/dashboard_tab.dart';
 import 'models/mgd_project.dart';
 import 'services/agentic_scanner.dart';
+import 'services/meta_service.dart';
+import 'services/pin_service.dart';
 import 'services/project_scanner.dart';
 import 'services/settings_store.dart';
 
@@ -17,11 +19,21 @@ class AppState extends ChangeNotifier {
     SettingsStore? settingsStore,
     ProjectScanner? projectScanner,
     AgenticScanner? agenticScanner,
-  })  : _settings = settingsStore ?? SettingsStore(),
+    PinService? pinService,
+  })  : pin = pinService ?? PinService(),
+        _settings = settingsStore ?? SettingsStore(),
         _projectScanner = projectScanner ?? ProjectScanner(),
         _agenticScanner = agenticScanner ?? AgenticScanner();
 
   final SettingsStore _settings;
+  final PinService pin;
+
+  /// Version, Versions-Timeline und Credits aus assets/meta.
+  AppMeta meta = AppMeta.empty;
+
+  /// true, solange eine PIN gesetzt und die App noch nicht entsperrt ist.
+  bool locked = false;
+  int? pinLength;
   final ProjectScanner _projectScanner;
   final AgenticScanner _agenticScanner;
 
@@ -46,6 +58,10 @@ class AppState extends ChangeNotifier {
   String? lastScanError;
 
   Future<void> bootstrap() async {
+    meta = await AppMeta.load();
+    final record = await pin.read();
+    pinLength = record?.length;
+    locked = record != null;
     onboardingDone = await _settings.isOnboardingDone();
     themeMode = await _settings.getThemeMode();
     accentColor = await _settings.getAccentColor();
@@ -142,6 +158,21 @@ class AppState extends ChangeNotifier {
   void showOverviewSection(int section) {
     overviewSection = section;
     activeTabIndex = 0;
+    notifyListeners();
+  }
+
+  /// Entsperrt die App, wenn die PIN stimmt. Liefert false bei falscher PIN oder Wartezeit.
+  Future<bool> unlock(String code) async {
+    final ok = await pin.unlock(code);
+    if (ok) {
+      locked = false;
+      notifyListeners();
+    }
+    return ok;
+  }
+
+  Future<void> refreshPinState() async {
+    pinLength = (await pin.read())?.length;
     notifyListeners();
   }
 }

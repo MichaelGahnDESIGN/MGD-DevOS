@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Verifizierte MGD-Integrationen für Inhalte und E-Commerce. Der Katalog empfiehlt passende Quellen, installiert, verbindet oder veröffentlicht aber nichts selbstständig.",
+  "updated": "2026-09-25",
+  "integrations": [
+    {
+      "name": "MGD Blogpost Skill",
+      "kind": "agent-skill",
+      "platform": [
+        "WordPress",
+        "Content",
+        "Facebook",
+        "Instagram"
+      ],
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_Blogpost-Skill",
+      "purpose": "Recherche, separater Faktencheck, SEO, Beitragsbild sowie Entwürfe für Facebook und Instagram.",
+      "safety": "Mit WordPress-Schreibzugriff nur als Entwurf anlegen; Veröffentlichung und Social-Media-Posting brauchen eine eigene Freigabe."
+    },
+    {
+      "name": "MGD JTL OPC Skill",
+      "kind": "agent-skill",
+      "platform": [
+        "JTL-Shop 5",
+        "OnPage Composer"
+      ],
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_JTL-OPC_SKILL",
+      "purpose": "Kontrollierte Befüllung und Diagnose von OnPage-Composer-Seiten.",
+      "safety": "OPC-Veröffentlichungen sind live. Vor jedem Schreibvorgang Backup, Zielbereich und konkrete Freigabe prüfen."
+    },
+    {
+      "name": "MGD Ausverkauft für Shopware 6",
+      "kind": "shop-plugin",
+      "platform": [
+        "Shopware 6"
+      ],
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_Ausverkauft_Shopware-Plugin",
+      "purpose": "Ausverkaufte Produkte sichtbar lassen, markieren und kontrolliert vom Kauf ausschließen.",
+      "safety": "Ändert bei Aktivierung eine Shopware-Core-Einstellung; nur nach Versions-, Staging- und Backup-Prüfung einsetzen."
+    },
+    {
+      "name": "MGD AI Kennzeichnung Shopware 6",
+      "kind": "shop-plugin",
+      "platform": [
+        "Shopware 6"
+      ],
+      "url": "https://github.com/MichaelGahnDESIGN/MGD-AI-Kennzeichnung-Shopware-6",
+      "purpose": "Redaktionell gepflegte, barrierearme Kennzeichnung von KI-generierten oder KI-bearbeiteten Bildern.",
+      "safety": "Die Kennzeichnung ist ein technisches Werkzeug und keine Rechtsberatung; Status immer durch berechtigte Menschen festlegen."
+    },
+    {
+      "name": "MGD JTL SEO & PageSpeed",
+      "kind": "shop-plugin",
+      "platform": [
+        "JTL-Shop 5"
+      ],
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_JTL-SEO-Plugin",
+      "purpose": "Konservative technische SEO- und Performance-Optimierung für JTL-Shop 5.",
+      "safety": "Erst messen, dann gezielt optimieren und erneut messen; Checkout und Tracking vor Live-Aktivierung testen."
+    },
+    {
+      "name": "MGD AI Kennzeichnung JTL-Shop 5",
+      "kind": "shop-plugin",
+      "platform": [
+        "JTL-Shop 5"
+      ],
+      "url": "https://github.com/MichaelGahnDESIGN/MGD-AI-Kennzeichnung-JTL-Shop-5",
+      "purpose": "Lokale Galerie und kontrollierte Bildkennzeichnung für JTL-Shop 5.",
+      "safety": "Keine automatische KI-Erkennung oder Veröffentlichung; die redaktionelle Entscheidung bleibt menschlich."
+    },
+    {
+      "name": "MGD EU-Garantiehinweise JTL-Shop 5",
+      "kind": "shop-plugin",
+      "platform": [
+        "JTL-Shop 5"
+      ],
+      "url": "https://github.com/MichaelGahnDESIGN/MGD_EU-Garantiehinweise_JTL-Plugin",
+      "purpose": "Technische Ausgabe von Gewährleistungshinweisen und artikelabhängigen GARAN-Labels.",
+      "safety": "Rechtliche Texte, Sortiment und Garantiebedingungen vor Livegang fachlich prüfen lassen."
+    },
+    {
+      "name": "Shopify",
+      "kind": "platform-path",
+      "platform": [
+        "Shopify"
+      ],
+      "url": null,
+      "purpose": "Projekt- und Integrationsaudit für einen bestehenden Shopify-Shop.",
+      "safety": "Zum Katalogstand existiert kein eindeutig zuordenbarer öffentlicher MGD-Shopify-Skill. Vor Empfehlungen vorhandene App-, Theme- und API-Konfiguration prüfen."
+    },
+    {
+      "name": "WooCommerce",
+      "kind": "platform-path",
+      "platform": [
+        "WooCommerce",
+        "WordPress"
+      ],
+      "url": null,
+      "purpose": "Projekt- und Integrationsaudit für einen bestehenden WooCommerce-Shop.",
+      "safety": "Zum Katalogstand existiert kein eindeutig zuordenbarer öffentlicher MGD-WooCommerce-Skill. WordPress-Rechte, Staging, Backups und Zahlungswege zuerst prüfen."
+    },
+    {
+      "name": "Godot AI (godot-ai)",
+      "kind": "editor-mcp-plugin",
+      "platform": [
+        "Godot 4.5+",
+        "MCP"
+      ],
+      "url": "https://github.com/hi-godot/godot-ai",
+      "purpose": "Verbindet MCP-fähige Assistenten (Claude, Codex, Cursor u. a.) mit einem laufenden Godot-Editor: Szenen, Knoten, Skripte, UI, Animationen, Materialien (über 150 Operationen). MIT-Lizenz, Godot Asset Library Nr. 5050.",
+      "safety": "Nur gegen eine Arbeitskopie des Projekts im Editor verwenden, nie gegen den offenen Hauptordner. Braucht uv. Addon nicht in Exporte übernehmen (Exportfilter). Vor Installation Quellstand und Rechte prüfen; der Editor-Zugriff ist Schreibzugriff auf das Projekt."
+    }
+  ],
+  "rules": [
+    "Agent-Skills, Shop-Plugins und MCPs sind unterschiedliche Integrationsarten und werden getrennt beurteilt.",
+    "Produktive Shop-, Checkout-, Rechts- und Social-Media-Änderungen benötigen eine konkrete Freigabe.",
+    "Vor Plugin-Installationen oder Updates: Version, Kompatibilität, Staging, Backup, Rollback und relevante Kaufpfade prüfen.",
+    "MCP-Zugangsdaten gehören nur in einen freigegebenen Secret-Speicher und nie in Repository, Chat, Screenshot oder Dashboard."
+  ]
+}

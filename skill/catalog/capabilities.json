@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Projektbezogene Auswahl von Skills, offiziellen Werkzeugen und möglichen MCP-Integrationen. Vorschlag und Prüfung erfolgen vor Installation oder Verbindung.",
+  "categories": [
+    {"name":"Repository und Dokumentation","options":["MGD-DevOS","repository-documentation","MGD_Living-Documentation","GitHub Wiki","Gitea Wiki"]},
+    {"name":"Spiele","options":["Godot: Entwicklung, GDScript, UI, Tests und E2E","Godot AI: MCP-Brücke zum Godot-Editor (nur Arbeitskopie)","Unity: offizielle Dokumentation und projektbezogene Tooling-Prüfung","Unreal Engine: offizielle Dokumentation und projektbezogene Tooling-Prüfung","Asset-Pipeline und Playtests"]},
+    {"name":"Design und Kreativ","options":["UI/UX-Review","Apple HIG","Affinity-Dateien als lokale Nutzerassets","3D- und Sprite-Pipeline"]},
+    {"name":"Web, CMS und Commerce","options":["MGD_Divi5-Dev_SKILL","MGD_WordPress-MCP","MGD_WordPress-Plugins_Skill","WordPress-Plugin-Entwicklung","MGD Blogpost Skill","Shopware 6: MGD-Plugins","JTL-Shop 5: MGD OPC-Skill und Plugins","Shopify: vorhandene Apps, Theme und API prüfen","WooCommerce: WordPress-, Plugin- und Zahlungswege prüfen"]},
+    {"name":"Apple und Büro","options":["Apple HIG","Pages/Keynote-Dokumente","Numbers und Tabellenanalyse","PDF- und Dokumentenprüfung"]},
+    {"name":"Daten und Backend","options":["Datenmodellierung","SQL/MariaDB/PostgreSQL","Firebase bei passendem Stack","Docker, Staging, Backup und Restore"]},
+    {"name":"Wissen und Kommunikation","options":["MGD_AI-Knowledge_VAULT","Graphify","Facebook und Instagram über Meta-APIs nach Freigabe","Redaktions- und Asset-Planung"]}
+  ],
+  "rules":["Keine Option wird automatisch installiert oder verbunden.","Dritt-Skills werden vor Nutzung geprüft.","MCPs erhalten nur die minimal nötigen Rechte und keine Secrets im Prompt.","Für externe Veröffentlichungen, Social Media, Staging und Backups ist eine konkrete Freigabe erforderlich.","Für Blog- und Shop-Workflows zusätzlich catalog/integrations.json lesen; Agent-Skill, Plugin und MCP getrennt bewerten."],
+  "officialSources":{"godot":"https://docs.godotengine.org/en/stable/","unity":"https://docs.unity3d.com/Manual/index.html","unreal":"https://dev.epicgames.com/documentation/en-us/unreal-engine","affinity":"https://affinity.studio/","apple":"https://developer.apple.com/design/human-interface-guidelines/","instagram":"https://developers.facebook.com/documentation/instagram-platform","githubWiki":"https://docs.github.com/en/communities/documenting-your-project-with-wikis/about-wikis"}
+}

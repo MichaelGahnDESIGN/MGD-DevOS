@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.1 (2026-09-25, Pre-Alpha)
+
+- Projektmanager und App vereint: Der Skill liegt jetzt unter `skill/` in diesem Repository, alles heißt MGD-DevOS und trägt eine gemeinsame Version.
+- Zentrale Versionsverwaltung in `assets/meta/version.json`; `scripts/sync_meta.py` überträgt sie in App, Dashboard und Timeline (CI prüft das).
+- Dashboard: Menüleiste mit Untermenüs, verschieb- und skalierbare Fenster mit magnetischem Einrasten, Minimieren, Vollbild und Schließen, Fenster-Dock in der Statusleiste, gespeichertes Layout.
+- Dashboard-Fenster: Todo, Fragenkatalog, lebende Dokumentation, Offene Tasks, Arbeitende Agenten, Statistiken, Dokumente, Notizen, Arbeitsweise, Skills, Projektfluss.
+- Einstellungen (App und Dashboard): durchsuchbar, Grundregeln-Editor, Sicherheit mit PIN-Sperre (4, 6 oder 8 Stellen, PBKDF2-Hash, Wartezeit nach Fehlversuchen, Ändern und Deaktivieren nur mit aktueller PIN), Versionen als Timeline, Credits.
+- Sperrbildschirm zeigt die Version; Version zusätzlich in Statusleiste und Einstellungen.
+
 ## 0.3.2 (2026-09-25)
 
 - Integrationstest mit der echten App läuft jetzt in der CI auf macOS, Windows (WebView2) und Linux

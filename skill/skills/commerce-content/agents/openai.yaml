@@ -1,0 +1,4 @@
+interface:
+  display_name: "Commerce und Content"
+  short_description: "Geführte MGD-Workflows für Blog und Shop-Systeme"
+  default_prompt: "Prüfe mein Shop- oder Content-Projekt und schlage nur passende, sichere nächste Schritte vor."
