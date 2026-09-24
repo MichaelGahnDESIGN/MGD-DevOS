@@ -26,5 +26,14 @@ im Projektordner (erzeugt vom Befehl `/dashboard` des Projektmanagers).
 | Linux | kein eingebettetes WebView verfügbar, Knopf öffnet den Standardbrowser |
 | Web (nur Entwicklung) | Knopf öffnet den Browser |
 
+## Downloads, Speichern und Dialoge im Webview
+
+Der eingebettete Webview hat keine Download-Behandlung und keine Brücke zur App. Seiten, die per
+Blob-Download exportieren oder `alert()`/`confirm()` nutzen, funktionieren dort nicht zuverlässig. Deshalb
+brauchen Dashboards und Vorlagen einen Ausweichweg auf der Seite selbst: Export-Fenster mit „Kopieren",
+eigene Bestätigungsdialoge, `try/catch` um `localStorage` mit sichtbarem Hinweis. Die Vorlagen
+`Fragenkatalog.template.html` (Fragenkatalog-Skill) und `dashboard/index.html` (Projektmanager) tun das seit dem 24.09.2026.
+Linux und Web öffnen das Dashboard im normalen Browser, dort gelten die üblichen Browser-Regeln.
+
 **Ungeprüft:** Das Laden von `file://` im eingebetteten WebView wurde noch nicht auf einem echten
 macOS- oder Windows-Gerät getestet.
