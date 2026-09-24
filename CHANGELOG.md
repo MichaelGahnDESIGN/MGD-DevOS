@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0 (2026-09-24)
+
+- Programm-Oberfläche im Stil einer Control Plane: schmale Icon-Leiste links, Titelleiste mit Statusanzeigen
+  („Lokal", „Adapter aus"), Statusleiste unten (Projekte, letzter Scan, offene Dashboards, Pflicht-Hinweis
+  „supported by: Michael Gahn DESIGN").
+- Agentic Control Panel als echter Graph: Projekt → Gruppe → Eintrag mit Verbindungslinien, verschieb- und
+  zoombar, Gruppen ein-/ausklappbar, große Gruppen starten eingeklappt; Inspektor rechts mit Status, Quelle und
+  Zeitpunkt. Umschaltbar auf Liste.
+- Tastenkürzel (⌘ auf macOS, Strg auf Windows/Linux): 1/2/3 Bereiche, „," Einstellungen, W Tab schließen,
+  R neu scannen, ⇧[ / ⇧] Tab wechseln.
+- Mindestfenstergröße 960 × 620 auf macOS, Windows und Linux; Startgröße 1280 × 800.
+- Fix: Leerzustände überliefen bei kleinen Fenstern.
+
 ## 0.2.0 (2026-09-23)
 
 - Neues Design: ruhiges, flaches Developer-Tool-Design mit Slate-Neutraltönen und MGD-Rot als Akzent,

@@ -11,6 +11,7 @@ Dashboards deiner Projekte in Tabs und liest Projektinformationen direkt aus dei
 | [Projekt-Scanner](Projekt-Scanner.md) | Wie Projekte erkannt werden |
 | [Agentic Control Panel](Agentic-Control-Panel.md) | Was angezeigt wird und was nicht |
 | [Einstellungen](Einstellungen.md) | Theme, Akzentfarbe, Projektordner |
+| [Tastenkürzel](Tastenkuerzel.md) | Bedienung per Tastatur |
 | [Sicherheit und Datenschutz](Sicherheit-und-Datenschutz.md) | Bedrohungsmodell, was gespeichert wird |
 | [Architektur](Architektur.md) | Aufbau des Codes |
 | [Design-System](Design-System.md) | Farben, Schrift, Abstände, Regeln |

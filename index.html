@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="de" data-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/png" href="data:image/png;base64,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">
+  <title>MGD-DevOS · MGD AI-Projektmanager</title>
+  <style>
+    :root{color-scheme:light dark;
+      --bg:#eef0f4;--win:#f7f8fa;--panel:#ffffff;--panel-2:#f3f4f7;--ink:#141821;--muted:#5f6878;--soft:#8b93a3;
+      --line:#e2e5eb;--line-2:#d3d7df;--grid:rgb(20 24 33 / .07);--accent:#10a37f;--accent-ink:#fff;
+      --good:#0f8a63;--warn:#b45309;--risk:#c0262d;--edge:#b9c0cc;
+      --shadow:0 1px 2px rgb(16 24 40 / .05),0 8px 24px rgb(16 24 40 / .06);
+      --ring:0 0 0 3px color-mix(in srgb,var(--accent) 30%,transparent);
+      --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    html[data-theme="dark"]{--bg:#070a10;--win:#0b0f17;--panel:#111723;--panel-2:#0e131d;--ink:#e6eaf2;--muted:#9aa4b5;--soft:#6c7688;
+      --line:#1d2533;--line-2:#283243;--grid:rgb(255 255 255 / .05);--good:#34d399;--warn:#fbbf24;--risk:#f87171;--edge:#334056;
+      --shadow:0 0 0 1px rgb(255 255 255 / .02),0 12px 30px rgb(0 0 0 / .35)}
+    @media(prefers-color-scheme:dark){html[data-theme="system"]{--bg:#070a10;--win:#0b0f17;--panel:#111723;--panel-2:#0e131d;--ink:#e6eaf2;--muted:#9aa4b5;--soft:#6c7688;
+      --line:#1d2533;--line-2:#283243;--grid:rgb(255 255 255 / .05);--good:#34d399;--warn:#fbbf24;--risk:#f87171;--edge:#334056;
+      --shadow:0 0 0 1px rgb(255 255 255 / .02),0 12px 30px rgb(0 0 0 / .35)}}
+    *{box-sizing:border-box}
+    [hidden]{display:none!important}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font:400 14px/1.55 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+    button,input,select{font:inherit;color:inherit}
+    button{cursor:pointer}
+    a{color:var(--accent)}
+    code{font:500 .86em var(--mono);background:color-mix(in srgb,var(--ink) 7%,transparent);padding:1px 6px;border-radius:5px}
+    :focus-visible{outline:none;box-shadow:var(--ring);border-radius:8px}
+    .skip{position:absolute;left:12px;top:-40px;z-index:50;background:var(--panel);padding:6px 10px;border-radius:8px;border:1px solid var(--line-2)}
+    .skip:focus{top:10px}
+    .label{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+    .app{display:grid;height:100vh;grid-template-columns:56px 1fr auto;grid-template-rows:48px 1fr 34px;grid-template-areas:"top top top" "rail main insp" "status status status";background:var(--win)}
+    .app.no-insp .inspector{display:none}
+    /* Titelleiste */
+    .titlebar{grid-area:top;display:flex;align-items:center;gap:12px;padding:0 12px 0 14px;border-bottom:1px solid var(--line);background:var(--panel-2)}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:13px;white-space:nowrap}
+    .brand img{width:24px;height:24px;border-radius:6px;display:block}
+    .crumbs{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;min-width:0}
+    .crumbs .sep{color:var(--soft)}
+    .crumbs strong{color:var(--ink);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .spacer{flex:1}
+    .pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border:1px solid var(--line-2);border-radius:999px;font:600 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--panel);white-space:nowrap}
+    .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px color-mix(in srgb,var(--good) 22%,transparent)}
+    .icon-btn{display:inline-grid;place-items:center;width:32px;height:32px;border:1px solid transparent;border-radius:8px;background:none;color:var(--muted);transition:background .15s,color .15s,border-color .15s}
+    .icon-btn:hover{background:var(--panel);border-color:var(--line);color:var(--ink)}
+    .icon-btn[aria-pressed="true"]{color:var(--ink);background:var(--panel);border-color:var(--line-2)}
+    svg.i{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+    /* Leiste links */
+    .rail{grid-area:rail;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0;border-right:1px solid var(--line);background:var(--panel-2)}
+    .rail .tab{position:relative;display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:10px;background:none;color:var(--soft);transition:background .15s,color .15s}
+    .rail .tab:hover{color:var(--ink);background:var(--panel)}
+    .rail .tab[aria-selected="true"]{color:var(--ink);background:var(--panel);box-shadow:inset 0 0 0 1px var(--line-2)}
+    .rail .tab[aria-selected="true"]::before{content:"";position:absolute;left:-9px;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:var(--accent)}
+    .rail .tab .tip{position:absolute;left:46px;top:50%;transform:translateY(-50%);padding:4px 8px;border-radius:6px;background:#161b26;color:#fff;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s}
+    .rail .tab:hover .tip,.rail .tab:focus-visible .tip{opacity:1}
+    .rail .grow{flex:1}
+    /* Arbeitsflaeche */
+    .main{grid-area:main;overflow:auto;position:relative;background-color:var(--win);background-image:radial-gradient(var(--grid) 1px,transparent 1px);background-size:18px 18px}
+    .view{display:none;padding:28px 32px 40px;max-width:1180px}
+    .view.active{display:block}
+    .view-head{margin-bottom:22px}
+    .view-head h1{font-size:22px;font-weight:600;letter-spacing:-.02em;margin:6px 0 4px}
+    .view-head p{margin:0;color:var(--muted);max-width:70ch}
+    .card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+    .card h2{margin:0 0 10px}
+    .card p{margin:.2rem 0;overflow-wrap:anywhere}
+    .card .kind{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+    .card .kind .ico{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--muted)}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:2px 9px 2px 7px;border-radius:999px;font-size:11.5px;font-weight:600;border:1px solid transparent}
+    .chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+    .chip.good{color:var(--good);background:color-mix(in srgb,var(--good) 11%,transparent)}
+    .chip.warn{color:var(--warn);background:color-mix(in srgb,var(--warn) 11%,transparent)}
+    .chip.risk{color:var(--risk);background:color-mix(in srgb,var(--risk) 11%,transparent)}
+    .warn-t{color:var(--warn)}.risk-t{color:var(--risk)}
+    ul.list{margin:0;padding:0;list-style:none}
+    ul.list li{display:flex;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+    ul.list li:first-child{border-top:0;padding-top:2px}
+    ul.list li::before{content:"";flex:none;width:7px;height:7px;margin-top:7px;border-radius:50%;background:var(--warn)}
+    /* Graph */
+    .flow{position:relative;display:grid;grid-template-columns:minmax(220px,1fr) minmax(220px,1fr) minmax(220px,1fr);gap:56px 72px;align-items:start}
+    .flow .card{z-index:1}
+    .flow .n-stand{grid-column:1;grid-row:1}
+    .flow .n-next{grid-column:2;grid-row:1}
+    .flow .n-open{grid-column:3;grid-row:1}
+    .flow .n-risk{grid-column:3;grid-row:2}
+    .flow .n-safe{grid-column:1 / span 2;grid-row:2}
+    .flow .card.node:hover{border-color:var(--line-2)}
+    .flow .card.node .port{position:absolute;top:28px;width:9px;height:9px;border-radius:50%;background:var(--panel);border:2px solid var(--edge)}
+    .flow .card.node .port.in{left:-5px}.flow .card.node .port.out{right:-5px}
+    svg.edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
+    svg.edges path{fill:none;stroke:var(--edge);stroke-width:1.6}
+    svg.edges path.hot{stroke:var(--accent);stroke-dasharray:4 5;animation:flow 1.4s linear infinite}
+    @keyframes flow{to{stroke-dashoffset:-18}}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .prose{max-width:75ch;color:var(--muted)}
+    .prose strong{color:var(--ink);font-weight:600}
+    details{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+    summary{cursor:pointer;color:var(--muted);font-weight:500}
+    summary:hover{color:var(--ink)}
+    /* Inspektor */
+    .inspector{grid-area:insp;width:300px;border-left:1px solid var(--line);background:var(--panel-2);display:flex;flex-direction:column;min-height:0}
+    .insp-head{padding:14px 16px 0}
+    .insp-head h2{margin:4px 0 10px;font-size:14px;font-weight:600}
+    .seg{display:flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:9px;background:var(--panel)}
+    .seg button{flex:1;height:26px;border:0;border-radius:6px;background:none;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+    .seg button[aria-selected="true"]{background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--ink)}
+    .insp-body{padding:14px 16px;overflow:auto;flex:1}
+    .kv{display:grid;gap:12px}
+    .kv div{border-bottom:1px solid var(--line);padding-bottom:10px}
+    .kv dt{margin:0 0 3px}
+    .kv dd{margin:0;overflow-wrap:anywhere}
+    .kbd{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;align-items:center;font-size:12.5px;color:var(--muted)}
+    kbd{font:600 11px var(--mono);padding:2px 6px;border:1px solid var(--line-2);border-bottom-width:2px;border-radius:5px;background:var(--panel);color:var(--ink);justify-self:start}
+    /* Statusleiste */
+    .statusbar{grid-area:status;display:flex;align-items:center;gap:14px;padding:0 12px;border-top:1px solid var(--line);background:var(--panel-2);font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden}
+    .statusbar .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--good);margin-right:6px;vertical-align:1px}
+    .statusbar .sb-sep{width:1px;height:14px;background:var(--line-2)}
+    .supported-by a{display:inline-flex;align-items:center;gap:8px;height:24px;padding:0 12px 0 4px;border:1px solid color-mix(in srgb,#cd1616 40%,var(--line));border-radius:999px;background:color-mix(in srgb,#cd1616 8%,var(--panel));color:var(--ink);text-decoration:none;font-weight:600;font-size:12px;transition:border-color .15s,background .15s}
+    .supported-by a:hover{border-color:#cd1616;background:color-mix(in srgb,#cd1616 14%,var(--panel))}
+    .supported-by .by{color:var(--muted);font-weight:400;margin-right:-3px}
+    .supported-by .mgd-logo{width:18px;height:18px;border-radius:5px;display:block}
+    /* Dialog */
+    .dialog{width:min(460px,calc(100% - 32px));border:1px solid var(--line-2);border-radius:16px;background:var(--panel);color:var(--ink);box-shadow:0 24px 60px rgb(0 0 0 / .3);padding:0;overflow:hidden}
+    .dialog::backdrop{background:rgb(6 8 12 / .55);backdrop-filter:blur(3px)}
+    .dialog-head,.dialog-actions{display:flex;justify-content:space-between;align-items:center;padding:14px 20px}
+    .dialog-head{border-bottom:1px solid var(--line)}
+    .dialog-head strong{font-size:14.5px;font-weight:600}
+    .dialog-actions{border-top:1px solid var(--line);justify-content:flex-end;gap:8px;background:var(--panel-2)}
+    .form{padding:18px 20px 6px;display:grid;gap:14px}
+    .form label{display:grid;gap:6px;font-weight:500;font-size:12.5px;color:var(--muted)}
+    .form select,.form input{width:100%;height:38px;border:1px solid var(--line-2);border-radius:9px;background:var(--panel-2);color:var(--ink);padding:0 12px;font-size:13.5px}
+    .form select{appearance:none;-webkit-appearance:none;padding-right:32px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b93a3' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center}
+    .form select:focus,.form input:focus{border-color:var(--accent);box-shadow:var(--ring);outline:none}
+    .form input[type=color]{padding:4px;width:64px;cursor:pointer}
+    .form input[type=color]::-webkit-color-swatch-wrapper{padding:0}.form input[type=color]::-webkit-color-swatch{border:0;border-radius:6px}
+    .button{height:34px;border:1px solid transparent;border-radius:9px;background:var(--accent);color:var(--accent-ink);padding:0 15px;font-weight:500;font-size:13.5px}
+    .button:hover{filter:brightness(1.07)}
+    .button.secondary{background:transparent;color:var(--ink);border-color:var(--line-2)}
+    .help{font-size:12px;color:var(--soft);margin:0 0 10px}
+    .toast{position:fixed;left:50%;bottom:46px;transform:translateX(-50%);padding:9px 14px;border-radius:10px;background:#161b26;color:#fff;font-size:12.5px;box-shadow:0 10px 30px rgb(0 0 0 / .3);z-index:60}
+    @media(max-width:1100px){.flow{grid-template-columns:1fr 1fr;gap:40px 56px}.flow .n-open{grid-column:1 / span 2;grid-row:2}.flow .n-risk{grid-column:1;grid-row:3}.flow .n-safe{grid-column:2;grid-row:3}}
+    @media(max-width:900px){.app{grid-template-columns:56px 1fr}.inspector{position:fixed;right:0;top:48px;bottom:34px;z-index:20;box-shadow:-12px 0 30px rgb(0 0 0 / .2)}.app.no-insp .inspector{display:none}}
+    @media(max-width:720px){.flow,.two{grid-template-columns:1fr;gap:14px}.flow .card.node .port{display:none}.flow .card{grid-column:1!important;grid-row:auto!important}svg.edges{display:none}.view{padding:20px 16px}.crumbs .hide-s,.statusbar .hide-s{display:none}}
+    @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+  <div class="app" id="app">
+    <header class="titlebar">
+      <div class="brand"><img src="data:image/png;base64,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" alt="">MGD AI-Projektmanager</div>
+      <div class="crumbs"><span class="sep">/</span><span class="hide-s">Control Plane</span><span class="sep hide-s">/</span><strong>MGD-DevOS</strong></div>
+      <div class="spacer"></div>
+      <span class="pill" title="Dieses Dashboard ist eine lokale Datei ohne Server und ohne Telemetrie"><span class="dot"></span>Lokal</span>
+      <button class="icon-btn" id="inspectorToggle" type="button" aria-pressed="true" aria-controls="inspector" aria-label="Inspektor ein- oder ausblenden" title="Inspektor ein/aus (I)"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg></button>
+      <button class="icon-btn" id="settingsButton" type="button" aria-label="Dashboard-Einstellungen" aria-haspopup="dialog" title="Einstellungen (,)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.2 2.2-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.1h-3.2v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-2.2-2.2.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1h-.1v-3.2h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 2.2-2.2.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.1h3.2v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 2.2 2.2-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v3.2h-.1a1.7 1.7 0 0 0-1.6 1Z"/></svg></button>
+    </header>
+
+    <nav class="rail" role="tablist" aria-orientation="vertical" aria-label="Ansichten">
+      <button class="tab" role="tab" id="t-uebersicht" aria-controls="uebersicht" data-view="uebersicht" aria-selected="true"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span class="tip">Übersicht <kbd>1</kbd></span></button>
+      <button class="tab" role="tab" id="t-aufgaben" aria-controls="aufgaben" data-view="aufgaben" aria-selected="false" tabindex="-1"><svg class="i" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1 1 2-2M3.5 12l1 1 2-2M3.5 18l1 1 2-2"/></svg><span class="tip">Aufgaben &amp; Risiken <kbd>2</kbd></span></button>
+      <button class="tab" role="tab" id="t-arbeit" aria-controls="arbeit" data-view="arbeit" aria-selected="false" tabindex="-1"><svg class="i" viewBox="0 0 24 24"><path d="M12 3a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V7a4 4 0 0 1 4-4Z"/><path d="M5 21a7 7 0 0 1 14 0"/></svg><span class="tip">Arbeitsweise <kbd>3</kbd></span></button>
+      <button class="tab" role="tab" id="t-skills" aria-controls="skills" data-view="skills" aria-selected="false" tabindex="-1"><svg class="i" viewBox="0 0 24 24"><path d="M10 3h4v3a2 2 0 1 0 4 0V3h3v7h-3a2 2 0 1 0 0 4h3v7h-7v-3a2 2 0 1 0-4 0v3H3v-7h3a2 2 0 1 0 0-4H3V3h7Z"/></svg><span class="tip">Skills <kbd>4</kbd></span></button>
+      <button class="tab" role="tab" id="t-doku" aria-controls="doku" data-view="doku" aria-selected="false" tabindex="-1"><svg class="i" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg><span class="tip">Dokumentation <kbd>5</kbd></span></button>
+      <div class="grow"></div>
+    </nav>
+
+    <main class="main" id="main" tabindex="-1">
+      <section class="view active" id="uebersicht" role="tabpanel" aria-labelledby="t-uebersicht">
+        <div class="view-head"><span class="label">Projektfluss</span><h1>MGD-DevOS</h1><p>Desktop-App (Flutter) für macOS, Windows und Linux: Tabs für die lokalen Dashboards deiner Projekte, Projekt-Scanner und Agentic Control Panel.</p></div>
+        <div class="flow" id="flow">
+          <svg class="edges" id="edges" aria-hidden="true"></svg>
+          <article class="card node n-stand" id="n-stand"><span class="port out"></span><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"/></svg></span><h2 class="label">Bestätigter Stand</h2></div><span class="chip good">geprüft</span><p style="margin-top:8px">Version 0.2.0 mit Installern für macOS, Windows und Linux veröffentlicht; CI grün, <code>flutter analyze</code> ohne Befunde, 16 Tests grün.</p></article>
+          <article class="card node n-next" id="n-next"><span class="port in"></span><span class="port out"></span><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><h2 class="label">Nächster Schritt</h2></div><p>Auf dem Mac prüfen, ob „Wählen“ und ein Dashboard-Tab mit lokaler <code>index.html</code> funktionieren.</p></article>
+          <article class="card node n-open" id="n-open"><span class="port in"></span><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><h2 class="label">Offene Punkte</h2></div><ul class="list"><li class="warn-t">Windows- und Linux-Installer nicht auf echten Geräten gestartet.</li><li class="warn-t">Dashboard im eingebetteten Webview nur per Logiktest geprüft; Installer unsigniert.</li></ul></article>
+          <article class="card node n-risk" id="n-risk"><span class="port in"></span><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg></span><h2 class="label">Risiken</h2></div><p class="risk-t">macOS-App ohne App-Sandbox (Dateirechte wie das Benutzerkonto). Stripe nicht eingerichtet; Downloads im Webview werden nicht abgefangen.</p></article>
+          <article class="card node n-safe" id="n-safe"><div class="kind"><span class="ico"><svg class="i" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/></svg></span><h2 class="label">Schutzbereiche</h2></div><p><strong>SECRETS/</strong> bleibt geschützt. <strong>USER CONCEPT/</strong> bewahrt deine Ideen und Grafiken.</p></article>
+        </div>
+      </section>
+
+      <section class="view" id="aufgaben" role="tabpanel" aria-labelledby="t-aufgaben" hidden>
+        <div class="view-head"><span class="label">Aufgaben &amp; Risiken</span><h1>Was offen ist</h1><p>Offene Punkte und bekannte Risiken aus dem letzten geprüften Stand.</p></div>
+        <div class="two">
+          <article class="card"><div class="kind"><h2 class="label">Offene Punkte</h2></div><ul class="list" id="openCopy"></ul></article>
+          <article class="card"><div class="kind"><h2 class="label">Risiken</h2></div><p class="risk-t" id="riskCopy"></p></article>
+        </div>
+      </section>
+
+      <section class="view" id="arbeit" role="tabpanel" aria-labelledby="t-arbeit" hidden>
+        <div class="view-head"><span class="label">Arbeitsweise</span><h1>So arbeitet dein Assistent</h1></div>
+        <article class="card prose"><p>Dein Assistent liest zuerst die Regeln und den aktuellen Projektstand. Er nutzt Skills nur, wenn sie für die Aufgabe helfen. Er arbeitet in kleinen Schritten und prüft jede Änderung. Er sagt offen, was noch nicht geprüft ist. Vor einem Wechsel zu Codex oder Claude Code sichert <strong>/thread</strong> fertig geprüfte Arbeit im vorgesehenen Git-Repository und schreibt eine Übergabe. Er fasst sensible Daten nur an, wenn du es für den konkreten Pfad erlaubst. Deine Ideen bleiben in <strong>USER CONCEPT/</strong> und werden bei Bedarf kopiert.</p></article>
+      </section>
+
+      <section class="view" id="skills" role="tabpanel" aria-labelledby="t-skills" hidden>
+        <div class="view-head"><span class="label">Skills</span><h1>Skills und Empfehlungen</h1></div>
+        <article class="card"><p>Genutzt: <code>mgd-ai-projektmanager</code>, <code>mgd-playtest</code>, <code>ui-ux-pro-max</code>. Pflicht laut Katalog: Autopilot und AI-Thread.</p><details><summary>Empfehlungen anzeigen</summary><p><code>getsentry/XcodeBuildMCP</code> (Sicherheits-Scan vor Installation) für lokale macOS-Builds; Xcode ist installiert, der Erststart steht noch aus. Releases baut GitHub Actions.</p></details></article>
+      </section>
+
+      <section class="view" id="doku" role="tabpanel" aria-labelledby="t-doku" hidden>
+        <div class="view-head"><span class="label">Dokumentation</span><h1>Kanonische Quelle</h1><p>Hier steht, wo die maßgebliche Projektdokumentation liegt.</p></div>
+        <article class="card"><p><a href="wiki/Home.md">wiki/Home.md</a> · <a href="README.md">README.md</a> · <a href="CHANGELOG.md">CHANGELOG.md</a></p></article>
+      </section>
+    </main>
+
+    <aside class="inspector" id="inspector" aria-label="Inspektor">
+      <div class="insp-head"><span class="label">Inspektor</span><h2 id="inspTitle">MGD-DevOS</h2>
+        <div class="seg" role="tablist" aria-label="Inspektor-Ansicht"><button role="tab" aria-selected="true" data-insp="info" id="i-info" aria-controls="insp-info">Info</button><button role="tab" aria-selected="false" data-insp="keys" id="i-keys" aria-controls="insp-keys" tabindex="-1">Tasten</button></div></div>
+      <div class="insp-body">
+        <dl class="kv" id="insp-info" role="tabpanel" aria-labelledby="i-info">
+          <div><dt class="label">Status</dt><dd><span class="chip good">geprüft</span></dd></div>
+          <div><dt class="label">Nächster Schritt</dt><dd id="nextCopy"></dd></div>
+          <div><dt class="label">Aktualisiert</dt><dd>24.09.2026</dd></div>
+          <div><dt class="label">Datenhaltung</dt><dd>Lokale Datei, keine Telemetrie. Einstellungen im Browser<span id="storageState"></span>.</dd></div>
+        </dl>
+        <div class="kbd" id="insp-keys" role="tabpanel" aria-labelledby="i-keys" hidden>
+          <kbd>1</kbd><span>Übersicht</span><kbd>2</kbd><span>Aufgaben &amp; Risiken</span><kbd>3</kbd><span>Arbeitsweise</span><kbd>4</kbd><span>Skills</span><kbd>5</kbd><span>Dokumentation</span><kbd>I</kbd><span>Inspektor ein/aus</span><kbd>,</kbd><span>Einstellungen</span><kbd>↑ ↓</kbd><span>Ansicht in der Leiste wechseln</span><kbd>Esc</kbd><span>Dialog oder Inspektor schließen</span>
+        </div>
+      </div>
+    </aside>
+
+    <footer class="statusbar">
+      <span><span class="dot"></span>Lokal</span><span class="sb-sep"></span>
+      <span class="hide-s">Aktualisiert 24.09.2026</span><span class="sb-sep hide-s"></span>
+      <span id="viewState" aria-live="polite">Übersicht</span>
+      <span class="spacer"></span>
+      <!-- MGD-SUPPORTED-BY: fester Bestandteil des Dashboards, nicht entfernen oder ändern (siehe LICENSE/NOTICE). -->
+      <div class="supported-by" data-mgd-supported-by><a href="https://Michael-Gahn.de" target="_blank" rel="noopener noreferrer"><img class="mgd-logo" alt="" width="18" height="18" src="data:image/png;base64,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"><span class="by">supported by:</span> Michael Gahn DESIGN</a></div>
+    </footer>
+  </div>
+
+  <dialog class="dialog" id="settingsDialog" aria-labelledby="settingsTitle"><div class="dialog-head"><strong id="settingsTitle">Dashboard-Einstellungen</strong><button class="icon-btn" id="closeSettings" type="button" aria-label="Einstellungen schließen"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><form class="form" id="settingsForm"><label>Ansicht<select id="theme"><option value="system">Systemeinstellung</option><option value="light">Hell</option><option value="dark">Dunkel</option></select></label><label>Akzentfarbe für dieses Tool<select id="accent"><option value="codex">ChatGPT Codex – Grün</option><option value="claude">Claude Code – Orange</option><option value="generic">Allgemein – Blau</option><option value="mgd">MGD – Rot</option><option value="custom">Eigene Farbe</option></select></label><label>Eigene Akzentfarbe<input id="customAccent" type="color" value="#10a37f"></label><label>Dashboard beim Aufruf öffnen in<select id="openTarget"><option value="ask">Einmal nachfragen</option><option value="internal">Internem Browser</option><option value="external">Standardbrowser</option></select></label><p class="help">Die Darstellung wird nur lokal in diesem Browser gespeichert. Übertrage die Einstellung zusätzlich in <code>PROJEKT/.mgd-ai-projektmanager.json</code>, damit Agenten sie beachten können.</p></form><div class="dialog-actions"><button class="button secondary" id="resetSettings" type="button">Zurücksetzen</button><button class="button" id="saveSettings" type="button">Speichern</button></div></dialog>
+
+  <script>
+  (function(){
+    'use strict';
+    var key='mgd-ai-projektmanager-settings', uiKey='mgd-ai-projektmanager-ui';
+    var presets={codex:'#10a37f',claude:'#d97706',generic:'#2563eb',mgd:'#cd1616'};
+    var defaults={theme:'system',accent:'codex',customAccent:'#10a37f',openTarget:'ask'};
+    var $=function(id){return document.getElementById(id)};
+    var dialog=$('settingsDialog');
+    var fields={theme:$('theme'),accent:$('accent'),customAccent:$('customAccent'),openTarget:$('openTarget')};
+    var storageOk=true;
+
+    function load(k,fallback){try{var v=JSON.parse(localStorage.getItem(k));return v||fallback}catch(e){storageOk=false;return fallback}}
+    function store(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){storageOk=false;return false}}
+    function toast(msg){var t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.remove()},2600)}
+
+    function read(){var s=load(key,null);return Object.assign({},defaults,s||{})}
+    function apply(s){
+      document.documentElement.dataset.theme=s.theme;
+      var color=s.accent==='custom'?s.customAccent:(presets[s.accent]||presets.codex);
+      document.documentElement.style.setProperty('--accent',color);
+      Object.keys(fields).forEach(function(n){fields[n].value=s[n]});
+      $('storageState').textContent=storageOk?'':' (hier gesperrt, gilt bis zum Schließen)';
+      requestAnimationFrame(drawEdges);
+    }
+    function save(){
+      var s={};Object.keys(fields).forEach(function(n){s[n]=fields[n].value});
+      var ok=store(key,s);apply(s);dialog.close();
+      toast(ok?'Einstellungen gespeichert':'Gespeichert bis zum Schließen (Browser-Speicher gesperrt)');
+    }
+    function reset(){try{localStorage.removeItem(key)}catch(e){storageOk=false} apply(read());toast('Auf Standard zurückgesetzt')}
+    function openSettings(){if(typeof dialog.showModal==='function'){dialog.showModal()}else{dialog.setAttribute('open','')}}
+
+    // Ansichten
+    var tabs=[].slice.call(document.querySelectorAll('.rail .tab'));
+    function show(view,focus){
+      var found=tabs.some(function(t){return t.dataset.view===view});if(!found)view='uebersicht';
+      tabs.forEach(function(t){var on=t.dataset.view===view;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;var p=$(t.dataset.view);p.classList.toggle('active',on);p.hidden=!on;if(on&&focus)t.focus()});
+      var label=tabs.filter(function(t){return t.dataset.view===view})[0].querySelector('.tip').firstChild.textContent.trim();
+      $('viewState').textContent=label;
+      if(location.hash!=='#'+view)history.replaceState(null,'','#'+view);
+      requestAnimationFrame(drawEdges);
+    }
+    tabs.forEach(function(t,i){
+      t.addEventListener('click',function(){show(t.dataset.view)});
+      t.addEventListener('keydown',function(e){
+        if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();var n=tabs[(i+(e.key==='ArrowDown'?1:tabs.length-1))%tabs.length];show(n.dataset.view,true)}
+      });
+    });
+
+    // Inspektor
+    var app=$('app'),inspBtn=$('inspectorToggle');
+    var inspPref=null;
+    function setInspector(on,remember){app.classList.toggle('no-insp',!on);inspBtn.setAttribute('aria-pressed',on);if(remember){inspPref=on;store(uiKey,{inspector:on})}requestAnimationFrame(drawEdges)}
+    function autoInspector(){if(inspPref===null)setInspector(window.innerWidth>900,false)}
+    inspBtn.addEventListener('click',function(){setInspector(app.classList.contains('no-insp'),true)});
+    window.addEventListener('resize',autoInspector);
+    var segBtns=[].slice.call(document.querySelectorAll('.seg button'));
+    segBtns.forEach(function(b){b.addEventListener('click',function(){segBtns.forEach(function(x){var on=x===b;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;$('insp-'+x.dataset.insp).hidden=!on})})});
+
+    // Inhalte spiegeln (Platzhalter stehen nur einmal im Graphen)
+    function mirror(){
+      $('openCopy').innerHTML=document.querySelector('#n-open ul').innerHTML;
+      $('riskCopy').innerHTML=document.querySelector('#n-risk p').innerHTML;
+      $('nextCopy').innerHTML=document.querySelector('#n-next p').innerHTML;
+    }
+
+    // Kanten des Projektflusses
+    var edges=[['n-stand','n-next',true],['n-next','n-open',false],['n-next','n-risk',false]];
+    function drawEdges(){
+      var svg=$('edges'),flow=$('flow');if(!svg||!flow||!flow.offsetParent){return}
+      var box=flow.getBoundingClientRect(),out='';
+      edges.forEach(function(e){
+        var a=$(e[0]).getBoundingClientRect(),b=$(e[1]).getBoundingClientRect();
+        if(!a.width||!b.width)return;
+        var x1=a.right-box.left,y1=a.top-box.top+32,x2=b.left-box.left,y2=b.top-box.top+32;
+        if(x2<x1+10){x1=a.left-box.left+a.width/2;y1=a.bottom-box.top;x2=b.left-box.left+b.width/2;y2=b.top-box.top;var my=(y1+y2)/2;out+='<path class="'+(e[2]?'hot':'')+'" d="M'+x1+' '+y1+' C'+x1+' '+my+' '+x2+' '+my+' '+x2+' '+y2+'"/>';return}
+        var mx=(x1+x2)/2;out+='<path class="'+(e[2]?'hot':'')+'" d="M'+x1+' '+y1+' C'+mx+' '+y1+' '+mx+' '+y2+' '+x2+' '+y2+'"/>';
+      });
+      svg.innerHTML=out;
+    }
+    window.addEventListener('resize',function(){requestAnimationFrame(drawEdges)});
+    if(window.ResizeObserver){new ResizeObserver(function(){requestAnimationFrame(drawEdges)}).observe($('flow'))}
+
+    // Tastatur
+    document.addEventListener('keydown',function(e){
+      if(dialog.open||e.metaKey||e.ctrlKey||e.altKey)return;
+      var tag=(e.target.tagName||'').toLowerCase();if(tag==='input'||tag==='select'||tag==='textarea')return;
+      var map={'1':'uebersicht','2':'aufgaben','3':'arbeit','4':'skills','5':'doku'};
+      if(map[e.key]){e.preventDefault();show(map[e.key],true)}
+      else if(e.key==='i'||e.key==='I'){e.preventDefault();inspBtn.click()}
+      else if(e.key===','){e.preventDefault();openSettings()}
+      else if(e.key==='Escape'&&window.innerWidth<=900&&!app.classList.contains('no-insp')){setInspector(false,true);inspBtn.focus()}
+    });
+    window.addEventListener('hashchange',function(){show(location.hash.slice(1))});
+
+    $('settingsButton').addEventListener('click',openSettings);
+    $('closeSettings').addEventListener('click',function(){dialog.close()});
+    $('saveSettings').addEventListener('click',save);
+    $('resetSettings').addEventListener('click',reset);
+
+    mirror();
+    var ui=load(uiKey,null);
+    if(ui&&typeof ui.inspector==='boolean'){inspPref=ui.inspector;setInspector(ui.inspector,false)}else{autoInspector()}
+    apply(read());
+    show((location.hash||'#uebersicht').slice(1));
+  })();
+  </script>
+</body>
+</html>

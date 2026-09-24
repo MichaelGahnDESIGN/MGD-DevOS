@@ -15,7 +15,7 @@ zwischen den Dashboards aller Projekte wechselst. Die Daten liegen in deinen lok
 Projektordnern, die Claude, Codex & Co. anlegen und pflegen. Die App zeigt sie an, sie
 braucht deshalb keinen eigenen Server und keinen Updater für Inhalte.
 
-> **Stand v0.2.0:** Installer für macOS, Windows und Linux werden über GitHub Actions gebaut
+> **Stand v0.3.0:** Installer für macOS, Windows und Linux werden über GitHub Actions gebaut
 > (alle Builds grün). Sie sind **unsigniert**, siehe [Download](#download). Details unter [Status](#status).
 
 ## Download
@@ -60,7 +60,7 @@ Fertige Installer: siehe [Download](#download).
 
 | | |
 |---|---|
-| <img src="assets/screenshots/01-onboarding-light.png" alt="Onboarding"> | <img src="assets/screenshots/03-agentic-dark.png" alt="Agentic Control Panel, dunkler Modus"> |
+| <img src="assets/screenshots/01-onboarding-light.png" alt="Onboarding"> | <img src="assets/screenshots/03b-agentic-auswahl-dark.png" alt="Agentic Control Panel als Graph mit Inspektor, dunkler Modus"> |
 | <img src="assets/screenshots/02-projekte-dark.png" alt="Projekte, dunkler Modus"> | <img src="assets/screenshots/04-einstellungen-light.png" alt="Einstellungen"> |
 
 ## Was die App kann
@@ -69,7 +69,7 @@ Fertige Installer: siehe [Download](#download).
 |---|---|
 | **Tab-Browser** | Tab „Übersicht" plus je ein Tab pro geöffnetem Projekt-Dashboard (`index.html`). Tabs wechseln und schließen. |
 | **Projektregister** | Scannt deinen Projektordner nach echten Projekten (Git, README, AGENTS.md, ...) und öffnet Dokumente. |
-| **Agentic Control Panel** | Zeigt Agenten, Skills und Integrationen aus `AGENTS.md` und `catalog/*.json`, mit Quelle und Zeitstempel. Nie ein erfundener „aktiv"-Status. |
+| **Agentic Control Panel** | Graph aus Projekten, Agenten, Skills und Integrationen (aus `AGENTS.md` und `catalog/*.json`) mit Inspektor, Quelle und Zeitstempel. Nie ein erfundener „aktiv"-Status. |
 | **Darstellung** | Hell, Dunkel oder System, eigene Akzentfarbe. |
 | **Sicher by Design** | Alles lokal, keine Telemetrie, keine Zugangsdaten, Webview nur für Dateien im Projektordner. |
 

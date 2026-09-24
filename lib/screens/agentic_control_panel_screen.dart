@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../app_state.dart';
 import '../models/agentic_entity.dart';
 import '../theme/app_theme.dart';
+import '../widgets/agentic_graph.dart';
 import '../widgets/ui.dart';
 
 /// Lesender Agentic-Control-Panel-Graph aus echten lokalen Projektdateien.
@@ -21,6 +22,11 @@ class AgenticControlPanelScreen extends StatefulWidget {
 class _AgenticControlPanelScreenState extends State<AgenticControlPanelScreen> {
   String _query = '';
   AgenticKind? _kind;
+  bool _graph = true;
+  AgenticEntity? _selected;
+  final Set<String> _collapsed = {};
+  bool _collapsedInit = false;
+  final TransformationController _view = TransformationController();
 
   static String kindLabel(AgenticKind k) => switch (k) {
         AgenticKind.agent => 'Agenten',
@@ -29,67 +35,69 @@ class _AgenticControlPanelScreenState extends State<AgenticControlPanelScreen> {
         AgenticKind.integration => 'Integrationen',
       };
 
-  static IconData kindIcon(AgenticKind k) => switch (k) {
-        AgenticKind.agent => Icons.smart_toy_outlined,
-        AgenticKind.skill => Icons.extension_outlined,
-        AgenticKind.mcp => Icons.cable_outlined,
-        AgenticKind.integration => Icons.link,
-      };
-
   @override
-  Widget build(BuildContext context) {
-    final all = widget.appState.agenticEntities;
+  void dispose() {
+    _view.dispose();
+    super.dispose();
+  }
+
+  List<AgenticEntity> _filtered(List<AgenticEntity> all) {
     final q = _query.toLowerCase();
-    final shown = all.where((e) {
+    return all.where((e) {
       if (_kind != null && e.kind != _kind) return false;
       if (q.isEmpty) return true;
       return e.name.toLowerCase().contains(q) || (e.description ?? '').toLowerCase().contains(q);
     }).toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final all = widget.appState.agenticEntities;
+    final shown = _filtered(all);
     int count(AgenticKind k) => all.where((e) => e.kind == k).length;
+    if (!_collapsedInit && all.isNotEmpty) {
+      // Große Gruppen starten eingeklappt, damit der Graph überschaubar bleibt.
+      for (final e in all) {
+        final id = '${e.projectName ?? 'Ohne Projekt'}::${e.kind.name}';
+        if (all.where((x) => x.projectName == e.projectName && x.kind == e.kind).length > 8) _collapsed.add(id);
+      }
+      _collapsedInit = true;
+    }
+    final selected = _selected != null && shown.any((e) => e.id == _selected!.id) ? _selected : null;
+    final c = context.colors;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const PageHeader(
+        PageHeader(
           title: 'Agentic Control Panel',
           subtitle: 'Agenten, Skills und Integrationen aus deinen Projektdateien',
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Space.xxl),
-          child: LayoutBuilder(builder: (context, box) {
-            final cards = [
-              _StatCard(icon: Icons.smart_toy_outlined, label: 'Agenten', value: '${count(AgenticKind.agent)}'),
-              _StatCard(icon: Icons.extension_outlined, label: 'Skills', value: '${count(AgenticKind.skill)}'),
-              _StatCard(icon: Icons.link, label: 'Integrationen', value: '${count(AgenticKind.integration)}'),
-              const _StatCard(icon: Icons.sensors_off_outlined, label: 'Live-Adapter', value: 'nicht verbunden', small: true),
-            ];
-            final perRow = box.maxWidth > 900 ? 4 : 2;
-            return Wrap(
-              spacing: Space.md,
-              runSpacing: Space.md,
-              children: [
-                for (final card in cards)
-                  SizedBox(width: (box.maxWidth - Space.md * (perRow - 1)) / perRow, child: card),
+          actions: [
+            SegmentedButton<bool>(
+              showSelectedIcon: false,
+              segments: const [
+                ButtonSegment(value: true, label: Text('Graph'), icon: Icon(Icons.account_tree_outlined, size: 16)),
+                ButtonSegment(value: false, label: Text('Liste'), icon: Icon(Icons.view_list_outlined, size: 16)),
               ],
-            );
-          }),
-        ),
-        const Padding(
-          padding: EdgeInsets.fromLTRB(Space.xxl, Space.md, Space.xxl, 0),
-          child: _AdapterNote(),
+              selected: {_graph},
+              onSelectionChanged: (v) => setState(() => _graph = v.first),
+            ),
+          ],
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(Space.xxl, Space.lg, Space.xxl, Space.sm),
+          padding: const EdgeInsets.fromLTRB(Space.xxl, 0, Space.xxl, Space.md),
           child: Row(
             children: [
               Expanded(
                 child: Wrap(
                   spacing: Space.sm,
+                  runSpacing: Space.sm,
                   children: [
-                    ChoiceChip(label: const Text('Alle'), selected: _kind == null, onSelected: (_) => setState(() => _kind = null)),
+                    ChoiceChip(label: Text('Alle ${all.length}'), selected: _kind == null, onSelected: (_) => setState(() => _kind = null)),
                     for (final k in AgenticKind.values)
                       if (count(k) > 0)
                         ChoiceChip(
+                          avatar: Icon(kindIcon(k), size: 15),
                           label: Text('${kindLabel(k)} ${count(k)}'),
                           selected: _kind == k,
                           onSelected: (_) => setState(() => _kind = _kind == k ? null : k),
@@ -97,8 +105,16 @@ class _AgenticControlPanelScreenState extends State<AgenticControlPanelScreen> {
                   ],
                 ),
               ),
+              if (_graph) ...[
+                IconButton(
+                  tooltip: 'Ansicht zurücksetzen',
+                  onPressed: () => _view.value = Matrix4.identity(),
+                  icon: const Icon(Icons.center_focus_strong_outlined, size: 18),
+                ),
+                const SizedBox(width: Space.xs),
+              ],
               SizedBox(
-                width: 240,
+                width: 220,
                 child: TextField(
                   onChanged: (v) => setState(() => _query = v),
                   style: const TextStyle(fontSize: 14),
@@ -117,22 +133,34 @@ class _AgenticControlPanelScreenState extends State<AgenticControlPanelScreen> {
                 )
               : shown.isEmpty
                   ? const EmptyState(icon: Icons.search_off, title: 'Kein Treffer', message: 'Passe Filter oder Suchbegriff an.')
-                  : Padding(
-                      padding: const EdgeInsets.fromLTRB(Space.xxl, Space.sm, Space.xxl, Space.xl),
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: context.colors.card,
-                          borderRadius: BorderRadius.circular(Radii.md),
-                          border: Border.all(color: context.colors.border),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(Radii.md),
-                          child: ListView.separated(
-                            itemCount: shown.length,
-                            separatorBuilder: (_, _) => const Divider(height: 1),
-                            itemBuilder: (context, i) => _EntityTile(entity: shown[i], icon: kindIcon(shown[i].kind)),
+                  : Container(
+                      decoration: BoxDecoration(border: Border(top: BorderSide(color: c.border))),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
+                            child: _graph
+                                ? AgenticGraphCanvas(
+                                    layout: GraphLayout.build(shown, _query.isEmpty && _kind == null ? _collapsed : const {}),
+                                    selectedId: selected?.id,
+                                    controller: _view,
+                                    onSelect: (e) => setState(() => _selected = e),
+                                    onToggleGroup: (id) => setState(() => _collapsed.contains(id) ? _collapsed.remove(id) : _collapsed.add(id)),
+                                  )
+                                : ListView.separated(
+                                    padding: const EdgeInsets.fromLTRB(Space.xxl, Space.md, Space.xxl, Space.xl),
+                                    itemCount: shown.length,
+                                    separatorBuilder: (_, _) => const SizedBox(height: Space.sm),
+                                    itemBuilder: (context, i) => _EntityTile(
+                                      entity: shown[i],
+                                      icon: kindIcon(shown[i].kind),
+                                      selected: shown[i].id == selected?.id,
+                                      onTap: () => setState(() => _selected = shown[i]),
+                                    ),
+                                  ),
                           ),
-                        ),
+                          _Inspector(entity: selected, onClose: () => setState(() => _selected = null)),
+                        ],
                       ),
                     ),
         ),
@@ -141,45 +169,59 @@ class _AgenticControlPanelScreenState extends State<AgenticControlPanelScreen> {
   }
 }
 
-class _StatCard extends StatelessWidget {
-  const _StatCard({required this.icon, required this.label, required this.value, this.small = false});
+class _Inspector extends StatelessWidget {
+  const _Inspector({required this.entity, required this.onClose});
 
-  final IconData icon;
-  final String label;
-  final String value;
-  final bool small;
+  final AgenticEntity? entity;
+  final VoidCallback onClose;
 
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
+    final t = Theme.of(context).textTheme;
+    final e = entity;
+    Widget kv(String k, Widget v) => Padding(
+          padding: const EdgeInsets.only(bottom: Space.md),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [SectionLabel(k), const SizedBox(height: 4), v]),
+        );
     return Container(
-      padding: const EdgeInsets.all(Space.lg),
-      decoration: BoxDecoration(
-        color: c.card,
-        borderRadius: BorderRadius.circular(Radii.md),
-        border: Border.all(color: c.border),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 20, color: c.muted),
-          const SizedBox(width: Space.md),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      width: 300,
+      decoration: BoxDecoration(color: c.sidebar, border: Border(left: BorderSide(color: c.border))),
+      child: e == null
+          ? Padding(
+              padding: const EdgeInsets.all(Space.lg),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SectionLabel('Inspektor'),
+                  const SizedBox(height: Space.md),
+                  Text('Wähle einen Eintrag im Graphen oder in der Liste, um Details zu sehen.', style: t.bodyMedium?.copyWith(color: c.muted, height: 1.5)),
+                  const SizedBox(height: Space.lg),
+                  const _AdapterNote(),
+                ],
+              ),
+            )
+          : ListView(
+              padding: const EdgeInsets.all(Space.lg),
               children: [
-                Text(label, style: TextStyle(fontSize: 12, color: c.muted)),
-                const SizedBox(height: 2),
-                Text(
-                  value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: small ? 15 : 22, fontWeight: FontWeight.w700, letterSpacing: -0.3),
+                Row(
+                  children: [
+                    const Expanded(child: SectionLabel('Inspektor')),
+                    IconButton(tooltip: 'Auswahl aufheben', visualDensity: VisualDensity.compact, onPressed: onClose, icon: const Icon(Icons.close, size: 16)),
+                  ],
                 ),
+                Text(e.name, style: t.titleMedium),
+                const SizedBox(height: Space.lg),
+                kv('Status', Align(alignment: Alignment.centerLeft, child: Badge2(label: e.status.labelDe, tone: e.status == AgenticStatus.unknown ? Tone.warning : Tone.neutral))),
+                kv('Art', Text(_AgenticControlPanelScreenState.kindLabel(e.kind))),
+                if (e.projectName != null) kv('Projekt', Text(e.projectName!)),
+                if (e.description != null) kv('Beschreibung', SelectableText(e.description!, style: const TextStyle(height: 1.5))),
+                kv('Quelle', SelectableText(e.source, style: TextStyle(fontSize: 12, color: c.muted, height: 1.45))),
+                kv('Beobachtet', Text(DateFormat('dd.MM.yyyy, HH:mm').format(e.observedAt))),
+                const Divider(height: Space.xl),
+                const _AdapterNote(),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -207,53 +249,48 @@ class _AdapterNote extends StatelessWidget {
 }
 
 class _EntityTile extends StatelessWidget {
-  const _EntityTile({required this.entity, required this.icon});
+  const _EntityTile({required this.entity, required this.icon, required this.selected, required this.onTap});
 
   final AgenticEntity entity;
   final IconData icon;
+  final bool selected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
-    final t = Theme.of(context).textTheme;
-    final tone = switch (entity.status) {
-      AgenticStatus.claimedActive => Tone.success,
-      AgenticStatus.claimedInactive => Tone.neutral,
-      AgenticStatus.notConnected => Tone.neutral,
-      AgenticStatus.unknown => Tone.warning,
-    };
+    final accent = Theme.of(context).colorScheme.primary;
     final mandatory = entity.description?.startsWith('Pflicht-Skill') ?? false;
-    final time = DateFormat('dd.MM.yyyy, HH:mm').format(entity.observedAt);
-
     return Material(
-      type: MaterialType.transparency,
-      child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: ExpansionTile(
-          dense: true,
-          visualDensity: VisualDensity.compact,
-          shape: const Border(),
-          collapsedShape: const Border(),
-          leading: Icon(icon, size: 20, color: c.muted),
-          title: Row(
+      color: c.card,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Radii.md),
+        side: BorderSide(color: selected ? accent : c.border, width: selected ? 1.6 : 1),
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(Radii.md),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Space.lg, vertical: Space.md),
+          child: Row(
             children: [
-              Flexible(child: Text(entity.name, style: t.titleSmall?.copyWith(fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis)),
-              if (mandatory) ...[const SizedBox(width: Space.sm), const Badge2(label: 'Pflicht', tone: Tone.accent)],
+              Icon(icon, size: 18, color: c.muted),
+              const SizedBox(width: Space.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(children: [
+                      Flexible(child: Text(entity.name, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w600))),
+                      if (mandatory) ...[const SizedBox(width: Space.sm), const Badge2(label: 'Pflicht', tone: Tone.accent)],
+                    ]),
+                    if (entity.projectName != null) Text(entity.projectName!, style: TextStyle(fontSize: 12, color: c.muted)),
+                  ],
+                ),
+              ),
+              Badge2(label: entity.status.labelDe, tone: entity.status == AgenticStatus.unknown ? Tone.warning : Tone.neutral),
             ],
           ),
-          subtitle: entity.projectName == null
-              ? null
-              : Text(entity.projectName!, style: TextStyle(fontSize: 12, color: c.muted)),
-          trailing: Badge2(label: entity.status.labelDe, tone: tone),
-          childrenPadding: const EdgeInsets.fromLTRB(56, 0, Space.lg, Space.lg),
-          expandedCrossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (entity.description != null)
-              SelectableText(entity.description!, style: t.bodyMedium?.copyWith(height: 1.45)),
-            const SizedBox(height: Space.sm),
-            SelectableText('Quelle: ${entity.source}', style: TextStyle(fontSize: 12, color: c.muted)),
-            Text('Beobachtet: $time', style: TextStyle(fontSize: 12, color: c.muted)),
-          ],
         ),
       ),
     );

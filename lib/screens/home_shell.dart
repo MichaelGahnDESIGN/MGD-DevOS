@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../theme/app_theme.dart';
-import '../widgets/ui.dart';
 import 'agentic_control_panel_screen.dart';
 import 'projects_screen.dart';
 import 'settings_screen.dart';
 
+/// Übersicht mit schmaler Icon-Leiste (wie in einem Desktop-Programm).
 class HomeShell extends StatelessWidget {
   const HomeShell({super.key, required this.appState});
 
   final AppState appState;
 
-  static const _items = [
-    (Icons.folder_outlined, Icons.folder, 'Projekte'),
-    (Icons.hub_outlined, Icons.hub, 'Agentic Control Panel'),
-    (Icons.tune_outlined, Icons.tune, 'Einstellungen'),
+  static const items = [
+    (Icons.folder_outlined, Icons.folder, 'Projekte', '⌘ 1'),
+    (Icons.hub_outlined, Icons.hub, 'Agentic Control Panel', '⌘ 2'),
+    (Icons.tune_outlined, Icons.tune, 'Einstellungen', '⌘ 3'),
   ];
 
   @override
@@ -31,31 +31,18 @@ class HomeShell extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 240,
-          decoration: BoxDecoration(
-            color: c.sidebar,
-            border: Border(right: BorderSide(color: c.border)),
-          ),
-          padding: const EdgeInsets.all(Space.md),
+          width: 56,
+          decoration: BoxDecoration(color: c.sidebar, border: Border(right: BorderSide(color: c.border))),
+          padding: const EdgeInsets.symmetric(vertical: Space.md),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(Space.sm, Space.md, Space.sm, Space.sm),
-                child: SectionLabel('Übersicht'),
-              ),
-              for (var i = 0; i < _items.length; i++)
-                _NavItem(
-                  icon: _items[i].$1,
-                  selectedIcon: _items[i].$2,
-                  label: _items[i].$3,
-                  selected: index == i,
-                  badge: i == 0 && appState.projects.isNotEmpty ? '${appState.projects.length}' : null,
-                  onTap: () => appState.showOverviewSection(i),
-                ),
-              const Spacer(),
-              if (appState.projectsRoot != null)
-                _RootInfo(appState: appState),
+              for (var i = 0; i < items.length; i++)
+                if (i < items.length - 1)
+                  _RailButton(item: items[i], selected: index == i, onTap: () => appState.showOverviewSection(i))
+                else ...[
+                  const Spacer(),
+                  _RailButton(item: items[i], selected: index == i, onTap: () => appState.showOverviewSection(i)),
+                ],
             ],
           ),
         ),
@@ -65,111 +52,78 @@ class HomeShell extends StatelessWidget {
   }
 }
 
-class _NavItem extends StatefulWidget {
-  const _NavItem({
-    required this.icon,
-    required this.selectedIcon,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-    this.badge,
-  });
+class _RailButton extends StatefulWidget {
+  const _RailButton({required this.item, required this.selected, required this.onTap});
 
-  final IconData icon;
-  final IconData selectedIcon;
-  final String label;
+  final (IconData, IconData, String, String) item;
   final bool selected;
   final VoidCallback onTap;
-  final String? badge;
 
   @override
-  State<_NavItem> createState() => _NavItemState();
+  State<_RailButton> createState() => _RailButtonState();
 }
 
-class _NavItemState extends State<_NavItem> {
+class _RailButtonState extends State<_RailButton> {
   bool _hover = false;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
     final c = context.colors;
-    final fg = widget.selected ? context.accentText : scheme.onSurface;
+    final scheme = Theme.of(context).colorScheme;
+    final (icon, selectedIcon, label, shortcut) = widget.item;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 2),
-      child: Semantics(
-        selected: widget.selected,
-        button: true,
-        child: MouseRegion(
-          onEnter: (_) => setState(() => _hover = true),
-          onExit: (_) => setState(() => _hover = false),
-          child: AnimatedContainer(
-            duration: Motion.of(context, Motion.fast),
-            decoration: BoxDecoration(
-              color: widget.selected
-                  ? scheme.primary.withValues(alpha: 0.10)
-                  : _hover
-                      ? scheme.surfaceContainerHighest
-                      : Colors.transparent,
-              borderRadius: BorderRadius.circular(Radii.sm),
-            ),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(Radii.sm),
-              onTap: widget.onTap,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Space.md, vertical: 10),
-                child: Row(
-                  children: [
-                    Icon(widget.selected ? widget.selectedIcon : widget.icon, size: 18, color: widget.selected ? context.accentText : c.muted),
-                    const SizedBox(width: Space.md),
-                    Expanded(
-                      child: Text(
-                        widget.label,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 14, fontWeight: widget.selected ? FontWeight.w600 : FontWeight.w500, color: fg),
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Tooltip(
+        message: '$label  $shortcut',
+        preferBelow: false,
+        verticalOffset: 0,
+        margin: const EdgeInsets.only(left: 56),
+        child: Semantics(
+          button: true,
+          selected: widget.selected,
+          label: label,
+          child: MouseRegion(
+            onEnter: (_) => setState(() => _hover = true),
+            onExit: (_) => setState(() => _hover = false),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                AnimatedContainer(
+                  duration: Motion.of(context, Motion.fast),
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: widget.selected || _hover ? scheme.surfaceContainerHighest : Colors.transparent,
+                    borderRadius: BorderRadius.circular(Radii.sm + 2),
+                    border: Border.all(color: widget.selected ? c.border : Colors.transparent),
+                  ),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(Radii.sm + 2),
+                    onTap: widget.onTap,
+                    child: Icon(
+                      widget.selected ? selectedIcon : icon,
+                      size: 19,
+                      color: widget.selected ? scheme.onSurface : c.muted,
+                    ),
+                  ),
+                ),
+                if (widget.selected)
+                  Positioned(
+                    left: -8,
+                    top: 10,
+                    bottom: 10,
+                    child: Container(
+                      width: 3,
+                      decoration: BoxDecoration(
+                        color: scheme.primary,
+                        borderRadius: const BorderRadius.horizontal(right: Radius.circular(3)),
                       ),
                     ),
-                    if (widget.badge != null) Badge2(label: widget.badge!),
-                  ],
-                ),
-              ),
+                  ),
+              ],
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _RootInfo extends StatelessWidget {
-  const _RootInfo({required this.appState});
-
-  final AppState appState;
-
-  @override
-  Widget build(BuildContext context) {
-    final c = context.colors;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(Space.md),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.6),
-        borderRadius: BorderRadius.circular(Radii.sm),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SectionLabel('Projektordner'),
-          const SizedBox(height: Space.xs),
-          Tooltip(
-            message: appState.projectsRoot!,
-            child: Text(
-              appState.projectsRoot!,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 12, color: c.muted, height: 1.4),
-            ),
-          ),
-        ],
       ),
     );
   }

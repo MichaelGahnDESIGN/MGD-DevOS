@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../app_state.dart';
 import '../theme/app_theme.dart';
-import '../widgets/supported_by_footer.dart';
+import '../widgets/status_bar.dart';
 import '../widgets/ui.dart';
 import 'dashboard_tab_view.dart';
 import 'home_shell.dart';
@@ -20,7 +21,34 @@ class TabsShell extends StatelessWidget {
     final active = appState.activeTabIndex;
     final c = context.colors;
 
-    return Scaffold(
+    void section(int i) => appState.showOverviewSection(i);
+    void closeActive() {
+      if (appState.activeTabIndex > 0) appState.closeTab(appState.activeTabIndex);
+    }
+    void cycle(int d) {
+      final n = tabs.length + 1;
+      appState.selectTab((appState.activeTabIndex + d + n) % n);
+    }
+
+    final bindings = <ShortcutActivator, VoidCallback>{};
+    for (final meta in [true, false]) {
+      SingleActivator k(LogicalKeyboardKey key, {bool shift = false}) =>
+          SingleActivator(key, meta: meta, control: !meta, shift: shift);
+      bindings[k(LogicalKeyboardKey.digit1)] = () => section(0);
+      bindings[k(LogicalKeyboardKey.digit2)] = () => section(1);
+      bindings[k(LogicalKeyboardKey.digit3)] = () => section(2);
+      bindings[k(LogicalKeyboardKey.comma)] = () => section(2);
+      bindings[k(LogicalKeyboardKey.keyW)] = closeActive;
+      bindings[k(LogicalKeyboardKey.keyR)] = appState.rescan;
+      bindings[k(LogicalKeyboardKey.bracketRight, shift: true)] = () => cycle(1);
+      bindings[k(LogicalKeyboardKey.bracketLeft, shift: true)] = () => cycle(-1);
+    }
+
+    return CallbackShortcuts(
+      bindings: bindings,
+      child: Focus(
+        autofocus: true,
+        child: Scaffold(
       body: Column(
         children: [
           Container(
@@ -55,9 +83,14 @@ class TabsShell extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(width: Space.sm),
+                StatusPill(label: 'Lokal', color: c.success, tooltip: 'Alle Daten bleiben auf diesem Rechner, keine Telemetrie'),
+                const SizedBox(width: Space.sm),
+                StatusPill(label: 'Adapter aus', color: c.neutral, tooltip: 'Kein Live-Adapter zu Codex oder Claude Code verbunden'),
+                const SizedBox(width: Space.xs),
                 IconButton(
-                  tooltip: 'Einstellungen',
-                  icon: const Icon(Icons.settings_outlined, size: 20),
+                  tooltip: 'Einstellungen (⌘ ,)',
+                  icon: const Icon(Icons.settings_outlined, size: 19),
                   onPressed: () => appState.showOverviewSection(2),
                 ),
               ],
@@ -73,8 +106,10 @@ class TabsShell extends StatelessWidget {
               ],
             ),
           ),
-          const SupportedByFooter(),
+          StatusBar(appState: appState),
         ],
+      ),
+        ),
       ),
     );
   }

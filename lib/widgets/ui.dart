@@ -156,7 +156,8 @@ class EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = Theme.of(context).textTheme;
     return Center(
-      child: ConstrainedBox(
+      child: SingleChildScrollView(
+        child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 420),
         child: Padding(
           padding: const EdgeInsets.all(Space.xxl),
@@ -179,6 +180,7 @@ class EmptyState extends StatelessWidget {
               if (action != null) ...[const SizedBox(height: Space.lg), action!],
             ],
           ),
+        ),
         ),
       ),
     );
