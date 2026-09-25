@@ -10,6 +10,7 @@ import '../app_state.dart';
 import '../services/meta_service.dart';
 import '../services/pin_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/status_bar.dart';
 import '../widgets/ui.dart';
 
 const List<(Color, String)> _accentSwatches = [
@@ -54,10 +55,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ('darstellung', 'Darstellung', 'farbschema hell dunkel system akzentfarbe theme', _appearance),
       ('projekte', 'Projekte', 'projektordner scannen pfad ordner', _projects),
       ('grundregeln', 'Grundregeln', 'regeln editor grundregeln.md bearbeiten', () => _RulesEditor(appState: appState)),
-      ('sicherheit', 'Sicherheit', 'pin sperre schutz passwort sicherheit', () => _PinSettings(appState: appState)),
+      ('sicherheit', 'Sicherheit', 'pin sperre sichtschutz schutz passwort sicherheit', () => _PinSettings(appState: appState)),
       ('datenschutz', 'Datenschutz', 'datenschutz telemetrie lokal privat', _privacy),
       ('versionen', 'Versionen', 'version timeline changelog versionshinweise', () => _Versions(meta: appState.meta)),
       ('ueber', 'Über', 'über version lizenz github', _about),
+      ('lizenz', 'Lizenz', 'lizenz mgd-lizenz powered by label nutzungsbedingungen', () => const _LicenseView()),
       ('credits', 'Credits', 'credits personen tools bibliotheken schriften icons lizenzen', () => _CreditsView(meta: appState.meta)),
     ];
     final q = _query.trim().toLowerCase();
@@ -177,8 +179,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
         const SizedBox(width: Space.md),
         Expanded(
           child: Text(
-            'Alles bleibt lokal: keine Konten, keine Telemetrie, keine Zugangsdaten. Gespeichert werden nur Farbschema, '
-            'Akzentfarbe, Projektordner und – falls gesetzt – der Hash deiner PIN.',
+            'Alles bleibt lokal: keine Konten, keine Telemetrie, keine Zugangsdaten. In den App-Einstellungen des Systems '
+            'liegen Farbschema, Akzentfarbe, Projektordner, ob das Onboarding erledigt ist und – falls gesetzt – Länge, '
+            'Salz und Hash deiner PIN sowie der Zähler für Fehlversuche. In Projektordner schreibt die App nur, wenn du '
+            'im Grundregeln-Editor speicherst (GRUNDREGELN.md). Geöffnete Dashboards speichern ihre eigenen Einstellungen '
+            'im Browser-Speicher des Webviews.',
             style: TextStyle(fontSize: 13.5, height: 1.5, color: c.muted),
           ),
         ),
@@ -197,7 +202,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('MGD-DevOS ${appState.meta.label}', style: Theme.of(context).textTheme.titleMedium),
-              Text('Stand ${appState.meta.date} · Lizenz: PolyForm Noncommercial 1.0.0', style: TextStyle(fontSize: 12.5, color: c.muted)),
+              Text('Stand ${appState.meta.date} · Lizenz: MGD-Lizenz 1.0', style: TextStyle(fontSize: 12.5, color: c.muted)),
             ],
           ),
         ),
@@ -434,7 +439,7 @@ class _PinSettingsState extends State<_PinSettings> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Die PIN sperrt MGD-DevOS beim Start. Sie schützt vor Blicken, ersetzt aber nicht die Anmeldung am Rechner und verschlüsselt keine Projektdateien.',
+        Text('Sichtschutz: Die PIN verdeckt MGD-DevOS beim Start vor neugierigen Blicken. Sie schützt nicht vor jemandem mit Zugriff auf dein Benutzerkonto oder deine Dateien, sperrt nicht automatisch bei Inaktivität und verschlüsselt keine Projektdateien. Gespeichert wird nur ein Hash in den lokalen App-Einstellungen.',
             style: TextStyle(fontSize: 13, color: c.muted, height: 1.5)),
         const SizedBox(height: Space.md),
         Badge2(label: active == null ? 'Keine PIN' : 'PIN aktiv ($active Stellen)', tone: active == null ? Tone.neutral : Tone.success),
@@ -523,6 +528,33 @@ class _VersionsState extends State<_Versions> {
               ],
             ),
           ),
+      ],
+    );
+  }
+}
+
+/// Einstellungen › Lizenz: Pflicht-Label und vollständiger Lizenztext (MGD-Lizenz, Abschnitt 3).
+class _LicenseView extends StatelessWidget {
+  const _LicenseView();
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const PoweredByPill(),
+        const SizedBox(height: Space.md),
+        FutureBuilder<String>(
+          future: rootBundle.loadString('LICENSE'),
+          builder: (context, snap) {
+            if (snap.hasError) {
+              return Text('Lizenztext konnte nicht geladen werden. Er liegt als LICENSE im Repository.', style: TextStyle(color: c.muted));
+            }
+            if (!snap.hasData) return const LinearProgressIndicator();
+            return SelectableText(snap.data!, style: TextStyle(fontSize: 12.5, height: 1.5, color: c.muted));
+          },
+        ),
       ],
     );
   }

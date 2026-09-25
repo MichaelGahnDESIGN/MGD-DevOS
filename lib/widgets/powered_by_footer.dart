@@ -4,12 +4,12 @@ import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 import 'ui.dart';
 
-/// Pflicht-Hinweis "supported by: Michael Gahn DESIGN" (siehe NOTICE).
-/// Fester Bestandteil der App, nicht entfernen oder ändern.
-class SupportedByFooter extends StatelessWidget {
-  const SupportedByFooter({super.key});
+/// Pflicht-Label "powered by: Michael Gahn DESIGN" (siehe NOTICE und LICENSE, MGD-Lizenz Abschnitt 3).
+/// Fester Bestandteil der App, nicht entfernen oder ändern. Der Link öffnet im Systembrowser.
+class PoweredByFooter extends StatelessWidget {
+  const PoweredByFooter({super.key});
 
-  static final Uri website = Uri.parse('https://Michael-Gahn.de');
+  static final Uri website = Uri.parse('https://michael-gahn.de');
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +23,10 @@ class SupportedByFooter extends StatelessWidget {
       ),
       alignment: Alignment.center,
       child: Tooltip(
-        message: 'Michael-Gahn.de öffnen',
+        message: 'michael-gahn.de im Browser öffnen',
         child: Semantics(
           link: true,
-          label: 'supported by Michael Gahn DESIGN, Website öffnen',
+          label: 'powered by Michael Gahn DESIGN, Website im Browser öffnen',
           child: InkWell(
             borderRadius: BorderRadius.circular(999),
             onTap: () => launchUrl(website, mode: LaunchMode.externalApplication),
@@ -43,7 +43,7 @@ class SupportedByFooter extends StatelessWidget {
                   children: [
                     const BrandMark(size: 20),
                     const SizedBox(width: Space.sm),
-                    Text('supported by: ', style: TextStyle(fontSize: 12.5, color: c.muted)),
+                    Text('powered by: ', style: TextStyle(fontSize: 12.5, color: c.muted)),
                     Text(
                       'Michael Gahn DESIGN',
                       style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: scheme.onSurface),

@@ -149,7 +149,7 @@ void main() {
     expect(await js('!window.MGD_DASHBOARD.wins.tasks'), true);
     await t.pump(const Duration(milliseconds: 300));
     expect(await js('document.querySelectorAll("#edges path").length'), 3);
-    expect(await js('!!document.querySelector("[data-mgd-supported-by] a[href=\'https://Michael-Gahn.de\']")'), true);
+    expect(await js('!!document.querySelector("[data-mgd-powered-by] a[href=\'https://michael-gahn.de\'][target=\'_blank\']")'), true);
     final version = (jsonDecode(File('assets/meta/version.json').readAsStringSync()) as Map)['version'];
     expect(await js('MGD_META.version.version'), version);
 

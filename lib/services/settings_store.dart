@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Persistiert nur unkritische App-Einstellungen (Theme, Akzentfarbe,
+/// Persistiert unkritische App-Einstellungen (Theme, Akzentfarbe,
 /// Projekt-Root-Pfad, Onboarding-Status) über [SharedPreferences].
+/// Die PIN-Daten (Salz, Hash, Fehlversuche) verwaltet `PinService` im selben Speicher.
 ///
 /// Es werden hier bewusst keine Zugangsdaten oder Secrets gespeichert.
-/// Echte Zugänge gehören in den OS-Schlüsselbund (siehe Restliste in der
-/// Projekt-Übergabe) und sind für diese erste Version noch nicht
-/// implementiert.
 class SettingsStore {
   static const _keyOnboardingDone = 'onboarding_done_v1';
   static const _keyThemeMode = 'theme_mode_v1';

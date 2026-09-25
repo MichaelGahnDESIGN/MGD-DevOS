@@ -6,42 +6,60 @@
 - [GitHub CLI `gh`](https://cli.github.com/), authentifiziert (`gh auth login`) — nötig für Live-Suche, Metadaten-Abfragen (`/projektstart-katalog-add`) und Update-Checks (`/projektstart-update`).
 - Netzzugriff für Clone- und Scan-Schritte. Ohne Netzzugriff funktioniert `/projektstart` weiterhin, verlangt bei Dritt-Skills aber die explizite Ungeprüft-Bestätigung (siehe [Sicherheitskonzept.md](Sicherheitskonzept.md)).
 
+Der Skill liegt im Ordner `skill/` des Repositorys
+[MGD-DevOS](https://github.com/MichaelGahnDESIGN/MGD-DevOS) (alternativ als `MGD-DevOS-Skill.zip` im Release).
+Installationsort ist immer ein Ordner namens `mgd-devos`. Mitgeliefert werden fünf Befehle:
+`/projektstart`, `/projektstart-update`, `/projektstart-katalog`, `/projektstart-katalog-add` und `/dashboard`.
+
+Quelle einmal holen:
+
+```bash
+git clone --depth 1 https://github.com/MichaelGahnDESIGN/MGD-DevOS.git /tmp/mgd-devos
+```
+
 ## Installation für Claude Code
 
-### Projekt-lokal (empfohlen, wenn dieser Skill nur in einem Projekt genutzt wird)
+### Global (empfohlen: Befehle in jedem Projekt verfügbar)
 
 ```bash
-mkdir -p .claude/commands
-git clone --depth 1 https://github.com/MichaelGahnDESIGN/MGD-DevOS.git /tmp/mgd-devos
-cp /tmp/ai-projektstart-install/.claude/commands/projektstart.md .claude/commands/
-cp -r /tmp/ai-projektstart-install/catalog .
-cp /tmp/ai-projektstart-install/SKILL.md .
+mkdir -p ~/.claude/skills/mgd-devos ~/.claude/commands
+cp -R /tmp/mgd-devos/skill/. ~/.claude/skills/mgd-devos/
+cp ~/.claude/skills/mgd-devos/.claude/commands/*.md ~/.claude/commands/
 ```
 
-### Global (empfohlen, wenn `/projektstart` in jedem neuen Projekt verfügbar sein soll)
+Claude Code erkennt `SKILL.md` in `~/.claude/skills/mgd-devos/` automatisch; die Befehle liegen danach in
+`~/.claude/commands/`. Dieselben Befehle aktualisieren eine bestehende Installation.
+
+### Projekt-lokal (nur für ein Projekt)
+
+Im Projektordner ausführen:
 
 ```bash
-mkdir -p ~/.claude/skills/projektstart
-git clone --depth 1 https://github.com/MichaelGahnDESIGN/MGD-DevOS.git /tmp/mgd-devos && cp -R /tmp/mgd-devos/skill ~/.claude/skills/mgd-devos
-```
-
-Claude Code erkennt `SKILL.md` in `~/.claude/skills/projektstart/` automatisch; der Slash-Befehl `/projektstart` steht danach in jedem Projekt zur Verfügung, sobald zusätzlich der Wrapper aus `.claude/commands/projektstart.md` global unter `~/.claude/commands/` abgelegt wird:
-
-```bash
-mkdir -p ~/.claude/commands
-cp ~/.claude/skills/projektstart/.claude/commands/projektstart.md ~/.claude/commands/
+mkdir -p .claude/skills/mgd-devos .claude/commands
+cp -R /tmp/mgd-devos/skill/. .claude/skills/mgd-devos/
+cp .claude/skills/mgd-devos/.claude/commands/*.md .claude/commands/
 ```
 
 ## Installation für Codex
 
-Analog, mit `.codex/`-Pfaden:
+Analog mit `.codex/`-Pfaden, global:
 
 ```bash
-mkdir -p .codex/commands
-cp /tmp/ai-projektstart-install/.codex/commands/projektstart.md .codex/commands/
+mkdir -p ~/.codex/skills/mgd-devos ~/.codex/commands
+cp -R /tmp/mgd-devos/skill/. ~/.codex/skills/mgd-devos/
+cp ~/.codex/skills/mgd-devos/.codex/commands/*.md ~/.codex/commands/
 ```
 
-Für eine globale Codex-Installation die entsprechenden globalen Codex-Skill-/Command-Verzeichnisse verwenden (siehe Codex-eigene Dokumentation zu Custom Commands).
+oder projekt-lokal:
+
+```bash
+mkdir -p .codex/skills/mgd-devos .codex/commands
+cp -R /tmp/mgd-devos/skill/. .codex/skills/mgd-devos/
+cp .codex/skills/mgd-devos/.codex/commands/*.md .codex/commands/
+```
+
+Wo deine Codex-Version eigene Befehle erwartet, steht in der Codex-Dokumentation zu Custom Prompts; die Dateien in
+`.codex/commands/` sind kurze Prompts, die auf den passenden Abschnitt in `SKILL.md` verweisen.
 
 ## `/thread` als Bestandteil des Projektstarts
 
@@ -59,3 +77,4 @@ unter [Thread-Übergabe.md](Thread-Übergabe.md).
 1. `/projektstart` ausführen und das Interview durchlaufen.
 2. Bei Rückfragen zu Installationsort (projekt-lokal vs. global) pro Kern-Skill einzeln entscheiden — siehe [SKILL.md](../SKILL.md#schritt-2--kern-skills-installieren).
 3. Nach Abschluss `PROJEKT/.projektstart-manifest.json` prüfen — sie ist die Grundlage für spätere `/projektstart-update`-Läufe.
+4. Im Alltag `/dashboard` verwenden.

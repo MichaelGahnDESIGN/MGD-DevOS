@@ -56,16 +56,16 @@ aktuelle Arbeitsstand später mit belegtem Git-Status an Codex oder Claude Code
 ### Beispiel-Dialog (Ausschnitt Schritt 3 — Plattform-Frage)
 
 ```
-Dieses Projekt klingt nach Backend-/Plattform-Bedarf (Nutzerkonten mit
-gespeicherten Rezepten). Soll ich `mgd-platform init --preset mobile-backend`
-ausführen, um ein geprüftes Grundgerüst aufzusetzen?
+Dieses Projekt ist ein Plattform-Projekt (Nutzerkonten mit gespeicherten
+Rezepten). Soll ich es mit dem MGD-Plattform-Builder einrichten
+(`mgd-platform init --preset community`)?
 > ja
 
-mgd-platform ist noch nicht global installiert — ich klone
-https://github.com/MichaelGahnDESIGN/Projekt-Plattform-System.git und richte
-es gemäß dessen Anleitung ein …
+mgd-platform ist noch nicht installiert — ich klone
+https://github.com/MichaelGahnDESIGN/MGD-Plattform-Builder.git und richte
+es gemäß dessen INSTALL.md ein …
 ✓ mgd-platform verfügbar
-✓ mgd-platform init --preset mobile-backend --target . ausgeführt
+✓ mgd-platform init --preset community --target . ausgeführt
 ✓ mgd-platform validate — keine Fehler
 ```
 

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
-  "beschreibung": "Kuratierter Startkatalog für den MGD-DevOS. Wird von /Dashboard, /projektstart und /projektstart-katalog gelesen. mandatory=true markiert die zwei verbindlichen MGD-Basis-Skills Autopilot und AI-Thread; die übrigen Einträge sind optionale Vorschläge.",
+  "beschreibung": "Kuratierter Startkatalog für den MGD-DevOS. Wird von /dashboard, /projektstart und /projektstart-katalog gelesen. mandatory=true markiert die zwei verbindlichen MGD-Basis-Skills Autopilot und AI-Thread; die übrigen Einträge sind optionale Vorschläge.",
   "stand": "2026-09-23",
   "skills": [
     {
@@ -113,9 +113,9 @@
       ]
     },
     {
-      "name": "Projekt-Plattform-System",
-      "url": "https://github.com/MichaelGahnDESIGN/Projekt-Plattform-System",
-      "description": "Eigenständiges Referenz-System für Backend/Admin/Compliance-lastige Plattformen mit CLI mgd-platform (init --preset <name> --target <pfad>, validate, doctor, audit, release-check, module create, update). Wird NICHT als Datei-Kopie installiert, sondern per CLI-Befehl in ein Zielverzeichnis initialisiert.",
+      "name": "MGD-Plattform-Builder",
+      "url": "https://github.com/MichaelGahnDESIGN/MGD-Plattform-Builder",
+      "description": "Empfehlung für Websites und Plattformen: Referenz-System mit Backoffice, Rechten, Rechtstexten und Versionierung, eigene CLI mgd-platform (init --preset general|game|community|creator|ecommerce --target <pfad>, validate, doctor, audit, release-check, module create, update). Wird NICHT als Datei-Kopie installiert, sondern per CLI in ein Zielverzeichnis initialisiert. Erzeugt MGD_PLATFORM.yml und version.json, die die MGD-DevOS-App als Plattform-Version anzeigt.",
       "category": "platform",
       "stars": null,
       "source": "mgd",

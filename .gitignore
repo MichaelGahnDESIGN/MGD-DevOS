@@ -58,3 +58,7 @@ BACKUPS/
 *.sql.gz
 .env*
 !.env.example
+
+# Eigenes, lokal erzeugtes Projekt-Dashboard des Inhabers (/dashboard); nicht versionieren.
+/index.html
+/PROJEKT/

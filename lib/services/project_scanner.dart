@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
 
 import '../models/mgd_project.dart';
+import '../models/platform_info.dart';
 
 /// Durchsucht einen vom Nutzer gewählten Projekt-Root **eine Ebene tief**
 /// nach Projektordnern und liest ausschließlich real vorhandene Dateien.
@@ -19,6 +21,7 @@ class ProjectScanner {
     'GRUNDREGELN.md',
     'PROJEKTREGELN.md',
     'SKILL.md',
+    'MGD_PLATFORM.yml',
     'docs/mgd-devos/ARCHITEKTUR.md',
     'docs/mgd-devos/STRIPE-SPENDEN.md',
   ];
@@ -77,6 +80,8 @@ class ProjectScanner {
       p.join(dir.path, 'catalog', 'skills.json'),
     ).exists();
 
+    final platform = await _readPlatform(dir);
+
     final indexFile = File(p.join(dir.path, 'index.html'));
     final dashboardFile = await indexFile.exists() ? indexFile : null;
 
@@ -86,6 +91,7 @@ class ProjectScanner {
     final looksLikeProject = hasGit ||
         hasDashboardConfig ||
         hasAgentsFile ||
+        platform != null ||
         await File(p.join(dir.path, 'README.md')).exists() ||
         await File(p.join(dir.path, 'pubspec.yaml')).exists() ||
         await File(p.join(dir.path, 'package.json')).exists();
@@ -119,6 +125,23 @@ class ProjectScanner {
       dashboardFile: dashboardFile,
       lastModified: lastModified,
       documents: documents,
+      platform: platform,
     );
+  }
+
+  /// Erkennt ein Projekt des MGD-Plattform-Builders an `MGD_PLATFORM.yml` und liest
+  /// Version und Status aus `version.json`. Fehlt die Datei oder ist sie ungültig,
+  /// wird das Projekt trotzdem als Plattform erkannt, nur ohne Version.
+  Future<PlatformInfo?> _readPlatform(Directory dir) async {
+    if (!await File(p.join(dir.path, PlatformInfo.profileFile)).exists()) return null;
+    final versionFile = File(p.join(dir.path, PlatformInfo.versionFile));
+    try {
+      if (!await versionFile.exists()) return const PlatformInfo();
+      return PlatformInfo.fromVersionJson(jsonDecode(await versionFile.readAsString()));
+    } on FormatException {
+      return const PlatformInfo();
+    } on FileSystemException {
+      return const PlatformInfo();
+    }
   }
 }

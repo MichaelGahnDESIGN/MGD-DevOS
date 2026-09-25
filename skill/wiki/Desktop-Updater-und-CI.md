@@ -58,8 +58,8 @@ App ungefragt abruft (Update-Info und die Installer selbst), muss ohne
 Login erreichbar sein. Zwei saubere Wege:
 
 1. **Öffentliches Release-/Config-Repo** nur für Update-Metadaten und
-   Installer (Quellcode bleibt in einem privaten Repo). Beispiel:
-   `MichaelGahnDESIGN/MGD-DevOS-config`.
+   Installer (Quellcode bleibt in einem privaten Repo). MGD-DevOS selbst
+   ist öffentlich und nutzt dafür die GitHub Releases dieses Repositorys.
 2. **Eigener kleiner Server**, der die Authentifizierung übernimmt.
    Mehr Kontrolle, aber Betriebsaufwand.
 

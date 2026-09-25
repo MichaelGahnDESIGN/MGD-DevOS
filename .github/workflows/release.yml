@@ -1,7 +1,9 @@
 name: Release
 
-# Baut bei einem Tag v* alle Plattformen und hängt die Pakete samt
-# SHA256SUMS.txt an das GitHub Release. Pakete sind unsigniert.
+# Bei einem Tag vX.Y.Z läuft zuerst die komplette CI (ci.yml: Analyse, Unit-Tests,
+# sync_meta --check, Integrationstests auf macOS/Windows/Linux, Pakete). Nur wenn
+# alles grün ist, hängt "publish" die Pakete aus diesem Lauf samt Skill-ZIP und
+# SHA256SUMS.txt an das GitHub Release "MGD-DevOS X.Y.Z Status". Pakete sind unsigniert.
 
 on:
   push:
@@ -12,66 +14,47 @@ permissions:
   contents: write
 
 jobs:
-  macos:
-    runs-on: macos-14
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with: { channel: stable }
-      - run: scripts/package_macos.sh
-      - uses: actions/upload-artifact@v4
-        with: { name: dmg, path: dist/macos/MGD-DevOS.dmg, if-no-files-found: error }
-
-  windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with: { channel: stable }
-      - run: flutter config --enable-windows-desktop
-      - run: flutter pub get
-      - run: flutter build windows --release
-      - run: Compress-Archive -Path build\windows\x64\runner\Release\* -DestinationPath MGD-DevOS-windows.zip
-        shell: pwsh
-      - uses: actions/upload-artifact@v4
-        with: { name: zip, path: MGD-DevOS-windows.zip, if-no-files-found: error }
-
-  linux:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with: { channel: stable }
-      - run: |
-          sudo apt-get update
-          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
-      - run: flutter config --enable-linux-desktop
-      - run: flutter pub get
-      - run: flutter build linux --release
-      - run: tar -czf MGD-DevOS-linux.tar.gz -C build/linux/x64/release bundle
-      - uses: actions/upload-artifact@v4
-        with: { name: tar, path: MGD-DevOS-linux.tar.gz, if-no-files-found: error }
+  ci:
+    name: Komplette CI
+    uses: ./.github/workflows/ci.yml
 
   publish:
-    needs: [macos, windows, linux]
+    name: Release veröffentlichen
+    needs: ci
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
       - uses: actions/checkout@v4
         with: { path: src }
-      - uses: actions/download-artifact@v4
-        with: { path: out, merge-multiple: true }
-      - run: cp src/.github/release-notes.md release-notes.md
-      - name: Skill als ZIP
+      - name: Tag mit zentraler Version abgleichen
+        id: meta
         run: |
-          cd src && git archive --format=zip --prefix=mgd-devos-skill/ -o ../out/MGD-DevOS-Skill.zip HEAD:skill
+          VERSION=$(jq -r .version src/assets/meta/version.json)
+          STAGE=$(jq -r .stage src/assets/meta/version.json)
+          if [ "v${VERSION}" != "${GITHUB_REF_NAME}" ]; then
+            echo "Tag ${GITHUB_REF_NAME} passt nicht zu assets/meta/version.json (${VERSION})." >&2
+            exit 1
+          fi
+          echo "title=MGD-DevOS ${VERSION} ${STAGE}" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: MGD-DevOS-*
+          path: out
+          merge-multiple: true
+      - name: Skill als ZIP (inklusive LICENSE und NOTICE)
+        run: |
+          cd src
+          test -f skill/LICENSE && test -f skill/NOTICE
+          git archive --format=zip --prefix=mgd-devos-skill/ -o ../out/MGD-DevOS-Skill.zip HEAD:skill
       - name: Prüfsummen und Release
         env:
           GH_TOKEN: ${{ github.token }}
+          TITLE: ${{ steps.meta.outputs.title }}
         run: |
           cd out
           sha256sum * > SHA256SUMS.txt
           gh release view "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1 \
-            || gh release create "${GITHUB_REF_NAME}" --latest --title "MGD-DevOS ${GITHUB_REF_NAME}" \
-                 --notes-file ../release-notes.md --repo "${GITHUB_REPOSITORY}"
+            || gh release create "${GITHUB_REF_NAME}" --latest --title "${TITLE}" \
+                 --notes-file ../src/.github/release-notes.md --repo "${GITHUB_REPOSITORY}"
+          gh release edit "${GITHUB_REF_NAME}" --title "${TITLE}" --repo "${GITHUB_REPOSITORY}"
           gh release upload "${GITHUB_REF_NAME}" * --clobber --repo "${GITHUB_REPOSITORY}"

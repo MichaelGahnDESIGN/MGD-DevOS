@@ -2,7 +2,24 @@
 
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 
+**Versionierung:** Ab sofort folgt der Skill der Version der MGD-DevOS-App (einzige Quelle:
+`assets/meta/version.json`, übertragen von `scripts/sync_meta.py`). Die Einträge 1.0.0 bis 2.4.1 unten sind die
+frühere eigenständige Zählung des Skills und bleiben als Historie erhalten.
+
 ## Unreleased
+
+## 0.6.0 (2026-09-25, Pre-Alpha)
+
+- Versionierung: Skill und App tragen dieselbe Version; `SKILL.md` und `README.md` zeigen sie an.
+- Befehle einheitlich kleingeschrieben; Befehlsdateien für `/projektstart`, `/projektstart-update`,
+  `/projektstart-katalog`, `/projektstart-katalog-add` und `/dashboard` für Claude Code und Codex; Installation
+  einheitlich nach `~/.claude/skills/mgd-devos` (Setup und README korrigiert).
+- MGD-Plattform-Builder (vormals Projekt-Plattform-System) wird für Web- und Plattform-Projekte empfohlen,
+  mit den tatsächlichen Presets `general`, `game`, `community`, `creator`, `ecommerce`.
+- Lizenz: MGD-Lizenz statt MIT; `LICENSE` und `NOTICE` liegen jetzt im Skill-Ordner und damit im Skill-ZIP.
+  Pflicht-Label heißt „powered by: Michael Gahn DESIGN" (`data-mgd-powered-by`), Link öffnet in neuem Tab.
+- Dashboard: PIN-Hinweis ehrlich als Sichtschutz beschrieben.
+- `IMPRESSUM.md` ist jetzt eine Vorlage mit Platzhaltern.
 
 - Katalog: Godot AI (hi-godot/godot-ai, MIT, Asset Library 5050) als Editor-MCP-Plugin für Spiele-Projekte aufgenommen,
   mit Sicherheitshinweis (nur gegen eine Arbeitskopie, nicht in Exporte).

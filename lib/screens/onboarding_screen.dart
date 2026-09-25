@@ -8,7 +8,7 @@ import 'package:path/path.dart' as p;
 import '../app_state.dart';
 import '../services/project_scanner.dart';
 import '../theme/app_theme.dart';
-import '../widgets/supported_by_footer.dart';
+import '../widgets/powered_by_footer.dart';
 import '../widgets/ui.dart';
 
 /// Standard-Entwicklungspfad, falls der Nutzer beim ersten Start keinen
@@ -98,7 +98,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ],
             ),
           ),
-          const SupportedByFooter(),
+          const PoweredByFooter(),
         ],
       ),
     );

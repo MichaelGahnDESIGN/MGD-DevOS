@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased
+
+## 0.6.0 (2026-09-25, Pre-Alpha)
+
+- Lizenz: MGD-Lizenz 1.0 statt PolyForm Noncommercial (Versionen bis 0.5.2 bleiben unter PolyForm). Neuer Bereich
+  Einstellungen › Lizenz mit Label und Lizenztext.
+- Pflicht-Label heißt jetzt „powered by: Michael Gahn DESIGN" (App, Dashboard, README, NOTICE); der Link öffnet im
+  Systembrowser bzw. in einem neuen Tab.
+- Projekt-Scanner erkennt Projekte des MGD-Plattform-Builders (`MGD_PLATFORM.yml`) und zeigt Version und Status aus
+  deren `version.json` in der Projektkarte, z. B. „Plattform 0.0.1 Pre-Alpha".
+- PIN-Sperre ehrlich als Sichtschutz beschrieben; Datenschutz-Hinweis nennt alle lokal gespeicherten Werte.
+- Aufgeräumt: ungenutzter Webview-Wrapper-Modus samt Online-Konfiguration (`config/`) und die Pakete `http` und
+  `cupertino_icons` entfernt.
+- Eine gemeinsame Version für App und Skill: `scripts/sync_meta.py` schreibt sie auch in README und Skill-Doku,
+  zählt die Tests und kopiert `LICENSE`/`NOTICE` in den Skill; `--check` schlägt bei Abweichung fehl.
+- Release-Workflow führt vorher die komplette CI aus; Release-Titel „MGD-DevOS X.Y.Z Status".
+
 ## 0.5.2 (2026-09-25, Pre-Alpha)
 
 - Sicherheit (Dashboard): Pfadprüfung für eingebettete Projektdateien über die aufgelöste Adresse; Backslashes, %-Kodierung, Steuerzeichen und fremde Schemata werden abgelehnt, iframes laufen mit `sandbox`.

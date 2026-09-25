@@ -24,7 +24,6 @@ im Projektordner (erzeugt vom Befehl `/dashboard` des Projektmanagers).
 |---|---|
 | macOS, Windows | eingebettet (`flutter_inappwebview`) |
 | Linux | kein eingebettetes WebView verfügbar, Knopf öffnet den Standardbrowser |
-| Web (nur Entwicklung) | Knopf öffnet den Browser |
 
 ## Downloads, Speichern und Dialoge im Webview
 
@@ -33,7 +32,7 @@ Blob-Download exportieren oder `alert()`/`confirm()` nutzen, funktionieren dort 
 brauchen Dashboards und Vorlagen einen Ausweichweg auf der Seite selbst: Export-Fenster mit „Kopieren",
 eigene Bestätigungsdialoge, `try/catch` um `localStorage` mit sichtbarem Hinweis. Die Vorlagen
 `Fragenkatalog.template.html` (Fragenkatalog-Skill) und `dashboard/index.html` (Projektmanager) tun das seit dem 24.09.2026.
-Linux und Web öffnen das Dashboard im normalen Browser, dort gelten die üblichen Browser-Regeln.
+Linux öffnet das Dashboard im normalen Browser, dort gelten die üblichen Browser-Regeln.
 
 **Geprüft (Integrationstest in der CI auf macOS und Windows):** Laden per `file://`, Browser-Speicher, Navigation im Projekt, Sperre für Dateien
 außerhalb und fremde Schemata. Linux: Ausweichweg „im Browser öffnen" geprüft.

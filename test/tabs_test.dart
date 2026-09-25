@@ -26,7 +26,7 @@ MgdProject _project(String name, {bool withDashboard = true}) {
 }
 
 void main() {
-  test('openDashboard oeffnet Tab und wechselt dorthin, ohne Duplikate', () {
+  test('openDashboard öffnet Tab und wechselt dorthin, ohne Duplikate', () {
     final state = AppState();
     final a = _project('a');
     final b = _project('b');
@@ -39,14 +39,14 @@ void main() {
     expect(state.activeTabIndex, 1);
   });
 
-  test('Projekt ohne index.html oeffnet keinen Tab', () {
+  test('Projekt ohne index.html öffnet keinen Tab', () {
     final state = AppState();
     state.openDashboard(_project('x', withDashboard: false));
     expect(state.dashboardTabs, isEmpty);
     expect(state.activeTabIndex, 0);
   });
 
-  test('closeTab entfernt Tab und waehlt Nachbarn; Uebersicht nicht schliessbar',
+  test('closeTab entfernt Tab und wählt Nachbarn; Übersicht nicht schließbar',
       () {
     final state = AppState();
     state.openDashboard(_project('a'));

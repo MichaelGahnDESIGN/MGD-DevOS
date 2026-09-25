@@ -28,11 +28,13 @@ class PinRecord {
   }
 }
 
-/// App-Sperre per PIN (4, 6 oder 8 Ziffern).
+/// PIN-Sichtschutz beim Start (4, 6 oder 8 Ziffern).
 ///
-/// Sicherheitsgrenzen: PBKDF2-HMAC-SHA-256 mit zufälligem Salz; gespeichert wird nur der Hash
-/// in den App-Einstellungen. Die Sperre schützt vor Blicken am Bildschirm. Sie ersetzt nicht die
-/// Anmeldung am Rechner oder eine Festplattenverschlüsselung und verschlüsselt keine Projektdateien.
+/// Nur ein Sichtschutz gegen neugierige Blicke, keine Zugriffssicherung: PBKDF2-HMAC-SHA-256 mit
+/// zufälligem Salz, gespeichert wird nur der Hash in den lokalen App-Einstellungen. Wer Zugriff auf
+/// das Benutzerkonto oder die Dateien hat, kann die Einstellungen löschen und die Projektdateien
+/// direkt lesen. Es gibt keine automatische Sperre bei Inaktivität. Ersetzt nicht die Anmeldung am
+/// Rechner oder eine Festplattenverschlüsselung und verschlüsselt keine Projektdateien.
 class PinService {
   PinService({Random? random}) : _random = random ?? Random.secure();
 

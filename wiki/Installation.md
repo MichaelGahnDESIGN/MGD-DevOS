@@ -26,5 +26,7 @@ ersten Start eine Gatekeeper-Warnung (Rechtsklick, Öffnen), Windows ggf. SmartS
 
 ## Deinstallation
 
-App löschen. Lokal liegen nur Theme, Akzentfarbe und Projektordner-Pfad in den
-Programmeinstellungen des Betriebssystems.
+App löschen. In den Programmeinstellungen des Betriebssystems bleiben Farbschema, Akzentfarbe, Projektordner-Pfad,
+Onboarding-Status und gegebenenfalls der PIN-Hash zurück (siehe
+[Sicherheit und Datenschutz](Sicherheit-und-Datenschutz.md#was-gespeichert-wird)); `GRUNDREGELN.md`-Dateien in
+Projekten bleiben erhalten.

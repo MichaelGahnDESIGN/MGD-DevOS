@@ -41,8 +41,8 @@ AI-Thread sichert später fertige Arbeit und schreibt die Übergabe.
 ## 3. Plattform-Frage — verneint
 
 ```
-Backend-Bedarf wurde im Interview verneint (nur lokale Spielstände) — ich
-überspringe die Projekt-Plattform-System-Frage.
+Kein Web- oder Plattform-Projekt und kein Backend-Bedarf (nur lokale
+Spielstände) — ich überspringe die Frage nach dem MGD-Plattform-Builder.
 ```
 
 ## 4. Domain-Skill-Vorschlag inkl. Scan-Dialog
@@ -98,7 +98,7 @@ Eingerichtet:
 - Living-Documentation-Einstiegsseite
 
 Offen:
-- Projekt-Plattform-System nicht eingerichtet (kein Backend-Bedarf erkannt)
+- MGD-Plattform-Builder nicht eingerichtet (kein Web-/Plattform-Projekt)
 - Keine weitere Live-Suche durchgeführt (nicht gewünscht)
 
 Viel Erfolg mit Sternenstaub-Sammler!

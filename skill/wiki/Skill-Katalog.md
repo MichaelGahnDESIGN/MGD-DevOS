@@ -21,11 +21,11 @@ Im JSON stehen die vier wählbaren Skills auf `mandatory: false` und Autopilot
 sowie AI-Thread auf `mandatory: true`. Der Projektmanager prüft vorhandene
 Installationen, bevor er Dateien kopiert.
 
-## Plattform-System (`mandatory: false`, eigene CLI, keine Datei-Kopie, kein Sicherheits-Scan nötig)
+## MGD-Plattform-Builder (`mandatory: false`, eigene CLI, keine Datei-Kopie, kein Sicherheits-Scan nötig)
 
 | Name | Kategorie | Quelle | Installationsart |
 |---|---|---|---|
-| [Projekt-Plattform-System](https://github.com/MichaelGahnDESIGN/Projekt-Plattform-System) | platform | mgd | `mgd-platform init --preset <preset> --target <pfad>` |
+| [MGD-Plattform-Builder](https://github.com/MichaelGahnDESIGN/MGD-Plattform-Builder) | platform | mgd | `mgd-platform init --preset <preset> --target <pfad>` |
 
 ## Optionale MGD-Fach-Skills (`mandatory: false`)
 

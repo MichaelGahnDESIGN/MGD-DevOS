@@ -5,6 +5,9 @@ kompatible Agenten.
 
 > **Ein Projekt. Ein klarer Stand. Ein geführter nächster Schritt.**
 
+Version <!-- mgd:version -->0.6.0 Pre-Alpha<!-- /mgd:version --> – gemeinsam mit der
+[MGD-DevOS-App](../README.md), einzige Quelle ist `assets/meta/version.json`.
+
 [Deutsch](README.md) · [English](docs/i18n/README.en.md) · [Español](docs/i18n/README.es.md) · [Français](docs/i18n/README.fr.md) · [Wiki](wiki/Home.md) · [Release](https://github.com/MichaelGahnDESIGN/MGD-DevOS/releases)
 
 Der MGD-DevOS hilft dir, ein Projekt neu zu beginnen, ein
@@ -31,17 +34,18 @@ Install-Befehl (Claude Code, global) und Start:
 
 ```bash
 git clone --depth 1 https://github.com/MichaelGahnDESIGN/MGD-DevOS.git /tmp/mgd-devos
-mkdir -p ~/.claude/skills ~/.claude/commands
-cp -R /tmp/mgd-devos/skill ~/.claude/skills/mgd-devos
-cp ~/.claude/skills/mgd-devos/.claude/commands/dashboard.md ~/.claude/commands/
+mkdir -p ~/.claude/skills/mgd-devos ~/.claude/commands
+cp -R /tmp/mgd-devos/skill/. ~/.claude/skills/mgd-devos/
+cp ~/.claude/skills/mgd-devos/.claude/commands/*.md ~/.claude/commands/
 ```
 
-Start im Assistenten: `/projektstart` (Einrichtung) bzw. `/Dashboard`.
+Das installiert alle Befehle: `/projektstart`, `/projektstart-update`, `/projektstart-katalog`,
+`/projektstart-katalog-add` und `/dashboard`. Start im Assistenten: `/projektstart` (Einrichtung), danach `/dashboard`.
 Codex und projekt-lokale Variante: [wiki/Setup.md](wiki/Setup.md).
 
 ## In einer Minute verstehen
 
-1. Starte mit `/Dashboard`.
+1. Starte mit `/dashboard`.
 2. Der Assistent liest Regeln, Dokumentation und tatsächlichen Git-Stand.
 3. Er zeigt verständlich, was bestätigt, offen oder riskant ist.
 4. Er schlägt nur die Skills und MCPs vor, die zum Projekt passen.
@@ -50,7 +54,7 @@ Codex und projekt-lokale Variante: [wiki/Setup.md](wiki/Setup.md).
 Du entscheidest weiterhin über Installationen, externe Verbindungen, Pushes,
 Deployments und Löschungen.
 
-**Der ultimative Projektstart-Skill: ein Assistent, der ein neues Projekt in einem Rutsch mit allen passenden MGD- und Dritt-Skills ausstattet — sicher vorgeprüft, nicht blind installiert.**
+**Projektstart mit MGD-DevOS: ein Assistent, der ein neues Projekt in einem Rutsch mit allen passenden MGD- und Dritt-Skills ausstattet — sicher vorgeprüft, nicht blind installiert.**
 
 ## Problem & Vision
 
@@ -61,17 +65,16 @@ Jedes neue Projekt beginnt mit denselben Fragen: Wie heißt es, was ist der Umfa
 1. Interview zu den Projektdaten.
 2. Vier wählbare MGD-Skills und die Basis-Skills Autopilot und AI-Thread
    einrichten.
-3. Optionales Angebot des eigenständigen Projekt-Plattform-Systems bei Backend-Bedarf.
+3. Empfehlung des eigenständigen [MGD-Plattform-Builders](https://github.com/MichaelGahnDESIGN/MGD-Plattform-Builder) bei Web- und Plattform-Projekten.
 4. Vorschlag passender Domain-Skills — zuerst aus einem kuratierten Startkatalog, danach optional per Live-Suche auf GitHub.
 5. **Pflicht-Sicherheits-Scan** jedes Dritt-Skills vor der Installation.
 6. Automatisches Eintragen der Projektdetails in alle installierten Skills.
 7. Abschluss-Zusammenfassung — und ein Updater (`/projektstart-update`), der später den Stand aller installierten Skills mit den Quell-Repos vergleicht.
-8. Ein lokales Dashboard (`/Dashboard`) als zentrale Sicht für Stand, Risiken,
+8. Ein lokales Dashboard (`/dashboard`) als zentrale Sicht für Stand, Risiken,
    Skills und nächste Schritte.
 
-`/projektstart` bleibt als Kompatibilitätsalias erhalten. Der bevorzugte
-Einstieg ist `/Dashboard` (manche Tools schreiben den Befehl klein als
-`/dashboard`). Der Assistent arbeitet nach dem Autopilot-Prinzip: Vertrag,
+`/projektstart` richtet ein Projekt ein, `/dashboard` ist die tägliche
+Projektzentrale. Der Assistent arbeitet nach dem Autopilot-Prinzip: Vertrag,
 Validierung nach Änderungen und harte Leitplanken. Details siehe
 [SKILL.md](SKILL.md) und [wiki/Sicherheitskonzept.md](wiki/Sicherheitskonzept.md).
 
@@ -81,15 +84,15 @@ Siehe [wiki/Setup.md](wiki/Setup.md) für die ausführliche Anleitung (Claude Co
 
 ```bash
 git clone --depth 1 https://github.com/MichaelGahnDESIGN/MGD-DevOS.git /tmp/mgd-devos
-mkdir -p ~/.claude/skills ~/.claude/commands
-cp -R /tmp/mgd-devos/skill ~/.claude/skills/mgd-devos
-cp ~/.claude/skills/mgd-devos/.claude/commands/dashboard.md ~/.claude/commands/
+mkdir -p ~/.claude/skills/mgd-devos ~/.claude/commands
+cp -R /tmp/mgd-devos/skill/. ~/.claude/skills/mgd-devos/
+cp ~/.claude/skills/mgd-devos/.claude/commands/*.md ~/.claude/commands/
 ```
 
 ## Erste Schritte
 
 ```
-/Dashboard
+/dashboard
 ```
 
 öffnet oder erstellt die zentrale Projektzentrale. Sie erklärt am Ende in
@@ -100,8 +103,8 @@ einfachen Worten, wie die Skills im jeweiligen Projekt zusammenarbeiten.
 
 | Befehl | Zweck |
 |---|---|
-| `/Dashboard` | Zentrale AI-Dev-OS-Ansicht: Stand, Risiken, Skills, nächste Schritte und Einstellungen |
-| `/projektstart` | Zentraler 7-Schritte-Assistent: Interview → MGD-Skills (inkl. Autopilot und AI-Thread) → optionales Plattform-Gerüst → Domain-Skills → Sicherheits-Scan → Details eintragen → Zusammenfassung |
+| `/dashboard` | Zentrale AI-Dev-OS-Ansicht: Stand, Risiken, Skills, nächste Schritte und Einstellungen |
+| `/projektstart` | Geführter Assistent: Interview → MGD-Skills (inkl. Autopilot und AI-Thread) → MGD-Plattform-Builder bei Web-/Plattform-Projekten → Domain-Skills → Sicherheits-Scan → Details eintragen → Zusammenfassung → `/dashboard` |
 | `/thread` | Belegte Übergabe an einen neuen Codex- oder Claude-Code-Thread; fertige Änderungen werden vorher gemäß Projektregeln gesichert und gepusht |
 | `/projektstart-update` | Vergleicht installierte Skill-Stände (`PROJEKT/.projektstart-manifest.json`) mit dem aktuellen Stand der Quell-Repos und bietet gezielte Updates an |
 | `/projektstart-katalog` | Zeigt den kuratierten Startkatalog formatiert an, mit Kategorie-Filter |
@@ -175,11 +178,11 @@ Innerhalb dieses Ablaufs wirkt der Autopilot-Mechanismus als Leitplanke: schläg
 Interview angeboten. Autopilot und AI-Thread gehören standardmäßig zum
 Projektstart; vorhandene Installationen werden zuerst geprüft.
 
-### Plattform-System (eigene CLI, kein Sicherheits-Scan nötig)
+### MGD-Plattform-Builder (eigene CLI, kein Sicherheits-Scan nötig)
 
 | Skill | Beschreibung | Kategorie |
 |---|---|---|
-| [Projekt-Plattform-System](https://github.com/MichaelGahnDESIGN/Projekt-Plattform-System) | Umfangreiches Referenz-System für Backend/Admin/Compliance-lastige Plattformen mit eigener CLI `mgd-platform` (`init --preset`, `validate`, `doctor`, `audit`, `release-check`, `module create`, `update`) | platform |
+| [MGD-Plattform-Builder](https://github.com/MichaelGahnDESIGN/MGD-Plattform-Builder) | Empfohlen für Websites und Plattformen: Referenz-System mit Backoffice, Rechten, Rechtstexten und Versionierung, eigene CLI `mgd-platform` (`init --preset`, `validate`, `doctor`, `audit`, `release-check`, `module create`, `update`). Die MGD-DevOS-App zeigt Version und Status solcher Projekte (`MGD_PLATFORM.yml`, `version.json`) an. | platform |
 
 ### Optionale MGD-Fach-Skills
 
@@ -236,16 +239,16 @@ aktuellen Katalogstand gibt es für beide jedoch kein eindeutig zuordenbares
 vorhandenen Shop statt eine unklare Erweiterung zu behaupten oder zu
 installieren.
 
-## MGD-DevOS: geplante Desktop-Zentrale
+## MGD-DevOS-Desktop-App
 
-[MGD-DevOS](docs/mgd-devos/ARCHITEKTUR.md) ist die geplante lokale Flutter-
-Desktop-Anwendung für macOS, Windows und Linux. Sie zeigt Projekte,
-Dokumentation, Skills, MCPs, Docker, Backups und einen echten Agentengraphen
-an. Sie ist keine zweite Agenten-Runtime: Adapter liefern nur tatsächlich
-verfügbare Daten und riskante Aktionen bleiben freigabepflichtig.
+Die [MGD-DevOS-App](../README.md) ist die lokale Flutter-Desktop-Anwendung für
+macOS, Windows und Linux im selben Repository. Sie zeigt die Dashboards aller
+Projekte in Tabs, ein Projektregister und einen Agentengraphen aus echten
+Projektdateien. Sie ist keine zweite Agenten-Runtime; weitere Ansichten (Docker,
+Backups, Live-Adapter) beschreibt der [Architekturentwurf](docs/mgd-devos/ARCHITEKTUR.md).
 
-Der Entwurf ist local-first, ohne Telemetrie als Standard und mit optionalem
-App-Sperrbildschirm. Secrets gehören in den Schlüsselbund des Betriebssystems,
+Sie arbeitet local-first ohne Telemetrie und hat einen optionalen
+PIN-Sichtschutz beim Start (nur gegen neugierige Blicke, kein Zugriffsschutz). Secrets gehören in den Schlüsselbund des Betriebssystems,
 nicht in Git oder eine Flutter-Datenbank. Die separate
 [Stripe-Spendenkonzeption](docs/mgd-devos/STRIPE-SPENDEN.md) nutzt ausschließlich
 Stripe-gehostete Zahlungsseiten; MGD-DevOS verarbeitet keine Kartendaten.
@@ -261,7 +264,7 @@ Stripe-gehostete Zahlungsseiten; MGD-DevOS verarbeitet keine Kartendaten.
 | [Setup](wiki/Setup.md) | Installationsanleitung Claude Code + Codex |
 | [Updater](wiki/Updater.md) | Funktionsweise von `/projektstart-update` |
 | [Beispiel-Ablauf](wiki/Beispiel-Ablauf.md) | Durchgespieltes Beispiel: Mobile-Game-Projekt |
-| [Dashboard](wiki/Dashboard.md) | Farben, Einstellungen, `/Dashboard` und Browser-Präferenz |
+| [Dashboard](wiki/Dashboard.md) | Farben, Einstellungen, `/dashboard` und Browser-Präferenz |
 | [Migration](wiki/Migration.md) | Bestehende Projekte ohne doppelte Struktur übernehmen |
 | [Kompetenz-Matrix](wiki/Kompetenz-Matrix.md) | Auswahl für Engines, Design, Office, Daten, CMS und Social Media |
 | [Thread-Übergabe](wiki/Thread-Übergabe.md) | `/thread`, Git-Sicherung und Startprompt für den nächsten Agenten |
@@ -287,7 +290,7 @@ Stripe-gehostete Zahlungsseiten; MGD-DevOS verarbeitet keine Kartendaten.
 | [MGD_Living-Documentation](https://github.com/MichaelGahnDESIGN/MGD_Living-Documentation) | Lebendige Projektdokumentation (Entscheidungen, offene Punkte, Risiken, Testnachweise) |
 | [MGD_Autopilot_SKILL](https://github.com/MichaelGahnDESIGN/MGD_Autopilot_SKILL) | Unbeaufsichtigtes Abarbeiten eines Projektziels mit Vertrag, Validierung nach jeder Änderung und Sicherheitsleitplanken |
 | [MGD_AI-Thread](https://github.com/MichaelGahnDESIGN/MGD_AI-Thread) | Nachvollziehbare Übergabe zwischen Codex und Claude Code mit Git-Sicherung fertiger Arbeit |
-| [Projekt-Plattform-System](https://github.com/MichaelGahnDESIGN/Projekt-Plattform-System) | Eigenständiges Referenz-System für Backend/Admin/Compliance-lastige Plattformen mit CLI `mgd-platform` |
+| [MGD-Plattform-Builder](https://github.com/MichaelGahnDESIGN/MGD-Plattform-Builder) | Eigenständiges Referenz-System für Websites und Plattformen mit CLI `mgd-platform` |
 
 ## Release-Paket
 
@@ -300,8 +303,11 @@ gepackt.
 
 ## Lizenz
 
-MIT — siehe [LICENSE](LICENSE).
+MGD-Lizenz 1.0 — siehe [LICENSE](LICENSE) und [NOTICE](NOTICE). Das Label „powered by: Michael Gahn DESIGN" mit
+Logo und Link in Dashboards bleibt immer erhalten. Frühere Versionen bleiben unter der Lizenz, unter der sie
+veröffentlicht wurden.
 
 ## Impressum
 
-Siehe [IMPRESSUM.md](IMPRESSUM.md).
+Impressum des Herausgebers: [michael-gahn.de/impressum](https://michael-gahn.de/impressum).
+[IMPRESSUM.md](IMPRESSUM.md) ist eine Vorlage mit Platzhaltern für dein eigenes Projekt.
