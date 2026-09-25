@@ -6,7 +6,7 @@ assets/meta/version.json; dieses Skript schreibt sie weiter:
 
 - pubspec.yaml: version: X.Y.Z+build
 - assets/meta/versions.json: Timeline aus CHANGELOG.md und skill/CHANGELOG.md
-- skill/dashboard/index.html: eingebettete Metadaten (Version, Timeline, Credits)
+- skill/dashboard/index.html und integration_test/fixtures/control_plane_dashboard.html: eingebettete Metadaten (Version, Timeline, Credits)
 - README.md, skill/README.md, skill/SKILL.md: Text zwischen den Markern
   <!-- mgd:version -->…<!-- /mgd:version --> (z. B. „0.5.2 Pre-Alpha")
 - README.md: Anzahl der Tests zwischen <!-- mgd:tests -->…<!-- /mgd:tests -->
@@ -89,15 +89,17 @@ def main():
 
     outputs[META / "versions.json"] = json.dumps(timeline, ensure_ascii=False, indent=2) + "\n"
 
-    dash = ROOT / "skill/dashboard/index.html"
-    d = dash.read_text(encoding="utf-8")
     payload = json.dumps({"version": version, "versions": timeline, "credits": credits}, ensure_ascii=False, separators=(",", ":"))
     # Jedes "<" als < schreiben: Texte können so weder das <script> beenden noch den Parser umschalten.
     payload = payload.replace("<", "\\u003c")
     block = f"{START}window.MGD_META={payload};{END}"
-    if START not in d:
-        sys.exit("Marker für Metadaten fehlt in skill/dashboard/index.html")
-    outputs[dash] = re.sub(re.escape(START) + ".*?" + re.escape(END), lambda _: block, d, count=1, flags=re.S)
+    # Dashboard-Vorlage und die Test-Fixture des Integrationstests tragen dieselben eingebetteten Metadaten.
+    for rel in ("skill/dashboard/index.html", "integration_test/fixtures/control_plane_dashboard.html"):
+        dash = ROOT / rel
+        d = dash.read_text(encoding="utf-8")
+        if START not in d:
+            sys.exit(f"Marker für Metadaten fehlt in {rel}")
+        outputs[dash] = re.sub(re.escape(START) + ".*?" + re.escape(END), lambda _: block, d, count=1, flags=re.S)
 
     tests = count_tests()
     for rel in sorted(set(VERSION_DOCS) | set(TEST_DOCS)):
