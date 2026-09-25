@@ -64,6 +64,20 @@
     ]
   },
   {
+    "version": "0.6.0",
+    "date": "2026-09-25",
+    "component": "Projektmanager-Skill",
+    "notes": [
+      "Versionierung: Skill und App tragen dieselbe Version; `SKILL.md` und `README.md` zeigen sie an.",
+      "Befehle einheitlich kleingeschrieben; Befehlsdateien für `/projektstart`, `/projektstart-update`, `/projektstart-katalog`, `/projektstart-katalog-add` und `/dashboard` für Claude Code und Codex; Installation einheitlich nach `~/.claude/skills/mgd-devos` (Setup und README korrigiert).",
+      "MGD-Plattform-Builder (vormals Projekt-Plattform-System) wird für Web- und Plattform-Projekte empfohlen, mit den tatsächlichen Presets `general`, `game`, `community`, `creator`, `ecommerce`.",
+      "Lizenz: MGD-Lizenz statt MIT; `LICENSE` und `NOTICE` liegen jetzt im Skill-Ordner und damit im Skill-ZIP. Pflicht-Label heißt „powered by: Michael Gahn DESIGN\" (`data-mgd-powered-by`), Link öffnet in neuem Tab.",
+      "Dashboard: PIN-Hinweis ehrlich als Sichtschutz beschrieben.",
+      "`IMPRESSUM.md` ist jetzt eine Vorlage mit Platzhaltern.",
+      "Katalog: Godot AI (hi-godot/godot-ai, MIT, Asset Library 5050) als Editor-MCP-Plugin für Spiele-Projekte aufgenommen, mit Sicherheitshinweis (nur gegen eine Arbeitskopie, nicht in Exporte)."
+    ]
+  },
+  {
     "version": "0.3.0",
     "date": "2026-09-24",
     "component": "App",
@@ -196,20 +210,6 @@
       "Sicherheitskonzept ergänzt: jeder Dritt-Skill wird vor Installation mit `NVIDIA/SkillSpector` und/oder `affaan-m/agentshield` gescannt; ohne Scanner erfolgt eine explizite Warnung mit zusätzlicher Bestätigung.",
       "Ausführliche `README.md`, `LICENSE` (MIT), `IMPRESSUM.md` und `wiki/`-Quellseiten (Home, Befehle, Sicherheitskonzept, Skill-Katalog, Setup, Updater, Beispiel-Ablauf) hinzugefügt.",
       "Command-Wrapper für Claude Code (`.claude/commands/projektstart.md`) und Codex (`.codex/commands/projektstart.md`) ergänzt."
-    ]
-  },
-  {
-    "version": "0.6.0",
-    "date": "",
-    "component": "Projektmanager-Skill",
-    "notes": [
-      "Versionierung: Skill und App tragen dieselbe Version; `SKILL.md` und `README.md` zeigen sie an.",
-      "Befehle einheitlich kleingeschrieben; Befehlsdateien für `/projektstart`, `/projektstart-update`, `/projektstart-katalog`, `/projektstart-katalog-add` und `/dashboard` für Claude Code und Codex; Installation einheitlich nach `~/.claude/skills/mgd-devos` (Setup und README korrigiert).",
-      "MGD-Plattform-Builder (vormals Projekt-Plattform-System) wird für Web- und Plattform-Projekte empfohlen, mit den tatsächlichen Presets `general`, `game`, `community`, `creator`, `ecommerce`.",
-      "Lizenz: MGD-Lizenz statt MIT; `LICENSE` und `NOTICE` liegen jetzt im Skill-Ordner und damit im Skill-ZIP. Pflicht-Label heißt „powered by: Michael Gahn DESIGN\" (`data-mgd-powered-by`), Link öffnet in neuem Tab.",
-      "Dashboard: PIN-Hinweis ehrlich als Sichtschutz beschrieben.",
-      "`IMPRESSUM.md` ist jetzt eine Vorlage mit Platzhaltern.",
-      "Katalog: Godot AI (hi-godot/godot-ai, MIT, Asset Library 5050) als Editor-MCP-Plugin für Spiele-Projekte aufgenommen, mit Sicherheitshinweis (nur gegen eine Arbeitskopie, nicht in Exporte)."
     ]
   }
 ]

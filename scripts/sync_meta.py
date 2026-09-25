@@ -57,7 +57,7 @@ def build():
     for e in app:
         if tuple(map(int, e["version"].split("."))) >= (0, 5, 0):
             e["component"] = "MGD-DevOS"
-    skill = parse_changelog(ROOT / "skill/CHANGELOG.md", "Projektmanager-Skill", r"^## (\d+\.\d+\.\d+)(?: - ([0-9-]{10}))?")
+    skill = parse_changelog(ROOT / "skill/CHANGELOG.md", "Projektmanager-Skill", r"^## (\d+\.\d+\.\d+)(?: - | \()?([0-9-]{10})?")
     # Neueste zuerst; bei gleichem Datum steht MGD-DevOS vor App und Skill.
     rank = {"MGD-DevOS": 2, "App": 1, "Projektmanager-Skill": 0}
     timeline = sorted(app + skill, key=lambda e: (e["date"] or "0000", rank.get(e["component"], 0), tuple(map(int, e["version"].split(".")))), reverse=True)
