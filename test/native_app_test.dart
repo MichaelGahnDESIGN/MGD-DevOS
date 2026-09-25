@@ -79,7 +79,8 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
     }
     expect(find.text('MGD-DevOS ist gesperrt'), findsOneWidget);
-    expect(find.textContaining('Version 0.5.1'), findsOneWidget);
+    expect(find.textContaining('Version ${appState.meta.version}'), findsOneWidget);
+    expect(appState.meta.version, isNot('?'));
 
     await tester.enterText(find.byType(TextField), '2468');
     await tester.tap(find.text('Entsperren'));
