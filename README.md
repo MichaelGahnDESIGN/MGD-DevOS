@@ -131,3 +131,43 @@ Regeln für Beiträge, Tests und CI stehen in [Entwicklung und CI](wiki/Entwickl
 ---
 
 <p align="center"><a href="https://Michael-Gahn.de"><img src="assets/brand/logo-64.png" width="24" alt=""> <b>supported by: Michael Gahn DESIGN</b></a></p>
+
+<!-- MGD-LEGAL -->
+---
+
+## Lizenz
+
+Dieses Projekt steht unter der [PolyForm Noncommercial 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0). Den vollständigen Text enthält die Datei [LICENSE](LICENSE).
+
+## Impressum
+
+**Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)**
+
+Michael Gahn DESIGN  
+Michael Gahn  
+Dr.-Theodor-Brugsch Str. 12  
+08529 Plauen  
+Sachsen  
+Deutschland
+
+Tel.: +49 (0) 151 59156639  
+E-Mail: Anfrage@Michael-Gahn.de
+
+Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:  
+Steuernummer: 223/222/02451  
+Ust-ID: DE288143343
+
+Wir sind zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle weder verpflichtet noch bereit.
+
+**Redaktionell verantwortlich:**
+
+Michael Gahn DESIGN  
+Michael Gahn  
+Dr.-Theodor-Brugsch Str. 12  
+08529 Plauen  
+Sachsen  
+Deutschland
+
+Tel.: +49 (0) 151 59156639  
+E-Mail: Anfrage@Michael-Gahn.de
+<!-- /MGD-LEGAL -->
