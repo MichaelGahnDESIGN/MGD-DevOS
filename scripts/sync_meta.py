@@ -61,8 +61,8 @@ def main():
     dash = ROOT / "skill/dashboard/index.html"
     d = dash.read_text(encoding="utf-8")
     payload = json.dumps({"version": version, "versions": timeline, "credits": credits}, ensure_ascii=False, separators=(",", ":"))
-    # "</" escapen, damit Texte nie das <script>-Tag beenden können.
-    payload = payload.replace("</", "<\\/")
+    # Jedes "<" als \u003c schreiben: Texte können so weder das <script> beenden noch den Parser umschalten.
+    payload = payload.replace("<", "\\u003c")
     block = f"{START}window.MGD_META={payload};{END}"
     if START not in d:
         sys.exit("Marker für Metadaten fehlt in skill/dashboard/index.html")

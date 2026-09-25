@@ -58,16 +58,28 @@ class AppState extends ChangeNotifier {
   String? lastScanError;
 
   Future<void> bootstrap() async {
-    meta = await AppMeta.load();
-    final record = await pin.read();
-    pinLength = record?.length;
-    locked = record != null;
-    onboardingDone = await _settings.isOnboardingDone();
-    themeMode = await _settings.getThemeMode();
-    accentColor = await _settings.getAccentColor();
-    projectsRoot = await _settings.getProjectsRoot();
-    isLoading = false;
-    notifyListeners();
+    try {
+      meta = await AppMeta.load();
+      try {
+        final record = await pin.read();
+        pinLength = record?.length;
+        locked = record != null;
+      } catch (_) {
+        // Unlesbare PIN-Daten verhalten sich wie "keine PIN" (gleich wie im Dashboard), statt die App
+        // dauerhaft zu blockieren.
+        pinLength = null;
+        locked = false;
+      }
+      onboardingDone = await _settings.isOnboardingDone();
+      themeMode = await _settings.getThemeMode();
+      accentColor = await _settings.getAccentColor();
+      projectsRoot = await _settings.getProjectsRoot();
+    } catch (e) {
+      lastScanError = 'Einstellungen konnten nicht geladen werden: $e';
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
 
     if (projectsRoot != null && projectsRoot!.isNotEmpty) {
       await rescan();

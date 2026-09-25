@@ -264,19 +264,35 @@ class _RulesEditorState extends State<_RulesEditor> {
 
   File get _file => File(p.join(_projectPath!, fileName));
 
+  // Zähler verwirft Ergebnisse älterer Ladevorgänge, falls schnell zwischen Projekten gewechselt wird.
+  int _loadId = 0;
+  bool _loaded = false;
+
   Future<void> _load(String path) async {
+    final id = ++_loadId;
     setState(() {
       _projectPath = path;
-      _status = null;
-    });
-    final f = _file;
-    final exists = await f.exists();
-    _text.text = exists ? await f.readAsString() : '# Grundregeln\n\n- Antworte auf Deutsch, einfach und knapp.\n- Keine Secrets lesen oder ausgeben.\n- Installationen, Pushes und Löschungen nur nach Freigabe.\n';
-    if (!mounted) return;
-    setState(() {
+      _loaded = false;
       _dirty = false;
-      _status = exists ? 'Geladen: ${f.path}' : 'Noch keine $fileName, Vorschlag geladen.';
+      _status = 'Lade …';
+      _text.clear();
     });
+    final f = File(p.join(path, fileName));
+    try {
+      final exists = await f.exists();
+      final content = exists
+          ? await f.readAsString()
+          : '# Grundregeln\n\n- Antworte auf Deutsch, einfach und knapp.\n- Keine Secrets lesen oder ausgeben.\n- Installationen, Pushes und Löschungen nur nach Freigabe.\n';
+      if (!mounted || id != _loadId) return;
+      setState(() {
+        _text.text = content;
+        _loaded = true;
+        _status = exists ? 'Geladen: ${f.path}' : 'Noch keine $fileName, Vorschlag geladen.';
+      });
+    } catch (e) {
+      if (!mounted || id != _loadId) return;
+      setState(() => _status = 'Datei konnte nicht gelesen werden: $e');
+    }
   }
 
   Future<void> _save() async {
@@ -328,6 +344,7 @@ class _RulesEditorState extends State<_RulesEditor> {
           const SizedBox(height: Space.md),
           TextField(
             controller: _text,
+            enabled: _loaded,
             minLines: 10,
             maxLines: 20,
             onChanged: (_) => setState(() => _dirty = true),
@@ -337,7 +354,7 @@ class _RulesEditorState extends State<_RulesEditor> {
           const SizedBox(height: Space.md),
           Row(
             children: [
-              FilledButton.icon(onPressed: _dirty ? _save : null, icon: const Icon(Icons.save_outlined, size: 16), label: const Text('Speichern')),
+              FilledButton.icon(onPressed: _dirty && _loaded ? _save : null, icon: const Icon(Icons.save_outlined, size: 16), label: const Text('Speichern')),
               const SizedBox(width: Space.sm),
               OutlinedButton(onPressed: () => _load(_projectPath!), child: const Text('Neu laden')),
             ],

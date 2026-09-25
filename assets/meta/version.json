@@ -1,7 +1,7 @@
 {
-  "version": "0.5.1",
+  "version": "0.5.2",
   "stage": "Pre-Alpha",
-  "build": 8,
+  "build": 9,
   "date": "2026-09-25",
   "scheme": "1.2.3: 1 = Hauptversion ab Release, 2 = neue Funktionen, 3 = Patches und Verbesserungen bestehender Funktionen"
 }

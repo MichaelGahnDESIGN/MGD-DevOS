@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.2 (2026-09-25, Pre-Alpha)
+
+- Sicherheit (Dashboard): Pfadprüfung für eingebettete Projektdateien über die aufgelöste Adresse; Backslashes, %-Kodierung, Steuerzeichen und fremde Schemata werden abgelehnt, iframes laufen mit `sandbox`.
+- Sicherheit (Dashboard): Metadaten werden vollständig escaped; PIN-Prüfung verhindert parallele Versuche; beschädigte PIN-Daten gelten wie in der App als „keine PIN".
+- Dashboard: Ziehen und Größe ändern über eingebetteten Seiten bleibt nicht mehr hängen; minimierte Fenster werden nicht mehr per „W" geschlossen; gespeicherte Fenster erscheinen immer sichtbar; Credits-JSON wird geprüft; Pfade mit „&" funktionieren; Esc im Menü behält den Fokus.
+- App: Grundregeln-Editor kann bei schnellem Projektwechsel oder Lesefehlern keine falsche Datei mehr überschreiben; Sperrbildschirm zeigt während der Wartezeit keine falsche Meldung; Fehler beim Start führen nicht mehr zu endlosem Laden.
+
 ## 0.5.1 (2026-09-25, Pre-Alpha)
 
 - Projektmanager und App vereint: Der Skill liegt jetzt unter `skill/` in diesem Repository, alles heißt MGD-DevOS und trägt eine gemeinsame Version.

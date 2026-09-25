@@ -43,11 +43,16 @@ class _LockScreenState extends State<LockScreen> {
     if (left > Duration.zero) {
       setState(() => _message = 'Zu viele Fehlversuche. Bitte ${left.inSeconds + 1} s warten.');
       _tick = Timer(const Duration(seconds: 1), _showLockout);
+    } else if (_message != null && _message!.startsWith('Zu viele')) {
+      setState(() => _message = null);
     }
   }
 
   Future<void> _submit() async {
     if (_busy) return;
+    // Während der Wartezeit gar nicht prüfen, sonst erschiene auch eine richtige PIN als "falsch".
+    if (await widget.appState.pin.remainingLockout() > Duration.zero) return _showLockout();
+    if (!mounted) return;
     setState(() => _busy = true);
     final ok = await widget.appState.unlock(_controller.text);
     if (!mounted) return;
