@@ -1,4 +1,4 @@
-<p align="center"><a href="https://Michael-Gahn.de"><img src="assets/brand/logo-64.png" alt="Michael Gahn DESIGN" width="48"></a></p>
+<p align="center"><a href="https://michael-gahn.de" target="_blank" rel="noopener"><img src="assets/brand/logo-64.png" alt="Michael Gahn DESIGN" width="48"></a></p>
 
 <p align="center"><img src="assets/banner.svg" alt="MGD-DevOS" width="100%"></p>
 
@@ -6,13 +6,13 @@
   <a href="https://github.com/MichaelGahnDESIGN/MGD-DevOS/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/MichaelGahnDESIGN/MGD-DevOS/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="Plattformen" src="https://img.shields.io/badge/macOS%20%C2%B7%20Windows%20%C2%B7%20Linux-Flutter%203.47-2f6fed">
   <a href="https://github.com/MichaelGahnDESIGN/MGD-DevOS/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/MichaelGahnDESIGN/MGD-DevOS?label=Release"></a>
-  <a href="LICENSE"><img alt="Lizenz" src="https://img.shields.io/badge/Lizenz-PolyForm%20Noncommercial-blue"></a>
+  <a href="LICENSE"><img alt="Lizenz" src="https://img.shields.io/badge/Lizenz-MGD--Lizenz-blue"></a>
   <img alt="Lokal" src="https://img.shields.io/badge/Daten-lokal%2C%20keine%20Telemetrie-2e9e6e">
 </p>
 
 **MGD-DevOS** ist deine Projektzentrale aus zwei Teilen in einem Repository:
 
-- **Desktop-App** (Flutter, macOS/Windows/Linux): Tabs für die Dashboards aller Projekte, Agentic Control Panel, PIN-Sperre.
+- **Desktop-App** (Flutter, macOS/Windows/Linux): Tabs für die Dashboards aller Projekte, Agentic Control Panel, PIN-Sichtschutz.
 - **Projektmanager-Skill** (`skill/`) für Claude Code, Codex & Co.: Projektstart, Skill-Auswahl, `/dashboard` mit einem
   Dashboard im Stil eines Programms (Menüleiste, verschiebbare Fenster, Einstellungen, Versionen, Credits).
 
@@ -20,7 +20,7 @@ Mit der App wechselst du zwischen den Dashboards aller Projekte. Die Daten liege
 Projektordnern, die Claude, Codex & Co. anlegen und pflegen. Die App zeigt sie an, sie
 braucht deshalb keinen eigenen Server und keinen Updater für Inhalte.
 
-> **Version 0.5.1 Pre-Alpha.** Installer für macOS, Windows und Linux entstehen über GitHub Actions, sie sind
+> **Version <!-- mgd:version -->0.6.0 Pre-Alpha<!-- /mgd:version -->** (App und Skill tragen dieselbe Version). Installer für macOS, Windows und Linux entstehen über GitHub Actions, sie sind
 > **unsigniert**, siehe [Download](#download). Versionsschema 1.2.3: 1 = Hauptversion ab Release, 2 = neue Funktionen,
 > 3 = Patches. Die Nummer steht zentral in [`assets/meta/version.json`](assets/meta/version.json).
 
@@ -53,11 +53,15 @@ Skill von Hand installieren (Claude Code, global):
 ```bash
 git clone --depth 1 https://github.com/MichaelGahnDESIGN/MGD-DevOS.git /tmp/mgd-devos
 mkdir -p ~/.claude/skills ~/.claude/commands
-cp -R /tmp/mgd-devos/skill ~/.claude/skills/mgd-devos
-cp ~/.claude/skills/mgd-devos/.claude/commands/dashboard.md ~/.claude/commands/
+mkdir -p ~/.claude/skills/mgd-devos
+cp -R /tmp/mgd-devos/skill/. ~/.claude/skills/mgd-devos/
+cp ~/.claude/skills/mgd-devos/.claude/commands/*.md ~/.claude/commands/
 ```
 
-Start im Assistenten: `/projektstart`, danach `/dashboard`. Codex und projekt-lokal: [skill/wiki/Setup.md](skill/wiki/Setup.md).
+Das kopiert den Skill nach `~/.claude/skills/mgd-devos` und alle Befehle: `/projektstart`, `/projektstart-update`,
+`/projektstart-katalog`, `/projektstart-katalog-add` und `/dashboard`. Derselbe Befehl aktualisiert eine bestehende
+Installation. Start im Assistenten: `/projektstart`, danach `/dashboard`. Codex und projekt-lokal:
+[skill/wiki/Setup.md](skill/wiki/Setup.md).
 
 App aus dem Quellcode:
 
@@ -84,10 +88,11 @@ Fertige Installer: siehe [Download](#download).
 | | |
 |---|---|
 | **Tab-Browser** | Tab „Übersicht" plus je ein Tab pro geöffnetem Projekt-Dashboard (`index.html`). Tabs wechseln und schließen. |
-| **Projektregister** | Scannt deinen Projektordner nach echten Projekten (Git, README, AGENTS.md, ...) und öffnet Dokumente. |
+| **Projektregister** | Scannt deinen Projektordner nach echten Projekten (Git, README, AGENTS.md, ...) und öffnet Dokumente. Projekte des [MGD-Plattform-Builders](#zusammenspiel-mit-dem-mgd-plattform-builder) zeigen ihre Version, z. B. „Plattform 0.0.1 Pre-Alpha". |
 | **Agentic Control Panel** | Graph aus Projekten, Agenten, Skills und Integrationen (aus `AGENTS.md` und `catalog/*.json`) mit Inspektor, Quelle und Zeitstempel. Nie ein erfundener „aktiv"-Status. |
 | **Darstellung** | Hell, Dunkel oder System, eigene Akzentfarbe. |
-| **Sicher by Design** | Alles lokal, keine Telemetrie, keine Zugangsdaten, Webview nur für Dateien im Projektordner. |
+| **PIN-Sichtschutz** | Optionale PIN beim Start gegen neugierige Blicke. Kein Zugriffsschutz, siehe [Sicherheit und Datenschutz](#sicherheit-und-datenschutz). |
+| **Lokal** | Keine Telemetrie, keine Zugangsdaten, Webview nur für Dateien im Projektordner. |
 
 ## So funktioniert es
 
@@ -100,13 +105,14 @@ Assistent (Claude/Codex)  ──pflegt──▶  Projektordner  ◀──liest�
 
 | Bereich | Stand |
 |---|---|
-| Code, Analyse, Tests | ✅ grün (15 Tests) |
+| Code, Analyse, Tests | ✅ grün (<!-- mgd:tests -->29 Tests<!-- /mgd:tests -->) |
 | macOS/Windows/Linux-Build | ✅ grün auf GitHub Actions, Installer im Release |
 | Start auf echten Geräten | ⏳ noch nicht manuell geprüft |
 | Dashboard im Webview (`file://`) | ✅ Integrationstest mit echter App auf macOS und Windows, Linux-Ausweichweg geprüft |
 | Linux | eingebettetes WebView nicht verfügbar, Dashboard öffnet im Browser |
 | Signierung/Notarisierung | ❌ nicht vorhanden (Apple Developer Program nötig) |
-| App-Sperre, Schlüsselbund, Live-Agenten-Adapter | ❌ geplant |
+| PIN-Sichtschutz (App und Dashboard) | ✅ vorhanden, nur Sichtschutz, keine Zugriffssicherung |
+| Schlüsselbund, Live-Agenten-Adapter | ❌ geplant |
 | Spenden (Stripe) | ❌ nicht eingerichtet, siehe [Stripe-Spenden](wiki/Stripe-Spenden.md) |
 
 ## Dokumentation
@@ -116,58 +122,52 @@ Tabs, Scanner, Agentic Panel, Sicherheit, Architektur, Entwicklung und CI, Relea
 
 ## Sicherheit und Datenschutz
 
-Keine Telemetrie, keine Zugangsdaten, keine Netzwerkzugriffe im Normalbetrieb. Gespeichert
-werden nur Theme, Akzentfarbe und der Projekt-Root-Pfad. Mehr: [Sicherheit](wiki/Sicherheit-und-Datenschutz.md).
+Keine Telemetrie, keine Zugangsdaten, keine Netzwerkzugriffe im Normalbetrieb.
+
+- **Gespeichert** (lokale App-Einstellungen des Betriebssystems): Farbschema, Akzentfarbe, Projektordner,
+  Onboarding-Status und, falls eine PIN gesetzt ist, deren Länge, Salz und PBKDF2-Hash sowie der Zähler für Fehlversuche.
+- **Geschrieben** wird in Projektordner nur, wenn du im Grundregeln-Editor speicherst (`GRUNDREGELN.md`, nach Rückfrage).
+  Dashboards im eingebetteten Webview speichern ihre eigenen Einstellungen im Browser-Speicher des Webviews.
+- **PIN = Sichtschutz.** Die PIN verdeckt App und Dashboard beim Start vor neugierigen Blicken. Sie schützt nicht vor
+  jemandem mit Zugriff auf dein Benutzerkonto oder deine Dateien (Einstellungen löschen genügt, Projektdateien sind
+  unverschlüsselt), und es gibt keine automatische Sperre bei Inaktivität.
+
+Mehr: [Sicherheit und Datenschutz](wiki/Sicherheit-und-Datenschutz.md).
+
+## Zusammenspiel mit dem MGD-Plattform-Builder
+
+Der [MGD-Plattform-Builder](https://github.com/MichaelGahnDESIGN/MGD-Plattform-Builder) erzeugt Websites und
+Plattformen (Backoffice, Rechte, Rechtstexte, Versionierung) mit der CLI `mgd-platform`. MGD-DevOS ergänzt ihn:
+
+- **Skill:** `/projektstart` empfiehlt den Plattform-Builder bei Web- und Plattform-Projekten und richtet ihn nach
+  Zustimmung per `mgd-platform init` ein (siehe [skill/SKILL.md](skill/SKILL.md)).
+- **App:** Der Projekt-Scanner erkennt Plattform-Projekte an `MGD_PLATFORM.yml` und zeigt Version und Status aus
+  deren `version.json` in der Projektkarte an, z. B. „Plattform 0.0.1 Pre-Alpha".
 
 ## Lizenz und Mitwirken
 
-Nutzen, ändern und Änderungen vorschlagen ist erlaubt, **verkaufen oder kommerziell nutzen nicht**
-([PolyForm Noncommercial 1.0.0](LICENSE)). Das ist keine Open-Source-Lizenz im Sinne der OSI.
-Beiträge willkommen, siehe [CONTRIBUTING.md](CONTRIBUTING.md).
+MGD-DevOS (App und Skill) steht unter der **MGD-Lizenz 1.0** ([LICENSE](LICENSE)): Nutzen, auch gewerblich, ändern und
+weitergeben ist erlaubt, solange das Label „powered by: Michael Gahn DESIGN" mit Logo und Link sichtbar bleibt und die
+Lizenz beiliegt. Entfernen des Labels nur mit Whitelabel-Lizenz. Das ist keine Open-Source-Lizenz im Sinne der OSI.
 
+Frühere Versionen bis einschließlich 0.5.2 wurden unter der PolyForm Noncommercial License 1.0.0 veröffentlicht und
+bleiben für diese Versionen unter jener Lizenz.
 
-Regeln für Beiträge, Tests und CI stehen in [Entwicklung und CI](wiki/Entwicklung-und-CI.md).
+Beiträge willkommen, siehe [CONTRIBUTING.md](CONTRIBUTING.md). Regeln für Tests und CI stehen in
+[Entwicklung und CI](wiki/Entwicklung-und-CI.md).
 
 ---
 
-<p align="center"><a href="https://Michael-Gahn.de"><img src="assets/brand/logo-64.png" width="24" alt=""> <b>supported by: Michael Gahn DESIGN</b></a></p>
+<p align="center"><a href="https://michael-gahn.de" target="_blank" rel="noopener"><img src="assets/brand/logo-64.png" width="24" alt=""> <b>powered by: Michael Gahn DESIGN</b></a></p>
 
 <!-- MGD-LEGAL -->
 ---
 
 ## Lizenz
 
-Dieses Projekt steht unter der [PolyForm Noncommercial 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0). Den vollständigen Text enthält die Datei [LICENSE](LICENSE).
+Dieses Projekt steht unter der [MGD-Lizenz 1.0](LICENSE). Den vollständigen Text enthält die Datei [LICENSE](LICENSE).
 
 ## Impressum
 
-**Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)**
-
-Michael Gahn DESIGN  
-Michael Gahn  
-Dr.-Theodor-Brugsch Str. 12  
-08529 Plauen  
-Sachsen  
-Deutschland
-
-Tel.: +49 (0) 151 59156639  
-E-Mail: Anfrage@Michael-Gahn.de
-
-Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:  
-Steuernummer: 223/222/02451  
-Ust-ID: DE288143343
-
-Wir sind zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle weder verpflichtet noch bereit.
-
-**Redaktionell verantwortlich:**
-
-Michael Gahn DESIGN  
-Michael Gahn  
-Dr.-Theodor-Brugsch Str. 12  
-08529 Plauen  
-Sachsen  
-Deutschland
-
-Tel.: +49 (0) 151 59156639  
-E-Mail: Anfrage@Michael-Gahn.de
+Angaben gemäß § 5 DDG: [michael-gahn.de/impressum](https://michael-gahn.de/impressum)
 <!-- /MGD-LEGAL -->

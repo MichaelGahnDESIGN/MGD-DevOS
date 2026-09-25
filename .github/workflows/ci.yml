@@ -1,17 +1,17 @@
 name: CI
 
-# Baut und prueft MGD-DevOS auf allen drei Zielplattformen. GitHub-Actions-
-# Runner bringen fuer macOS ein vollstaendiges Xcode mit (im Gegensatz zu
-# lokalen Entwicklungsrechnern ohne Xcode-Installation) und liefern damit
-# die erste echte macOS-Build-Verifikation. Windows- und Linux-Jobs pruefen
-# den Build auf den jeweiligen realen Plattformen (siehe README.md,
-# Abschnitt "Release und Betrieb").
+# Baut und prüft MGD-DevOS auf allen drei Zielplattformen: Analyse, Unit-Tests,
+# zentrale Version (scripts/sync_meta.py --check), Integrationstests mit der
+# echten App auf macOS, Windows und Linux sowie die Installer-Pakete.
+# release.yml ruft diesen Workflow per workflow_call auf und veröffentlicht
+# nur, wenn alles grün ist; die Pakete stammen dann aus genau diesem Lauf.
 
 on:
   push:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  workflow_call:
 
 env:
   FLUTTER_CHANNEL: stable
@@ -40,7 +40,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
-      - name: Xcode-Version pruefen
+      - name: Xcode-Version prüfen
         run: xcodebuild -version
       - name: Integrationstest (echte App, eingebettetes Dashboard)
         run: flutter test integration_test -d macos
@@ -85,7 +85,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
-      - name: Linux-Desktop-Abhaengigkeiten installieren
+      - name: Linux-Desktop-Abhängigkeiten installieren
         run: |
           sudo apt-get update
           sudo apt-get install -y clang cmake ninja-build pkg-config \

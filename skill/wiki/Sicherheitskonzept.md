@@ -54,9 +54,9 @@ klonen    (noch NICHT ins Projekt kopieren)
 
 Ein automatischer Scan ist eine Heuristik, kein Garant. Er senkt das Risiko offensichtlicher, maschinell erkennbarer Probleme erheblich, ersetzt aber keine menschliche Prüfung bei sicherheitskritischen Projekten (z. B. Skills, die produktiv mit echten Nutzerdaten arbeiten). Der Assistent weist bei CRITICAL/HIGH-Findings ausdrücklich darauf hin, dass eine manuelle Code-Durchsicht sinnvoll sein kann.
 
-## Warum die MGD-Kern-Skills und das Plattform-System ausgenommen sind
+## Warum die MGD-Kern-Skills und der MGD-Plattform-Builder ausgenommen sind
 
-Die sechs MGD-Skills des Basisangebots (`requiresScan: false`; Autopilot und AI-Thread sind `mandatory: true`) sowie das Projekt-Plattform-System stammen aus dem eigenen GitHub-Konto des Betreibers (`MichaelGahnDESIGN`). Der spezielle Dritt-Skill-Scan wird daher hier nicht verlangt. Quelle, Dateien und vorhandene Installationen werden trotzdem geprüft.
+Die sechs MGD-Skills des Basisangebots (`requiresScan: false`; Autopilot und AI-Thread sind `mandatory: true`) sowie der MGD-Plattform-Builder stammen aus dem eigenen GitHub-Konto des Betreibers (`MichaelGahnDESIGN`). Der spezielle Dritt-Skill-Scan wird daher hier nicht verlangt. Quelle, Dateien und vorhandene Installationen werden trotzdem geprüft.
 
 ## Autopilot-Vertrag als zusätzliche Leitplanke
 

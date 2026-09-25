@@ -117,7 +117,7 @@ void main() {
   testWidgets('Echtes Control-Plane-Dashboard funktioniert im Tab', skip: Platform.isLinux, (t) async {
     final real = Directory(p.join(root.path, 'Echt'))..createSync();
     Directory(p.join(real.path, '.git')).createSync();
-    File('index.html').copySync(p.join(real.path, 'index.html'));
+    File('integration_test/fixtures/control_plane_dashboard.html').copySync(p.join(real.path, 'index.html'));
     // Kein gespeicherter Zustand aus früheren Läufen (Webview-Speicher bleibt pro App erhalten).
     SharedPreferences.setMockInitialValues({
       'onboarding_done_v1': true,
@@ -149,7 +149,7 @@ void main() {
     expect(await js('!window.MGD_DASHBOARD.wins.tasks'), true);
     await t.pump(const Duration(milliseconds: 300));
     expect(await js('document.querySelectorAll("#edges path").length'), 3);
-    expect(await js('!!document.querySelector("[data-mgd-supported-by] a[href=\'https://Michael-Gahn.de\']")'), true);
+    expect(await js('!!document.querySelector("[data-mgd-powered-by] a[href=\'https://michael-gahn.de\'][target=\'_blank\']")'), true);
     final version = (jsonDecode(File('assets/meta/version.json').readAsStringSync()) as Map)['version'];
     expect(await js('MGD_META.version.version'), version);
 

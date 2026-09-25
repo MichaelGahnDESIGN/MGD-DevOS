@@ -4,6 +4,7 @@ import 'package:path/path.dart' as p;
 
 import '../app_state.dart';
 import '../models/mgd_project.dart';
+import '../models/platform_info.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui.dart';
 import 'document_viewer_screen.dart';
@@ -66,7 +67,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               ? const EmptyState(
                   icon: Icons.folder_off_outlined,
                   title: 'Keine Projekte gefunden',
-                  message: 'Ein Projekt ist ein Unterordner mit .git, README.md, AGENTS.md, pubspec.yaml, package.json oder PROJEKT/.mgd-ai-projektmanager.json. Den Projektordner änderst du in den Einstellungen.',
+                  message: 'Ein Projekt ist ein Unterordner mit .git, README.md, AGENTS.md, pubspec.yaml, package.json oder PROJEKT/.mgd-ai-projektmanager.json oder MGD_PLATFORM.yml. Den Projektordner änderst du in den Einstellungen.',
                 )
               : projects.isEmpty
                   ? EmptyState(
@@ -117,6 +118,12 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   }
 }
 
+/// Text des Plattform-Badges in der Projektkarte, z. B. „Plattform 0.0.1 Pre-Alpha".
+String platformBadgeLabel(PlatformInfo platform) {
+  final label = platform.label;
+  return label == null ? 'MGD-Plattform' : 'Plattform $label';
+}
+
 class _ProjectCard extends StatelessWidget {
   const _ProjectCard({required this.project, required this.dateFormat, this.onOpenDashboard});
 
@@ -129,7 +136,10 @@ class _ProjectCard extends StatelessWidget {
     final t = Theme.of(context).textTheme;
     final c = context.colors;
     final scheme = Theme.of(context).colorScheme;
+    final platform = project.platform;
     final features = <(String, Tone)>[
+      // Plattform-Stand zuerst, damit er bei vielen Merkmalen sichtbar bleibt.
+      if (platform != null) (platformBadgeLabel(platform), Tone.accent),
       if (project.hasGit) ('Git', Tone.neutral),
       if (project.hasLivingDocs) ('Living Docs', Tone.neutral),
       if (project.hasAgentsFile) ('AGENTS.md', Tone.neutral),
@@ -179,15 +189,22 @@ class _ProjectCard extends StatelessWidget {
           const SizedBox(height: Space.md),
           SizedBox(
             height: 22,
-            child: Row(
-              children: [
-                for (final f in features.take(3)) ...[Badge2(label: f.$1, tone: f.$2), const SizedBox(width: 6)],
-                if (features.length > 3)
-                  Tooltip(
-                    message: features.skip(3).map((f) => f.$1).join(', '),
-                    child: Badge2(label: '+${features.length - 3}'),
-                  ),
-              ],
+            // Bei schmalen Karten wird rechts abgeschnitten statt überzulaufen.
+            child: ClipRect(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const NeverScrollableScrollPhysics(),
+                child: Row(
+                  children: [
+                    for (final f in features.take(3)) ...[Badge2(label: f.$1, tone: f.$2), const SizedBox(width: 6)],
+                    if (features.length > 3)
+                      Tooltip(
+                        message: features.skip(3).map((f) => f.$1).join(', '),
+                        child: Badge2(label: '+${features.length - 3}'),
+                      ),
+                  ],
+                ),
+              ),
             ),
           ),
           const Spacer(),
@@ -208,7 +225,7 @@ class _ProjectCard extends StatelessWidget {
                 )
               else
                 Tooltip(
-                  message: 'Kein Dashboard: Im Projekt fehlt eine index.html. Mit /Dashboard im Assistenten anlegen.',
+                  message: 'Kein Dashboard: Im Projekt fehlt eine index.html. Mit /dashboard im Assistenten anlegen.',
                   child: Text('Kein Dashboard', style: TextStyle(fontSize: 13, color: c.muted)),
                 ),
               const Spacer(),

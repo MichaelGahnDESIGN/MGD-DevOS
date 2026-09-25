@@ -11,7 +11,7 @@ Der MGD-DevOS bündelt das in einer Projektzentrale:
 
 1. **Interview** — erfasst Projektname, -typ, Zielplattform, Zielgruppe, Umfang, Backend-Bedarf und Sprache.
 2. **Kern-Skills** — bietet vier wählbare MGD-Skills an (DEV, Fragenkatalog, Todo, Living Documentation) und richtet Autopilot sowie AI-Thread als verbindliche Basis für sichere Abläufe und Übergaben ein.
-3. **Plattform-Frage** — bei erkanntem Backend-Bedarf wird das eigenständige Projekt-Plattform-System (`mgd-platform init`) angeboten.
+3. **Plattform-Frage** — bei Web- und Plattform-Projekten wird der eigenständige [MGD-Plattform-Builder](https://github.com/MichaelGahnDESIGN/MGD-Plattform-Builder) (`mgd-platform init`) empfohlen.
 4. **Domain-Skills** — schlägt passende Dritt-Skills zuerst aus einem kuratierten Startkatalog vor, sucht bei Bedarf live auf GitHub weiter.
 5. **Sicherheits-Check** — scannt jeden Dritt-Skill vor der Installation mit `NVIDIA/SkillSpector` und/oder `affaan-m/agentshield`.
 6. **Details eintragen** — überträgt die Interview-Antworten automatisch in die installierten Skills.
@@ -32,7 +32,7 @@ Ein integrierter Updater (`/projektstart-update`) hält alle so installierten Sk
 | [Setup.md](Setup.md) | Installationsanleitung Claude Code + Codex |
 | [Updater.md](Updater.md) | Funktionsweise von `/projektstart-update` |
 | [Beispiel-Ablauf.md](Beispiel-Ablauf.md) | Durchgespieltes Beispiel: Mobile-Game-Projekt |
-| [Dashboard.md](Dashboard.md) | `/Dashboard`, Zahnrad, Light/Dark und Tool-Akzentfarben |
+| [Dashboard.md](Dashboard.md) | `/dashboard`, Zahnrad, Light/Dark und Tool-Akzentfarben |
 | [Migration.md](Migration.md) | Bestehende Projekte sicher und ohne doppelte Zentrale übernehmen |
 | [Kompetenz-Matrix.md](Kompetenz-Matrix.md) | Geführte Auswahl für Skills, Programme und MCPs |
 | [Thread-Übergabe.md](Thread-Übergabe.md) | `/thread`: geprüfte Arbeit sichern und vollständig an Codex oder Claude Code übergeben |

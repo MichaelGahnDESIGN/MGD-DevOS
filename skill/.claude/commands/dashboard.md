@@ -1,16 +1,17 @@
-# /Dashboard
+---
+description: Projektzentrale (index.html) öffnen oder einrichten
+---
 
-Öffne oder richte die zentrale Projektzentrale gemäß `SKILL.md` ein.
+# /dashboard
 
-1. Lies Projektregeln, `PROJEKT/.mgd-ai-projektmanager.json`, Git-Status und
-   die kanonische Living Documentation.
-2. Fehlt die lokale `index.html`, kopiere sie aus `dashboard/index.html` und
-   ersetze nur bestätigte Platzhalter.
-3. Beachte `dashboardOpenTarget`: intern, Standardbrowser oder einmalig
-   nachfragen. Öffne niemals private Inhalte oder `SECRETS/`.
-4. Aktualisiere Stand, offene Punkte, Risiken, Skill-Audit und nächsten Schritt
-   nur mit tatsächlich beobachteten Informationen.
-5. Erkläre die Arbeit mit den Skills in kurzen, einfachen Sätzen.
+Quelle der Anweisungen: `SKILL.md` des Skills `mgd-devos` (global unter
+`~/.claude/skills/mgd-devos/SKILL.md` bzw. `~/.codex/skills/mgd-devos/SKILL.md`,
+projekt-lokal unter `.claude/skills/mgd-devos/SKILL.md` bzw. `.codex/skills/mgd-devos/SKILL.md`).
+Lies dort zuerst den genannten Abschnitt und folge ihm vollständig.
 
-`/projektstart` bleibt für bestehende Abläufe verfügbar; `/Dashboard` ist die
-bevorzugte Projektzentrale.
+Maßgeblich ist der Abschnitt „`/dashboard` – zentrale Projektzentrale“.
+
+Lies Projektregeln, `PROJEKT/.mgd-ai-projektmanager.json`, Git-Status und die kanonische Living Documentation.
+Fehlt die `index.html`, richte sie aus `dashboard/index.html` des Skills ein und ersetze nur bestätigte Platzhalter.
+Beachte `dashboardOpenTarget`, öffne nie `SECRETS/`, trage nur beobachtete Informationen ein und lasse das Label
+„powered by: Michael Gahn DESIGN“ immer unverändert.

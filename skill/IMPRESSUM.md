@@ -1,31 +1,34 @@
 # Impressum
 
-## Angaben gemäß § 5 DDG
+Platzhalter Informationen
 
-**Michael Gahn DESIGN**<br>
-Michael Gahn<br>
-Dr.-Theodor-Brugsch Str. 12<br>
-08529 Plauen<br>
-Sachsen<br>
-Deutschland
+Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)
 
-## Kontakt
+[Name]
+[Unternehmen Name]
+[Straße Nr]
+[PLZ Ort]
+[Land]
 
-Telefon: +49 (0) 151 59156639<br>
-E-Mail: [Anfrage@Michael-Gahn.de](mailto:anfrage@michael-gahn.de)<br>
-Website: [https://michael-gahn.de](https://michael-gahn.de)<br>
-GitHub: [MichaelGahnDESIGN](https://github.com/MichaelGahnDESIGN)
+Tel.: [+40 000 000 000 000]
+E-Mail: [email@email.xy]
 
-## Umsatzsteuer
+Umsatzsteuer-Identifikationsnummer: DE000000000
 
-Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz:<br>
-**DE288143343**
+Verantwortliche/r i.S.d. § 18 Abs. 2 MStV:
+[Name], [Straße Nr], [PLZ Ort], , Email: [email@email.xy]
 
-Steuernummer: **223/222/02451**
+Wir sind zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle weder verpflichtet noch bereit.
+
+Redaktionell verantwortlich:
+
+[Name]
+[Straße Nr]
+[PLZ Ort]
+[Land]
+
+Tel.: [+40 000 000 000 000]
+E-Mail: [email@email.xy]
 
 ---
-
-Dieses Impressum entspricht dem veröffentlichten Stand auf
-[michael-gahn.de/impressum](https://michael-gahn.de/impressum/) vom
-23. September 2026. Es ist keine Rechtsberatung; rechtliche Änderungen bitte
-vor einer Veröffentlichung fachlich prüfen.
+Based on MGD DevOS by Michael Gahn DESIGN | https://Michael-Gahn.de

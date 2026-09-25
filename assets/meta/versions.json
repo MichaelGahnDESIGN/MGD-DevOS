@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.6.0",
+    "date": "2026-09-25",
+    "component": "MGD-DevOS",
+    "notes": [
+      "Lizenz: MGD-Lizenz 1.0 statt PolyForm Noncommercial (Versionen bis 0.5.2 bleiben unter PolyForm). Neuer Bereich Einstellungen › Lizenz mit Label und Lizenztext.",
+      "Pflicht-Label heißt jetzt „powered by: Michael Gahn DESIGN\" (App, Dashboard, README, NOTICE); der Link öffnet im Systembrowser bzw. in einem neuen Tab.",
+      "Projekt-Scanner erkennt Projekte des MGD-Plattform-Builders (`MGD_PLATFORM.yml`) und zeigt Version und Status aus deren `version.json` in der Projektkarte, z. B. „Plattform 0.0.1 Pre-Alpha\".",
+      "PIN-Sperre ehrlich als Sichtschutz beschrieben; Datenschutz-Hinweis nennt alle lokal gespeicherten Werte.",
+      "Aufgeräumt: ungenutzter Webview-Wrapper-Modus samt Online-Konfiguration (`config/`) und die Pakete `http` und `cupertino_icons` entfernt.",
+      "Eine gemeinsame Version für App und Skill: `scripts/sync_meta.py` schreibt sie auch in README und Skill-Doku, zählt die Tests und kopiert `LICENSE`/`NOTICE` in den Skill; `--check` schlägt bei Abweichung fehl.",
+      "Release-Workflow führt vorher die komplette CI aus; Release-Titel „MGD-DevOS X.Y.Z Status\"."
+    ]
+  },
+  {
     "version": "0.5.2",
     "date": "2026-09-25",
     "component": "MGD-DevOS",
@@ -47,6 +61,20 @@
     "component": "Projektmanager-Skill",
     "notes": [
       "Dashboard-Vorlage: Verbindungslinien im Projektfluss werden jetzt auch in eingebetteten oder verdeckten Webviews sofort gezeichnet (vorher nur per `requestAnimationFrame`, das dort pausiert). In der MGD-DevOS-App auf macOS geprüft."
+    ]
+  },
+  {
+    "version": "0.6.0",
+    "date": "2026-09-25",
+    "component": "Projektmanager-Skill",
+    "notes": [
+      "Versionierung: Skill und App tragen dieselbe Version; `SKILL.md` und `README.md` zeigen sie an.",
+      "Befehle einheitlich kleingeschrieben; Befehlsdateien für `/projektstart`, `/projektstart-update`, `/projektstart-katalog`, `/projektstart-katalog-add` und `/dashboard` für Claude Code und Codex; Installation einheitlich nach `~/.claude/skills/mgd-devos` (Setup und README korrigiert).",
+      "MGD-Plattform-Builder (vormals Projekt-Plattform-System) wird für Web- und Plattform-Projekte empfohlen, mit den tatsächlichen Presets `general`, `game`, `community`, `creator`, `ecommerce`.",
+      "Lizenz: MGD-Lizenz statt MIT; `LICENSE` und `NOTICE` liegen jetzt im Skill-Ordner und damit im Skill-ZIP. Pflicht-Label heißt „powered by: Michael Gahn DESIGN\" (`data-mgd-powered-by`), Link öffnet in neuem Tab.",
+      "Dashboard: PIN-Hinweis ehrlich als Sichtschutz beschrieben.",
+      "`IMPRESSUM.md` ist jetzt eine Vorlage mit Platzhaltern.",
+      "Katalog: Godot AI (hi-godot/godot-ai, MIT, Asset Library 5050) als Editor-MCP-Plugin für Spiele-Projekte aufgenommen, mit Sicherheitshinweis (nur gegen eine Arbeitskopie, nicht in Exporte)."
     ]
   },
   {

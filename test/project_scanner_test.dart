@@ -85,7 +85,7 @@ void main() {
     {
       "name": "MGD_AI-Thread",
       "url": "https://github.com/MichaelGahnDESIGN/MGD_AI-Thread",
-      "description": "Schreibt eine belegte Uebergabe.",
+      "description": "Schreibt eine belegte Übergabe.",
       "mandatory": true,
       "slashCommands": ["/thread"]
     }

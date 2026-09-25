@@ -87,9 +87,12 @@ Drittanbietern ab. MGD-DevOS wird jedoch datensparsam gestaltet:
 2. **Secrets:** Keine Klartext-Passwörter in Flutter-Preferences, SQLite,
    Logs, Projektordner oder Git. Geheimnisse liegen nur im Schlüsselbund des
    Betriebssystems; das Projekt speichert höchstens eine sichere Referenz.
-3. **Optionaler App-Schutz:** Optionaler lokaler Sperrbildschirm mit
-   Argon2id-Hash und Schlüsselbund-gestütztem Schlüssel. Nach Leerlauf wird
-   die App gesperrt. Der Schutz ergänzt, aber ersetzt nicht die Anmeldung am
+3. **Optionaler PIN-Sichtschutz (umgesetzt):** Eine PIN verdeckt App und
+   Dashboard beim Start vor neugierigen Blicken. Gespeichert wird nur ein
+   PBKDF2-SHA-256-Hash mit Salz in den lokalen App-Einstellungen bzw. im
+   Browser-Speicher. Es gibt keine automatische Sperre bei Leerlauf und keinen
+   Schlüsselbund-Schlüssel; wer Zugriff auf Benutzerkonto oder Dateien hat,
+   kommt an die Daten. Der Sichtschutz ersetzt nicht die Anmeldung am
    Betriebssystem und die Festplattenverschlüsselung.
 4. **Minimale Rechte:** Jeder Adapter benötigt eine einzeln aktivierte,
    verständlich erklärte Berechtigung. Lesen, Schreiben, Starten und

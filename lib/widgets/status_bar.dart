@@ -7,13 +7,13 @@ import '../theme/app_theme.dart';
 import 'ui.dart';
 
 /// Statusleiste unten: lokaler Status, Projektzahl, letzter Scan und der
-/// Pflicht-Hinweis "supported by: Michael Gahn DESIGN" (siehe NOTICE).
+/// Pflicht-Label "powered by: Michael Gahn DESIGN" (siehe NOTICE und LICENSE).
 class StatusBar extends StatelessWidget {
   const StatusBar({super.key, required this.appState});
 
   final AppState appState;
 
-  static final Uri website = Uri.parse('https://Michael-Gahn.de');
+  static final Uri website = Uri.parse('https://michael-gahn.de');
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class StatusBar extends StatelessWidget {
             ),
           ),
           const SizedBox(width: Space.md),
-          const SupportedByPill(),
+          const PoweredByPill(),
         ],
       ),
     );
@@ -86,17 +86,17 @@ class StatusBar extends StatelessWidget {
 }
 
 /// Pflicht-Hinweis als Pille. Fester Bestandteil der App, nicht entfernen.
-class SupportedByPill extends StatelessWidget {
-  const SupportedByPill({super.key});
+class PoweredByPill extends StatelessWidget {
+  const PoweredByPill({super.key});
 
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
     return Tooltip(
-      message: 'Michael-Gahn.de öffnen',
+      message: 'michael-gahn.de im Browser öffnen',
       child: Semantics(
         link: true,
-        label: 'supported by Michael Gahn DESIGN, Website öffnen',
+        label: 'powered by Michael Gahn DESIGN, Website im Browser öffnen',
         child: InkWell(
           borderRadius: BorderRadius.circular(999),
           onTap: () => launchUrl(
@@ -118,7 +118,7 @@ class SupportedByPill extends StatelessWidget {
                   const BrandMark(size: 18),
                   const SizedBox(width: Space.sm),
                   Text(
-                    'supported by: ',
+                    'powered by: ',
                     style: TextStyle(fontSize: 12, color: c.muted),
                   ),
                   Text(

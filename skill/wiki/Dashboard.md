@@ -1,6 +1,6 @@
 # Dashboard und Einstellungen
 
-`/Dashboard` ist die zentrale AI-Dev-OS-Ansicht eines Projekts. Es richtet die
+`/dashboard` ist die zentrale AI-Dev-OS-Ansicht eines Projekts. Es richtet die
 lokale `index.html` ein oder öffnet sie. Die Datei enthält nur bestätigten
 Projektstand, offene Punkte, Risiken, Skills und nächste Schritte – niemals
 Secrets, personenbezogene Daten oder private Infrastrukturdetails.
@@ -18,7 +18,7 @@ Button mit sichtbarem Tastaturfokus und verwendet ein skalierbares SVG-Symbol.
 
 Die optischen Einstellungen werden lokal im Browser gespeichert. Die
 Browser-Präferenz wird zusätzlich in `PROJEKT/.mgd-ai-projektmanager.json`
-geführt, damit ein Agent bei `/Dashboard` zuverlässig weiß, wie er die Seite
+geführt, damit ein Agent bei `/dashboard` zuverlässig weiß, wie er die Seite
 öffnen soll.
 
 ## Tool-Oberflächen

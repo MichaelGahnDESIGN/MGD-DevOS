@@ -1,17 +1,16 @@
-# /projektstart – Kompatibilitätsalias
+---
+description: Projekt einrichten: Interview, MGD-Skills, Plattform-Builder, Sicherheits-Scan, Dashboard
+---
 
-Der bevorzugte Einstieg ist jetzt `/Dashboard`. Dieser Befehl bleibt als
-Kompatibilitätsalias für das ausführliche Projektstart-Interview erhalten und
-führt den mehrstufigen Assistenten gemäß [`SKILL.md`](../../SKILL.md) aus:
+# /projektstart
 
-1. Projekt-Interview.
-2. Installation der vier MGD-Kern-Skills nach Einzel-Bestätigung.
-3. Optionales `mgd-platform init --preset <preset>` bei Backend-Bedarf.
-4. Domain-Skill-Vorschläge aus `catalog/skills.json`, danach optionale Live-GitHub-Suche.
-5. Pflicht-Sicherheits-Scan (SkillSpector/agentshield) jedes Dritt-Skills vor Installation.
-6. Details in installierte Skills eintragen, Manifest `PROJEKT/.projektstart-manifest.json` fortschreiben.
-7. Abschluss-Zusammenfassung.
+Quelle der Anweisungen: `SKILL.md` des Skills `mgd-devos` (global unter
+`~/.claude/skills/mgd-devos/SKILL.md` bzw. `~/.codex/skills/mgd-devos/SKILL.md`,
+projekt-lokal unter `.claude/skills/mgd-devos/SKILL.md` bzw. `.codex/skills/mgd-devos/SKILL.md`).
+Lies dort zuerst den genannten Abschnitt und folge ihm vollständig.
 
-Weitere Befehle: `/projektstart-update`, `/projektstart-katalog`, `/projektstart-katalog-add <repo-url> <kategorie>`.
+Maßgeblich ist der Abschnitt „`/projektstart`“ (Schritte 1–8).
 
-Details: siehe `SKILL.md` im Repo-Root sowie `wiki/` für vertiefende Dokumentation.
+Führe den geführten Projektstart aus: Interview, MGD-Kern- und Basis-Skills, MGD-Plattform-Builder bei Web- und
+Plattform-Projekten, Domain-Skills mit Pflicht-Sicherheits-Scan, Details eintragen, Zusammenfassung und am Ende
+`/dashboard`. Installationen, Pushes, Deployments und Löschungen nur nach Freigabe.

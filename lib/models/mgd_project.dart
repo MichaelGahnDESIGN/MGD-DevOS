@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'platform_info.dart';
+
 /// Ein lokal gefundenes Projekt unterhalb des konfigurierten Projekt-Root.
 ///
 /// Alle Felder stammen aus echten Dateisystem-Beobachtungen. Es werden keine
@@ -19,6 +21,7 @@ class MgdProject {
     required this.dashboardFile,
     required this.lastModified,
     required this.documents,
+    this.platform,
   });
 
   final String name;
@@ -39,6 +42,9 @@ class MgdProject {
   /// Textdokumente (README, Living Docs, AGENTS.md, ...), die in der Projekt-
   /// ansicht direkt geöffnet werden können. Nur real gefundene Dateien.
   final List<File> documents;
+
+  /// Gesetzt, wenn der Ordner ein `MGD_PLATFORM.yml` enthält (MGD-Plattform-Builder).
+  final PlatformInfo? platform;
 
   String get path => directory.path;
 }

@@ -1,19 +1,24 @@
 ---
 name: mgd-devos
-description: Zentrale AI-Dev-OS-Projektzentrale für neue und bestehende Projekte. Verwenden für Projektstart, Migration, /Dashboard, Skill-Audit, sichere Installation und Projektkoordination.
+description: Zentrale AI-Dev-OS-Projektzentrale für neue und bestehende Projekte. Verwenden für Projektstart, Migration, /dashboard, Skill-Audit, sichere Installation und Projektkoordination.
 ---
 
 # MGD-DevOS
+
+Version <!-- mgd:version -->0.6.0 Pre-Alpha<!-- /mgd:version --> – der Skill trägt dieselbe Version wie die
+MGD-DevOS-App (einzige Quelle: `assets/meta/version.json` im Repository).
 
 Der MGD-DevOS ist die zentrale Projektmanagement-Schicht für
 ChatGPT Codex, Claude Code und kompatible Agenten. Er verbindet Projektstart,
 Bestandsprojekt-Audit, Skill-Vetting, Living Documentation, Todo, Autopilot, Thread,
 Release und ein lokales Dashboard zu einem nachvollziehbaren AI-Dev-OS.
 
-`/projektstart` bleibt als Kompatibilitätsalias erhalten. Der bevorzugte
-Einstieg ist `/Dashboard` (in manchen Werkzeugen als `/dashboard` geschrieben).
+`/projektstart` richtet ein Projekt ein. Die tägliche Projektzentrale ist
+`/dashboard`. Alle Befehle werden kleingeschrieben: `/projektstart`,
+`/projektstart-update`, `/projektstart-katalog`, `/projektstart-katalog-add`,
+`/dashboard`.
 
-## `/Dashboard` – zentrale Projektzentrale
+## `/dashboard` – zentrale Projektzentrale
 
 Beim Aufruf prüfe zuerst, ob im Projekt eine `index.html` und die Datei
 `PROJEKT/.mgd-ai-projektmanager.json` vorhanden sind. Fehlen sie, richte sie
@@ -33,15 +38,18 @@ Zusätzliche Platzhalter der Vorlage (leer lassen, wenn nicht vorhanden; nie erf
 `{{ARBEITENDE_AGENTEN}}` (zuletzt beobachtete Agenten, kein Live-Status), `{{GRUNDREGELN}}` (Inhalt von
 `GRUNDREGELN.md`), `{{TODO_DATEI}}`, `{{FRAGENKATALOG_DATEI}}`, `{{LIVING_DOKU_DATEI}}` (nur relative Pfade im
 Projekt, z. B. `TODO.html`). Die Metadaten (Version, Versionen, Credits) setzt `scripts/sync_meta.py` im Repo, nicht der
-Assistent. Die PIN-Sperre im Dashboard richtet nur der Nutzer selbst ein.
+Assistent. Den PIN-Sichtschutz im Dashboard (nur gegen neugierige Blicke, kein Zugriffsschutz) richtet nur der Nutzer selbst ein.
 
-**Pflicht-Footer:** Jede `index.html` (Dashboard) trägt unten den Hinweis
-„supported by: Michael Gahn DESIGN" mit Link auf https://Michael-Gahn.de
-(Element mit `data-mgd-supported-by`, in `dashboard/index.html` enthalten).
-Der Assistent entfernt oder verändert ihn nie. Fehlt er in einem bestehenden
-Dashboard, ergänzt er ihn aus der Vorlage.
+**Pflicht-Label:** Jede `index.html` (Dashboard) trägt unten das Label
+„powered by: Michael Gahn DESIGN" mit Logo und Link auf https://michael-gahn.de,
+der in einem neuen Tab öffnet (`target="_blank" rel="noopener noreferrer"`;
+Element mit `data-mgd-powered-by`, in `dashboard/index.html` enthalten). Es ist
+Bedingung der MGD-Lizenz (siehe `LICENSE`, Abschnitt 3). Der Assistent entfernt,
+verdeckt oder verändert es nie. Fehlt es in einem bestehenden Dashboard oder
+steht dort noch der alte Hinweis mit `data-mgd-supported-by`, ersetzt er ihn
+durch das Label aus der Vorlage.
 
-Ob es im internen Tool-Browser oder im Standardbrowser geöffnet wird, steuert
+Ob es im internen Browser des Werkzeugs oder im Standardbrowser geöffnet wird, steuert
 `dashboardOpenTarget` in der Projekt-Konfiguration. Respektiere die Einstellung:
 
 - `internal`: sofern das jeweilige Tool einen sicheren internen Browser hat;
@@ -54,7 +62,7 @@ Die Einstellungen oben rechts im Dashboard steuern Light/Dark/System-Modus,
 Akzentfarbe pro Tool und die Browser-Präferenz. Sie werden lokal im Browser
 gespeichert; für Agenten exportiert oder überträgt der Nutzer dieselbe Wahl in
 die Projekt-Konfiguration. Der Agent ersetzt diese Konfiguration nicht
-still schweigend.
+stillschweigend.
 
 ## Kein doppelter Projektmanager
 
@@ -123,11 +131,11 @@ kontrollierte Delegation, regelmäßige Prüfung von Agenten und Prozessen,
 Gegenprobe am realen Ziel sowie sichere Project-Clean-Inventur. Backups,
 Secrets, Nutzerinhalte und unklare Dateien werden nie automatisiert bereinigt.
 
-**Der ultimative Projektstart-Skill: ein Assistent, der ein neues Projekt in einem Rutsch mit allen passenden MGD- und Dritt-Skills ausstattet — sicher vorgeprüft, nicht blind installiert.**
+**Projektstart mit MGD-DevOS: ein Assistent, der ein neues Projekt in einem Rutsch mit allen passenden MGD- und Dritt-Skills ausstattet — sicher vorgeprüft, nicht blind installiert.**
 
-Statt für jedes neue Projekt einzeln zu überlegen, welche Skills gebraucht werden, sie einzeln zu klonen, einzurichten und zu pflegen, übernimmt dieser Skill den kompletten Ablauf: Interview zum Projekt → vier optionale MGD-Kern-Skills und die verbindlichen Basis-Skills `MGD_Autopilot_SKILL` und `MGD_AI-Thread` → optionales Plattform-Gerüst bei Backend-Bedarf → Vorschlag passender Domain-Skills aus einem kuratierten Startkatalog und der Live-Suche auf GitHub → **Sicherheits-Scan jedes Dritt-Skills vor der Installation** → Eintragen aller erhobenen Projektdetails in die frisch installierten Skills → Update-Mechanismus, der regelmäßig prüft, ob installierte Skills neuer sind als der lokale Stand.
+Statt für jedes neue Projekt einzeln zu überlegen, welche Skills gebraucht werden, sie einzeln zu klonen, einzurichten und zu pflegen, übernimmt dieser Skill den kompletten Ablauf: Interview zum Projekt → vier optionale MGD-Kern-Skills und die verbindlichen Basis-Skills `MGD_Autopilot_SKILL` und `MGD_AI-Thread` → MGD-Plattform-Builder bei Web- und Plattform-Projekten → Vorschlag passender Domain-Skills aus einem kuratierten Startkatalog und der Live-Suche auf GitHub → **Sicherheits-Scan jedes Dritt-Skills vor der Installation** → Eintragen aller erhobenen Projektdetails in die frisch installierten Skills → Update-Mechanismus, der regelmäßig prüft, ob installierte Skills neuer sind als der lokale Stand.
 
-Dieser Skill ist die zentrale, umfassendere Variante der "Companion-Skill-Check"-Logik, die MGD_DEV_SKILL, Fragenkatalog-Skill, MGD_Todo_SKILL und MGD_Living-Documentation bereits einzeln mitbringen (sie erkennen sich gegenseitig und bieten sich zur Installation an). `AI_Projektstart_Skill` deckt zusätzlich Domain-Skills (Design/Programmierung/Recht/Sicherheit) und optional ein Backend-Plattform-Gerüst ab — und ist der einzige der Skills, der aktiv auf GitHub nach zusätzlichen, zum Projekt passenden Skills sucht.
+Dieser Skill ist die zentrale, umfassendere Variante der "Companion-Skill-Check"-Logik, die MGD_DEV_SKILL, Fragenkatalog-Skill, MGD_Todo_SKILL und MGD_Living-Documentation bereits einzeln mitbringen (sie erkennen sich gegenseitig und bieten sich zur Installation an). MGD-DevOS deckt zusätzlich Domain-Skills (Design/Programmierung/Recht/Sicherheit) und optional ein Plattform-Gerüst mit dem MGD-Plattform-Builder ab — und ist der einzige der Skills, der aktiv auf GitHub nach zusätzlichen, zum Projekt passenden Skills sucht.
 
 ### `/projektstart` läuft selbst nach dem Autopilot-Prinzip ab
 
@@ -200,22 +208,23 @@ Installationsort (projekt-lokal vs. global) wird vorher erfragt:
 
 Nach jeder erfolgreichen Installation wird ein Eintrag in `PROJEKT/.projektstart-manifest.json` geschrieben (siehe `/projektstart-update`).
 
-#### Schritt 3 — Projekt-Plattform-System optional anbieten
+#### Schritt 3 — MGD-Plattform-Builder empfehlen (Web- und Plattform-Projekte)
 
-Wird nur angeboten, wenn im Interview (Schritt 1, Frage 6) Backend-/Admin-/Compliance-Bedarf erkannt wurde. Der Assistent fragt wörtlich sinngemäß:
+Der [MGD-Plattform-Builder](https://github.com/MichaelGahnDESIGN/MGD-Plattform-Builder) ist die Empfehlung für Websites und Plattformen: Projekttyp „Website", Zielplattform Web/Server oder erkannter Backend-, Admin- oder Compliance-Bedarf (Schritt 1, Fragen 2, 3 und 6). Für andere Projekte wird er nicht angeboten. Der Assistent fragt sinngemäß:
 
-> "Dieses Projekt klingt nach Backend-/Plattform-Bedarf. Soll ich `mgd-platform init --preset <passendes Preset>` ausführen, um ein geprüftes Grundgerüst aufzusetzen?"
+> "Dieses Projekt ist ein Web- bzw. Plattform-Projekt. Soll ich es mit dem MGD-Plattform-Builder (`mgd-platform init --preset <preset>`) einrichten? Er bringt Backoffice, Rechte, Rechtstexte und Versionierung mit."
 
-Das Preset wird aus Projekttyp + Zielplattform abgeleitet (z. B. `saas-multi-tenant`, `mobile-backend`, `community-platform` — der Assistent nennt sein abgeleitetes Preset explizit und lässt den Nutzer es korrigieren). Bei Zustimmung:
+Das Preset wird aus Projekttyp und Zielplattform abgeleitet: `general`, `game`, `community`, `creator` oder `ecommerce`. Der Assistent nennt sein abgeleitetes Preset und lässt den Nutzer es korrigieren. Bei Zustimmung:
 
-1. Prüfen, ob `mgd-platform` bereits global verfügbar ist (`command -v mgd-platform`).
-2. Falls nicht: `git clone https://github.com/MichaelGahnDESIGN/Projekt-Plattform-System.git` in ein Tool-Verzeichnis (z. B. `~/.local/share/mgd-platform/`) und gemäß dessen eigener Installationsanleitung einrichten.
+1. Prüfen, ob `mgd-platform` bereits verfügbar ist (`command -v mgd-platform`).
+2. Falls nicht: `git clone https://github.com/MichaelGahnDESIGN/MGD-Plattform-Builder.git` in ein Tool-Verzeichnis (z. B. `~/.local/share/mgd-platform/`) und gemäß dessen `INSTALL.md` einrichten (Node.js 20+, `npm install`, `npm link`).
 3. `mgd-platform init --preset <preset> --target <projektpfad>` ausführen.
 4. Ergebnis prüfen mit `mgd-platform validate` und `mgd-platform doctor`.
+5. Hinweis an den Nutzer: Das Projekt hat danach `MGD_PLATFORM.yml` und `version.json`; die MGD-DevOS-App zeigt Version und Status (z. B. „0.0.1 Pre-Alpha") in der Projektkarte. Für Starter-Templates und das „powered by"-Label des Plattform-Builders gilt dessen MGD-Lizenz.
 
 Bei Ablehnung: übersprungen, im Abschluss-Report als "nicht eingerichtet (abgelehnt)" vermerkt.
 
-**Wichtig:** Das Projekt-Plattform-System wird nicht wie die MGD-Skills als Dateien kopiert — es ist ein eigenständiges System mit eigener CLI und wird ausschließlich über `mgd-platform init` in das Zielprojekt eingebracht.
+**Wichtig:** Der MGD-Plattform-Builder wird nicht wie die MGD-Skills als Dateien kopiert — er ist ein eigenständiges System mit eigener CLI und wird ausschließlich über `mgd-platform` in das Zielprojekt eingebracht.
 
 #### Schritt 4 — Domain-Skills finden
 
@@ -272,7 +281,7 @@ Für **jeden** Dritt-Skill-Kandidaten (kuratiert oder live gefunden), der nicht 
 6. **Ohne verfügbaren Scanner** (z. B. kein Netzzugriff, Clone schlägt fehl): Der Assistent installiert **nicht automatisch weiter**, sondern warnt explizit: "Kein Sicherheits-Scanner verfügbar — dieser Skill würde ungeprüft installiert. Trotzdem fortfahren? (ja/nein)" und verlangt eine zusätzliche, separate Bestätigung, die diese Tatsache ausdrücklich anerkennt.
 7. Erst nach Bestätigung: Installation wie bei den Kern-Skills (Kopieren in `.claude/`/`.codex/`-Struktur bzw. globale Skill-Ordner), inkl. Manifest-Eintrag mit `scanResult: "clean" | "warnings-accepted" | "unscanned-accepted"`.
 
-Dieser Schritt gilt **nicht** für die sechs MGD-Skills des Basisangebots (`requiresScan: false` im Katalog; nur Autopilot und AI-Thread sind `mandatory: true`) und **nicht** für das Projekt-Plattform-System (eigenes CLI-Init, keine Datei-Kopie).
+Dieser Schritt gilt **nicht** für die sechs MGD-Skills des Basisangebots (`requiresScan: false` im Katalog; nur Autopilot und AI-Thread sind `mandatory: true`) und **nicht** für den MGD-Plattform-Builder (eigenes CLI-Init, keine Datei-Kopie).
 
 #### Schritt 6 — Details eintragen
 
@@ -287,7 +296,7 @@ Nach Installation aller gewählten Skills werden die im Interview erhobenen Proj
 
 Der Assistent fasst zusammen:
 
-- **Installiert**: welche Kern-Skills, welche Domain-Skills (mit Scan-Ergebnis), Projekt-Plattform-System (ja/nein/Preset).
+- **Installiert**: welche Kern-Skills, welche Domain-Skills (mit Scan-Ergebnis), MGD-Plattform-Builder (ja/nein/Preset).
 - **Eingerichtet**: welche Setup-Befehle liefen (`/fragenkatalog-setup`, `/todo-setup`, Living-Doc-Einstiegsseite).
 - **Offen**: abgelehnte Vorschläge, ungeprüft installierte Skills (falls zugestimmt), manuell zu erledigende Punkte.
 
@@ -295,7 +304,7 @@ Der Assistent fasst zusammen:
 
 Nach der Zusammenfassung:
 
-1. Starte `/Dashboard` (Regeln oben, `dashboardOpenTarget` beachten).
+1. Starte `/dashboard` (Regeln oben, `dashboardOpenTarget` beachten).
 2. Frage, ob eine **Desktop-Verknüpfung** zur `index.html` des Projekts
    angelegt werden soll. Nur nach Ja: macOS `.webloc`, Windows `.url`,
    Linux `.desktop` – die Verknüpfung zeigt auf die Projektdatei, es wird
@@ -343,7 +352,7 @@ Ablauf von `/projektstart-update`:
    gh api repos/<owner>/<repo>/commits/main --jq .sha
    gh release list --repo <owner>/<repo> --limit 1
    ```
-3. Tabelle anzeigen:
+3. Tabelle anzeigen (Beispielwerte, keine echten Commits):
 
    | Skill | installierte Version | aktuelle Version | Update verfügbar |
    |---|---|---|---|
@@ -387,3 +396,8 @@ Ablauf:
 ## Verwandte MGD-Skills
 
 Siehe [README.md](README.md#verwandte-mgd-projekte) für die vollständige Übersicht.
+
+## Lizenz
+
+MGD-Lizenz 1.0, siehe [LICENSE](LICENSE) und [NOTICE](NOTICE) in diesem Ordner. Das Label
+„powered by: Michael Gahn DESIGN" in Dashboards bleibt immer erhalten.

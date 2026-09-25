@@ -6,7 +6,7 @@ Skills, die einmal per `/projektstart` installiert wurden, veralten wie jeder an
 
 ## Grundlage: das Manifest
 
-Jede Installation über `/projektstart` (Kern-Skills, Domain-Skills, künftig auch erneute Updates) schreibt einen Eintrag in `PROJEKT/.projektstart-manifest.json`:
+Jede Installation über `/projektstart` (Kern-Skills, Domain-Skills, künftig auch erneute Updates) schreibt einen Eintrag in `PROJEKT/.projektstart-manifest.json` (Beispielwerte):
 
 ```json
 [
@@ -45,6 +45,9 @@ Jede Installation über `/projektstart` (Kern-Skills, Domain-Skills, künftig au
 
 ## Beispiel-Ausgabe
 
+Alle Commit-Kürzel in diesem Beispiel sind **erfundene Beispielwerte** (gültiges Hex-Format, aber keine echten
+Commits). In echten Läufen stammen sie aus `git ls-remote` bzw. der GitHub-API.
+
 ```
 > /projektstart-update
 
@@ -55,8 +58,8 @@ Prüfe aktuellen Stand der Quell-Repos …
 |-------------------------------|------------------------|-------------------|-------------------|
 | MGD_DEV_SKILL                 | a1b2c3d (23.09.2026)    | f9e8d7c           | ja                |
 | Fragenkatalog-Skill           | 4c5d6e7 (23.09.2026)    | 4c5d6e7           | nein              |
-| MGD_Todo_SKILL                | 7g8h9i0 (23.09.2026)    | 7g8h9i0           | nein              |
-| MGD_Living-Documentation      | j1k2l3m (23.09.2026)    | n4o5p6q           | ja                |
+| MGD_Todo_SKILL                | 7e8f9a0 (23.09.2026)    | 7e8f9a0           | nein              |
+| MGD_Living-Documentation      | b1c2d3e (23.09.2026)    | c4d5e6f           | ja                |
 | dickwu/apple-design-skill     | 9f8e7d6 (23.09.2026)    | 2b3c4d5           | ja                |
 
 3 Updates verfügbar. Aktualisieren? (alle/einzeln auswählen/keine)
