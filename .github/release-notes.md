@@ -1,4 +1,4 @@
-MGD-DevOS 0.5.1 Pre-Alpha: App und Projektmanager-Skill in einem Repository.
+MGD-DevOS (Pre-Alpha): App und Projektmanager-Skill in einem Repository. Änderungen siehe CHANGELOG.
 
 **Download:** `MGD-DevOS.dmg` (macOS), `MGD-DevOS-windows.zip` (Windows), `MGD-DevOS-linux.tar.gz` (Linux x64), `MGD-DevOS-Skill.zip` (Projektmanager-Skill). Prüfsummen in `SHA256SUMS.txt`. Pakete sind unsigniert.
 
