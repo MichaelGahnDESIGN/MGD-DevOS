@@ -117,7 +117,7 @@ void main() {
   testWidgets('Echtes Control-Plane-Dashboard funktioniert im Tab', skip: Platform.isLinux, (t) async {
     final real = Directory(p.join(root.path, 'Echt'))..createSync();
     Directory(p.join(real.path, '.git')).createSync();
-    File('index.html').copySync(p.join(real.path, 'index.html'));
+    File('integration_test/fixtures/control_plane_dashboard.html').copySync(p.join(real.path, 'index.html'));
     // Kein gespeicherter Zustand aus früheren Läufen (Webview-Speicher bleibt pro App erhalten).
     SharedPreferences.setMockInitialValues({
       'onboarding_done_v1': true,
