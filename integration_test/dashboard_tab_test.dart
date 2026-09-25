@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -149,7 +150,8 @@ void main() {
     await t.pump(const Duration(milliseconds: 300));
     expect(await js('document.querySelectorAll("#edges path").length'), 3);
     expect(await js('!!document.querySelector("[data-mgd-supported-by] a[href=\'https://Michael-Gahn.de\']")'), true);
-    expect(await js('MGD_META.version.version'), '0.5.1');
+    final version = (jsonDecode(File('assets/meta/version.json').readAsStringSync()) as Map)['version'];
+    expect(await js('MGD_META.version.version'), version);
 
     // Einstellungen speichern und nach Neuladen behalten.
     await js('window.MGD_DASHBOARD.openWin("settings");var b=document.querySelector("[data-win=settings] [data-sec=allg]");b.querySelector("[data-f=theme]").value="dark";b.querySelector("[data-f=accent]").value="mgd";b.querySelector("[data-a=save]").click();');
