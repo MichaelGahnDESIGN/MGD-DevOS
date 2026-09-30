@@ -145,6 +145,15 @@ Dieser Skill ist die zentrale, umfassendere Variante der "Companion-Skill-Check"
 - **Validierung nach jeder Änderung**: nach jeder einzelnen Skill-Installation (Kern-Skill, Plattform-Init, Domain-Skill) wird sofort geprüft, ob die erwarteten Dateien/Ordner tatsächlich angekommen sind, bevor der nächste Schritt beginnt.
 - **Leitplanken**: schlägt eine Installation fehl, oder lehnt der Nutzer einen Pflicht-Sicherheits-Scan ab (siehe Schritt 5), bricht `/projektstart` den betroffenen Skill sofort ab und macht **nicht** unkontrolliert mit dem nächsten Schritt weiter — der Abbruch wird in der Abschluss-Zusammenfassung (Schritt 7) unter "offen" vermerkt.
 
+### Lange Läufe token-sparend (Loop-Protokoll)
+
+Lange oder wiederholte Abläufe (z. B. Massen-Installationen, `/projektstart-update` über viele
+Projekte) laufen nach dem Loop-Protokoll des MGD-Plattform-Builders (`platform/LOOP.md`) bzw.
+des `MGD_Autopilot_SKILL`: Zustand in `.loop/STATE.md`, pro Runde ein kleiner Schritt mit
+frischem Kontext, harte Stoppregeln (Prüfskript, Rundenlimit, Frist, kein Fortschritt,
+erlaubter Bereich). Modell pro Schritt wählen: günstig für Prüfung und Doku, stark nur
+nach Rückfrage. Nie für Rechts-, Datenschutz-, Kosten- oder Produktionsentscheidungen.
+
 ## Grundprinzip: Sicherheit vor Bequemlichkeit
 
 Dritt-Skills werden **nie blind installiert**. Jeder Skill-Kandidat, der nicht aus dem MGD-eigenen GitHub-Konto (`MichaelGahnDESIGN`) stammt, durchläuft vor der endgültigen Installation einen Scan mit `NVIDIA/SkillSpector` und/oder `affaan-m/agentshield`. Details siehe Abschnitt "Sicherheits-Check" unter `/projektstart` Schritt 5 sowie [wiki/Sicherheitskonzept.md](wiki/Sicherheitskonzept.md).

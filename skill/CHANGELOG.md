@@ -8,6 +8,8 @@ frühere eigenständige Zählung des Skills und bleiben als Historie erhalten.
 
 ## Unreleased
 
+- Hinweis auf das token-sparende Loop-Protokoll (Zustandsdatei, Stoppregeln) für lange Läufe.
+
 ## 0.6.0 (2026-09-25, Pre-Alpha)
 
 - Versionierung: Skill und App tragen dieselbe Version; `SKILL.md` und `README.md` zeigen sie an.
