@@ -179,7 +179,7 @@ Vier MGD-Kern-Skills werden **einzeln kurz erklärt** und per Ja/Nein (oder "all
 |---|---|---|---|
 | **MGD_DEV_SKILL** | Release/Sync/Backup/Cleanup/Tests/Wissensdokumentation | `/dev`, `/dev-fast`, `/dev-changelog` | Ja/Nein |
 | **Fragenkatalog-Skill** | Interaktiver Design-Fragenkatalog mit KI-Antworten aus wählbarer Experten-Perspektive, inkl. Recht-Kategorie mit ⚖️-Disclaimer | `/fragenkatalog-setup` | Ja/Nein |
-| **MGD_Todo_SKILL** | Selbst-gehostete TODO.html mit Bearbeiten-Funktion und Dokument-Verknüpfung | `/todo-setup`, `/todo-add`, `/todo-edit`, `/todo-link` | Ja/Nein |
+| **MGD_Todo_SKILL** | Operative TODO.html; verknüpft relevante Aufgaben mit der kanonischen Living Documentation, ohne deren Inhalte zu duplizieren | `/todo-setup`, `/todo-add`, `/todo-update`, `/todo-edit`, `/todo-link`, `/todo-index` | Ja/Nein |
 | **MGD_Living-Documentation** | Lebendige Projektdokumentation (Entscheidungen, offene Punkte, Risiken, Testnachweise) | kein eigener Slash-Command — wird automatisch vom Agenten erkannt | Ja/Nein |
 | **MGD_Autopilot_SKILL** | KI-Agent arbeitet ein Projektziel unbeaufsichtigt ab und merkt selbst, wenn er danebenliegt — Vertrag vor Start, Validierung nach jeder Änderung, zehn Härtungsregeln, harte Sicherheitsleitplanken | keiner (wirkt intern auf `/projektstart` selbst) | **verbindlich, keine Abfrage** |
 | **MGD_AI-Thread** | Belegte Übergabe an Codex oder Claude Code; fertig geprüfte Änderungen vorher gemäß Projektregeln committen und pushen | `/thread` | **verbindlich, keine Abfrage** |
@@ -288,8 +288,8 @@ Dieser Schritt gilt **nicht** für die sechs MGD-Skills des Basisangebots (`requ
 Nach Installation aller gewählten Skills werden die im Interview erhobenen Projektdaten automatisch in die jeweiligen Skills eingetragen:
 
 - **Fragenkatalog-Skill**: `/fragenkatalog-setup` wird mit den erhobenen Projektdaten (Name, Typ, Zielgruppe, Sprache) angestoßen.
-- **MGD_Todo_SKILL**: `/todo-setup` initialisiert `TODO.html`; anschließend werden über `/todo-add` erste Einträge für offene Setup-Punkte angelegt (z. B. "Rechtstext prüfen lassen", "Design-Skill-Ergebnisse durchgehen", "Backend-Preset validieren" — abhängig davon, was in den vorigen Schritten offen blieb oder abgelehnt wurde).
-- **MGD_Living-Documentation**: eine erste Einstiegsseite wird mit den Interview-Antworten befüllt (Projektüberblick, Entscheidung "welche Skills installiert wurden und warum", offene Punkte aus Schritt 3–5).
+- **MGD_Todo_SKILL**: `/todo-setup` initialisiert `TODO.html`; anschließend werden über `/todo-add` erste Einträge für offene Setup-Punkte angelegt (z. B. "Rechtstext prüfen lassen", "Design-Skill-Ergebnisse durchgehen", "Backend-Preset validieren" — abhängig davon, was in den vorigen Schritten offen blieb oder abgelehnt wurde). Relevante Todos erhalten mit `/todo-link` einen Verweis auf ihre kanonische Living-Documentation-Seite.
+- **MGD_Living-Documentation**: eine erste Einstiegsseite wird mit den Interview-Antworten befüllt (Projektüberblick, Entscheidung "welche Skills installiert wurden und warum", offene Punkte aus Schritt 3–5). Sie bleibt die Fachquelle für Entscheidungen, Risiken und Testnachweise; TODO führt nur den Arbeitsstatus. Lokaler Stand, Commit, GitHub-Push und Deployment werden getrennt dokumentiert.
 - **PROJEKT/.projektstart-manifest.json**: wird geschrieben/aktualisiert (siehe `/projektstart-update`).
 
 #### Schritt 7 — Abschluss-Zusammenfassung

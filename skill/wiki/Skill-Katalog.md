@@ -12,7 +12,7 @@ Jeder Eintrag ist ein Objekt mit mindestens `{name, url, description, category, 
 |---|---|---|---|---|---|
 | [MGD_DEV_SKILL](https://github.com/MichaelGahnDESIGN/MGD_DEV_SKILL) | core | mgd | `.claude/commands/`, `.codex/commands/`, `dev/SKILL.md` | `/dev`, `/dev-fast`, `/dev-changelog` | Ja/Nein |
 | [Fragenkatalog-Skill](https://github.com/MichaelGahnDESIGN/Fragenkatalog-Skill) | core | mgd | `.claude/commands/fragenkatalog.md`, `.codex/commands/fragenkatalog.md`, `SKILL.md` | `/fragenkatalog-setup` | Ja/Nein |
-| [MGD_Todo_SKILL](https://github.com/MichaelGahnDESIGN/MGD_Todo_SKILL) | core | mgd | `.claude/commands/todo.md`, `SKILL.md`, `todo/TODO.template.html` | `/todo-setup`, `/todo-add`, `/todo-edit`, `/todo-link` | Ja/Nein |
+| [MGD_Todo_SKILL](https://github.com/MichaelGahnDESIGN/MGD_Todo_SKILL) | core | mgd | `.claude/commands/todo.md`, `.codex/commands/todo.md`, `SKILL.md`, `todo/TODO.template.html` | `/todo-setup`, `/todo-add`, `/todo-update`, `/todo-edit`, `/todo-link`, `/todo-index` | Ja/Nein |
 | [MGD_Living-Documentation](https://github.com/MichaelGahnDESIGN/MGD_Living-Documentation) | core | mgd | `.claude/skills/living-documentation/` bzw. `~/.claude/skills/living-documentation/` | — (automatische Erkennung) | Ja/Nein |
 | [MGD_Autopilot_SKILL](https://github.com/MichaelGahnDESIGN/MGD_Autopilot_SKILL) | orchestrierung | mgd | `.claude/commands/`, `autopilot/`, `~/.claude/skills/autopilot/` | — (wirkt intern auf `/projektstart`) | **keine — verbindlich** |
 | [MGD_AI-Thread](https://github.com/MichaelGahnDESIGN/MGD_AI-Thread) | orchestrierung | mgd | `.claude/skills/thread/SKILL.md`, `.claude/commands/thread.md`, `.codex/skills/thread/SKILL.md`, `.codex/commands/thread.md` | `/thread` | **keine — verbindlich** |
@@ -20,6 +20,12 @@ Jeder Eintrag ist ein Objekt mit mindestens `{name, url, description, category, 
 Im JSON stehen die vier wählbaren Skills auf `mandatory: false` und Autopilot
 sowie AI-Thread auf `mandatory: true`. Der Projektmanager prüft vorhandene
 Installationen, bevor er Dateien kopiert.
+
+`MGD_Todo_SKILL` und `MGD_Living-Documentation` bilden eine feste
+Dokumentationskette: TODO hält Aufgaben, Status und Priorität; die Living
+Documentation hält Entscheidungen, Risiken und Testnachweise. Relevante
+Todos werden auf die kanonische Fachseite verlinkt. Ein lokaler Stand, Commit,
+GitHub-Push oder Deployment sind getrennte Nachweise.
 
 ## MGD-Plattform-Builder (`mandatory: false`, eigene CLI, keine Datei-Kopie, kein Sicherheits-Scan nötig)
 

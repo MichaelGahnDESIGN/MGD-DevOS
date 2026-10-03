@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Projektmanager-Skill: MGD_Todo_SKILL und MGD_Living-Documentation sind nun
+  als feste Dokumentationskette beschrieben. Der Katalog enthält die aktuellen
+  Todo-Befehle und Codex-Installationsdatei; operative Todos verlinken auf die
+  kanonische Living Documentation, während lokaler Stand, Commit,
+  GitHub-Push und Deployment getrennt bleiben.
+
 ## 0.6.0 (2026-09-25, Pre-Alpha)
 
 - Lizenz: MGD-Lizenz 1.0 statt PolyForm Noncommercial (Versionen bis 0.5.2 bleiben unter PolyForm). Neuer Bereich

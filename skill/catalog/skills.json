@@ -44,7 +44,7 @@
     {
       "name": "MGD_Todo_SKILL",
       "url": "https://github.com/MichaelGahnDESIGN/MGD_Todo_SKILL",
-      "description": "Selbst-gehostete TODO.html mit Bearbeiten-Funktion (/todo-edit) und Dokument-Verknüpfung (/todo-link).",
+      "description": "Selbst-gehostete TODO.html für operative Aufgaben; verbindet relevante Todos per /todo-link und /todo-index mit der kanonischen Living Documentation, ohne deren Inhalte zu duplizieren.",
       "category": "core",
       "stars": null,
       "source": "mgd",
@@ -52,14 +52,17 @@
       "mandatory": false,
       "installTargets": [
         ".claude/commands/todo.md",
+        ".codex/commands/todo.md",
         "SKILL.md",
         "todo/TODO.template.html"
       ],
       "slashCommands": [
         "/todo-setup",
         "/todo-add",
+        "/todo-update",
         "/todo-edit",
-        "/todo-link"
+        "/todo-link",
+        "/todo-index"
       ]
     },
     {
