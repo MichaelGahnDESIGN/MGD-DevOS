@@ -8,6 +8,8 @@ frühere eigenständige Zählung des Skills und bleiben als Historie erhalten.
 
 ## Unreleased
 
+- `ai-sync` (`ai-sync/ai_sync.py`): README und Befehl `/ai-sync` für Claude Code und Codex ergänzt; `SKILL.md` nennt den Befehl.
+
 ## 0.6.0 (2026-09-25, Pre-Alpha)
 
 - Versionierung: Skill und App tragen dieselbe Version; `SKILL.md` und `README.md` zeigen sie an.

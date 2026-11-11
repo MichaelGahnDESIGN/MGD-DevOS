@@ -1,0 +1,33 @@
+{
+  "_hinweis": "Beispiel-Manifest fuer ai-sync. Kopieren, anpassen und am besten in einem privaten Repo halten. Schluessel mit _ werden ignoriert. Secrets stehen nie hier, nur Verweise (keychain:<dienst> oder env:<VAR>).",
+  "_freigaben": "Marketplaces, MCP-Befehle und Secret-Verweise werden nur in der lokalen Konfig freigegeben (nicht hier). Das Plugin ecc braucht dort: allowedMarketplaces = [\"anthropics/claude-plugins-official\", \"affaan-m/ECC\"]; siehe README.",
+  "skills": [
+    {"name": "wissen", "repo": "MGD_Wissen_SKILL", "path": "skills/wissen", "targets": ["claude", "codex", "agents"]},
+    {"name": "dev", "repo": "MGD_DEV_SKILL", "path": "dev", "targets": ["claude", "codex"]},
+    {"name": "fast-dev", "repo": "MGD_DEV_SKILL", "path": "fast-dev", "targets": ["claude", "codex"]},
+    {"name": "todo", "repo": "MGD_Todo_SKILL", "path": ".", "targets": ["claude", "codex"]},
+    {"name": "living-documentation", "repo": "MGD_Living-Documentation", "path": "skills/living-documentation", "targets": ["claude", "codex"]},
+    {"name": "project-start-assistant", "repo": "MGD_Living-Documentation", "path": "skills/project-start-assistant", "targets": ["claude", "codex"]},
+    {"name": "autopilot", "repo": "MGD_Autopilot_SKILL", "path": ".", "targets": ["claude", "codex"]},
+    {"name": "thread", "repo": "MGD_AI-Thread", "path": ".", "targets": ["claude", "codex"]},
+    {"name": "prozesse", "repo": "MGD_Prozesse_SKILL", "path": ".", "targets": ["claude", "codex"]},
+    {"name": "playtest", "repo": "MGD_AI-PlayTest_SKILL", "path": ".", "targets": ["claude", "codex"]},
+    {"name": "macclean", "repo": "MGD_Mac-Clean_Skill", "path": "skill", "targets": ["claude", "codex"]},
+    {"name": "mgd-seo", "repo": "MGD-SEO", "path": ".", "targets": ["claude", "codex"]},
+    {"name": "mgd-akquise", "repo": "MGD-SEO", "path": "Akquise-Skill", "targets": ["claude", "codex"]},
+    {"name": "mgd-devos", "repo": "MGD-DevOS", "path": "skill", "targets": ["claude", "codex"]},
+    {"name": "divi5-dev", "repo": "MGD_Divi5-Dev_SKILL", "path": ".", "targets": ["claude", "codex"]}
+  ],
+  "commands": [
+    {"name": "ai-sync", "repo": "MGD-DevOS", "path": "skill/.claude/commands/ai-sync.md", "targets": ["claude"]}
+  ],
+  "mcp": [
+    {"name": "context7", "command": "npx", "args": ["-y", "@upstash/context7-mcp"], "env": {}, "targets": ["claude", "codex"]},
+    {"name": "playwright", "command": "npx", "args": ["-y", "@playwright/mcp@latest"], "env": {}, "targets": ["claude", "codex"]}
+  ],
+  "plugins": {
+    "claude": [
+      {"marketplace": "affaan-m/ECC", "marketplaceName": "ecc", "name": "ecc"}
+    ]
+  }
+}

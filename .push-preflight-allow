@@ -1,0 +1,2 @@
+# reason: ai-sync-Testfixture, absichtlich falscher Wert zum Pruefen der Secret-Schwaerzung, kein Zugang
+skill/ai-sync/tests/test_ai_sync.py:^SECRET = "s3cr3t-T0ken-4711"$

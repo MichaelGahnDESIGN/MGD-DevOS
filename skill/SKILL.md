@@ -386,6 +386,10 @@ Ablauf:
 3. Kategorie wie vom Nutzer angegeben übernehmen (freie Kategorisierung, konsistent zu bestehenden Werten wo möglich).
 4. Bestätigung anzeigen, Änderung ist sofort für künftige `/projektstart`-Läufe wirksam.
 
+### `/ai-sync`
+
+Gleicht Skills, Befehls-Wrapper, MCP-Server und Claude-Plugins anhand eines JSON-Manifests auf mehreren Macs ab (`ai-sync/ai_sync.py`, Trockenlauf mit `plan`, sichere Änderungen mit `apply`); Details in [ai-sync/README.md](ai-sync/README.md).
+
 ---
 
 ## Voraussetzungen
