@@ -1,0 +1,4 @@
+# reason: ai-sync-Testfixture, absichtlich falscher Wert zum Pruefen der Secret-Schwaerzung, kein Zugang
+f98ddb0231ac985b6909943027f2dfffba0bd4bb:skill/ai-sync/tests/test_ai_sync.py:generic-api-key:25
+# reason: Freigabezeile fuer dieselbe Testfixture in .push-preflight-allow
+f98ddb0231ac985b6909943027f2dfffba0bd4bb:.push-preflight-allow:generic-api-key:2
